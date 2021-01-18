@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="477.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.MainFrameController">
+   <children>
+      <Label layoutX="455.0" layoutY="445.0" text="欢迎：" />
+      <Label fx:id="userName" layoutX="491.0" layoutY="445.0" text="Root" />
+      <Button fx:id="next" layoutX="252.0" layoutY="377.0" mnemonicParsing="false" onMouseClicked="#NextSdomain" text="下一页" />
+      <Label fx:id="pages" layoutX="154.0" layoutY="381.0" text="1/1" />
+      <Button fx:id="previous" layoutX="20.0" layoutY="377.0" mnemonicParsing="false" onMouseClicked="#PreviousSdomain" text="上一页" />
+      <TableView fx:id="table" layoutX="14.0" layoutY="61.0" onMouseClicked="#click" prefHeight="293.0" prefWidth="300">
+        <columns>
+          <TableColumn fx:id="tabIndex" editable="false" prefWidth="45.0" sortable="false" text="序号" />
+          <TableColumn fx:id="tabName" editable="false" prefWidth="100.0" sortable="false" text="名称" />
+            <TableColumn fx:id="tabId" editable="false" prefWidth="155.0" sortable="false" text="ID" />
+        </columns>
+      </TableView>
+      <TitledPane animated="false" collapsible="false" layoutX="323.0" layoutY="30.0" prefHeight="130.0" prefWidth="264.0" text="导出数据">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="262.0">
+               <children>
+                  <Button fx:id="exportButton" layoutX="39.0" layoutY="39.0" mnemonicParsing="false" onMouseClicked="#ExportData" prefHeight="27.0" prefWidth="58.0" text="导出" />
+                  <ProgressIndicator fx:id="progress" layoutX="166.0" layoutY="20.0" prefHeight="58.0" prefWidth="51.0" progress="1.0" />
+                  <Label layoutX="39.0" layoutY="13.0" text="当前选中：" />
+                  <Label fx:id="sdomainName" layoutX="99.0" layoutY="13.0" text="null" />
+               </children>
+            </AnchorPane>
+        </content>
+      </TitledPane>
+      <Label layoutX="22.0" layoutY="34.0" text="时空域：" />
+      <TextField fx:id="keyword" layoutX="64.0" layoutY="30.0" />
+      <Button layoutX="252.0" layoutY="30.0" mnemonicParsing="false" onMouseClicked="#querySdomain" prefHeight="23.0" prefWidth="68.0" text="查询" />
+      <TitledPane animated="false" collapsible="false" layoutX="323.0" layoutY="177.0" prefHeight="178.0" prefWidth="264.0" text="导入数据">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="139.0" prefWidth="262.0">
+               <children>
+                  <Button  fx:id="importButton" layoutX="47.0" layoutY="63.0" mnemonicParsing="false" onMouseClicked="#ImportData" text="导入数据" />
+               </children>
+            </AnchorPane>
+        </content>
+      </TitledPane>
+   </children>
+</Pane>
