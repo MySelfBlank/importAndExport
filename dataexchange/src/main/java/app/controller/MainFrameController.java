@@ -172,7 +172,7 @@ public class MainFrameController implements Initializable {
             return;
         }
         String path = file.getPath();//选择的文件夹路径
-
+        //导入之前先导入基本数据
         Task<Void> importTask = new Task<Void>() {
             @Override
             protected void succeeded() {

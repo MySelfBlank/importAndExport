@@ -47,7 +47,7 @@ public class Index {
     private static final Logger logger = LoggerFactory.getLogger(Index.class);
 
     public static void main(String[] args) throws Exception {
-//        startVoid("C:\\Users\\Cai\\Desktop\\demo","测试八个方面1223",1341568728029622272L);
+        startVoid("C:\\Users\\Cai\\Desktop\\demo","测试八个方面1223",1341568728029622272L);
         logger.debug("开始运行");
         //用户Token
         Scanner input = new Scanner(System.in);
@@ -230,6 +230,7 @@ public class Index {
         List<Attribute> attributeList = new ArrayList<>();
         //形态集合
         List<Form> formList = new ArrayList<>();
+        List<FormStyle> FormStyleList = new ArrayList<>();
         //导出所有脚本文件
         ExportDllFile.writeDllFiles();
         for (SObject sObject : sObjectsList) {
@@ -249,13 +250,20 @@ public class Index {
                 sObject.getForms().getForms().stream().sequential().collect(Collectors.toCollection(() -> formList));
             }
         }
+        for (OType oType : oTypeList) {
+            if (isEmpty(oType.getFormStyles().getStyles()) || isNull(oType.getFormStyles().getStyles())) {
+                continue;
+            } else {
+                oType.getFormStyles().getStyles().stream().sequential().collect(Collectors.toCollection(() -> FormStyleList));
+            }
+        }
         fieldList.addAll(FieldUtils.objectFieldsHandle2(attributeList));
         //导出时空域下所有使用的属性
         //List<Field> fieldList = FieldUtils.objectFieldsHandle(sObjectsList);
         FileTools.exportFile(JSONUtil.parse(fieldList), PathUtil.baseInfoDir+ "/test.fields","field");
         //导出时空域下所有使用的样式
         List<EForm> eFormList = FormUtils.dsForms2EForm(formList);
-        List<FormStyle> formStyles = FormUtils.objectFromsHandle2(formList);
+        List<FormStyle> formStyles = FormUtils.otpyeFromsHandle2(FormStyleList);
         //导出所有模型（与对象中下载的模型一致）
         //FormUtils.downLoadModel(ExecuteContainer.modelIds,PathUtil.baseInfoDirData);
         FileTools.exportFile(JSONUtil.parse(eFormList), PathUtil.baseInfoDir+ "/test.forms","form");

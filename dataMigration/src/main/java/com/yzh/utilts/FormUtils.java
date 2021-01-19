@@ -116,6 +116,54 @@ public class FormUtils {
         return formStyles;
     }
 
+    public static List<FormStyle> otpyeFromsHandle2(List<FormStyle> fromList) throws Exception {
+        if (isNull(fromList) || isEmpty(fromList)) {
+            return new ArrayList<>();
+        }
+        Set<Long> formList = new HashSet<>();
+        StringBuffer buffer = new StringBuffer();
+        for (FormStyle form : fromList) {
+            //形态不是模型的时候取样式id
+            if(!form.getType().getName().equalsIgnoreCase("model")&&!form.getType().getName().equalsIgnoreCase("bim")){
+                formList.add(form.getId());
+            }
+        }
+//        for (Form form : fromList) {
+//            //形态不是模型的时候取样式id
+//            if (!form.getType().getName().equalsIgnoreCase("model")&&!form.getType().getName().equalsIgnoreCase("bim")) {
+//                //取形态中的样式Id
+//                JSONArray jsonArray = JSONArray.parseArray(form.getStyle());
+//                if (isNotNull(jsonArray) && isNotEmpty(jsonArray)) {
+//                    for (Object o : jsonArray) {
+//                        buffer.append("," + o);
+//                    }
+//                }
+//
+//            }
+//        }
+        //去除第一位多余的，
+//        buffer.deleteCharAt(0);
+//        System.out.println(buffer);
+//        String[] split = buffer.toString().split(",");
+//        formList.addAll(Arrays.asList(split));
+        System.out.println(formList);
+        //请求样式数据
+        Map<String, Object> params = MapUtil.builder(new HashMap<String, Object>())
+                .put("token", UserInfo.token)
+                .put("orderType", "ID")
+                .put("descOrAsc", true)
+                .put("ids", formList.toArray())
+                .build();
+        String styleJsonStr = HttpUtil.get(MyApi.getStyleById.getValue(), params);
+        JSONObject stylejsonObj = FileTools.formatData(styleJsonStr);
+        String styleListStr = stylejsonObj.getStr("list");
+        if (StringUtils.isEmpty(styleListStr)) {
+            return new ArrayList<>();
+        }
+        List<FormStyle> formStyles = JsonUtils.jsonToList(styleListStr, FormStyle.class);
+        return formStyles;
+    }
+
     public static List<EForm> dsForms2EForm(List<Form> forms) throws Exception {
         if (isEmpty(forms) || isNull(forms)) {
             return new ArrayList<>();
