@@ -6,6 +6,7 @@ import cn.hutool.json.JSONUtil;
 import com.yzh.api.MyApi;
 import com.yzh.dao.EModel;
 import com.yzh.dao.Mobj;
+import com.yzh.userInfo.PathUtil;
 import com.yzh.userInfo.UserInfo;
 import onegis.psde.model.Model;
 import onegis.psde.model.Models;
@@ -88,7 +89,7 @@ public class EModelUtil {
 
         list.addAll(forJsonList(relationStr, EModel.class));
 
-        String path = "E:\\test\\" + sDomain.getName() + "\\test.models";
+        String path = PathUtil.baseInfoDir + "\\test.models";
         exportFile(JSONUtil.parse(list), path, "Models");
 
     }
@@ -108,7 +109,7 @@ public class EModelUtil {
             InputStream inputStream = con.getInputStream();
             int index;
             byte[] bytes = new byte[1024];
-            File file = new File("E:\\test\\"+sDomain.getName()+"\\ModelFile\\test"+i+"."+s);
+            File file = new File(PathUtil.baseInfoDirData+"\\test"+i+"."+s);
             //判断目录
             //判断文件是否存在
             if (!file.getParentFile().exists()) {

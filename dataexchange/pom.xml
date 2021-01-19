@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>groupId</groupId>
-    <artifactId>onegis.dataexchange</artifactId>
+    <artifactId>dataexchange</artifactId>
 
     <repositories>
         <repository>
@@ -140,6 +140,12 @@
             <artifactId>spring-mock</artifactId>
             <version>RELEASE</version>
             <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.yzh</groupId>
+            <artifactId>dataMigration</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

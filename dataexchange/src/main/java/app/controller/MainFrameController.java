@@ -1,6 +1,7 @@
 package app.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.yzh.Index;
 import enums.KeyType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -97,7 +98,7 @@ public class MainFrameController implements Initializable {
      * 执行数据的导出
      */
     @FXML
-    private void ExportData(){
+    private void ExportData() throws Exception {
         if(curKey==null||curKey.isEmpty()||curKey.equals("")||curKey.equals("null")){
             AlertController.alert("请选择时空域！");
             return;
@@ -111,6 +112,14 @@ public class MainFrameController implements Initializable {
             return;
         }
         String path = file.getPath();//选择的文件夹路径
+        //基本信息下载
+        new Thread(()->{
+            try {
+                Index.startVoid(path,curDoamin.getName(),Long.parseLong(curDoamin.getId()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
         Task<Void> exportTask = new Task<Void>() {
             @Override
             protected void succeeded() {
@@ -143,7 +152,6 @@ public class MainFrameController implements Initializable {
             }
         };
         new Thread(exportTask).start();
-
     }
 
     /**
@@ -164,6 +172,7 @@ public class MainFrameController implements Initializable {
             return;
         }
         String path = file.getPath();//选择的文件夹路径
+
         Task<Void> importTask = new Task<Void>() {
             @Override
             protected void succeeded() {
@@ -199,7 +208,6 @@ public class MainFrameController implements Initializable {
             }
         };
         new Thread(importTask).start();
-
     }
 
     /**

@@ -6,6 +6,7 @@ import com.yzh.dao.EForm;
 import com.yzh.dao.ExecuteContainer;
 import com.yzh.dao.SDomainOutPutModel;
 import com.yzh.services.export.ExportDllFile;
+import com.yzh.userInfo.PathUtil;
 import com.yzh.userInfo.UserInfo;
 import com.yzh.utilts.*;
 import onegis.psde.attribute.Attribute;
@@ -28,6 +29,7 @@ import static cn.hutool.core.util.ObjectUtil.isNull;
 import static com.yzh.utilts.FileTools.*;
 import static com.yzh.utilts.SDomainPagesTools.getPages;
 import static com.yzh.utilts.SDomainUtil.getSDomain;
+import static com.yzh.utilts.SDomainUtil.getSDomainById;
 
 /**
  * @author Yzh
@@ -45,6 +47,7 @@ public class Index {
     private static final Logger logger = LoggerFactory.getLogger(Index.class);
 
     public static void main(String[] args) throws Exception {
+//        startVoid("C:\\Users\\Cai\\Desktop\\demo","测试八个方面1223",1341568728029622272L);
         logger.debug("开始运行");
         //用户Token
         Scanner input = new Scanner(System.in);
@@ -116,6 +119,8 @@ public class Index {
                 }
                 UserInfo.domain = sDomains.get(i).getId();
                 sDomain = sDomains.get(i);
+
+
                 SDomainOutPutModel sDomainOutPutModel = new SDomainOutPutModel();
                 SDomainOutPutModel sDomain = getSDomain(sDomainOutPutModel, Index.sDomain);
                 JSONObject jsonObject = (JSONObject) JSONUtil.parse(sDomain);
@@ -187,6 +192,75 @@ public class Index {
         //导出时空域下所有使用的形态
         //退出账号
         logout();
+    }
+
+    public static void startVoid(String path,String sDomainName , long SDomainId) throws Exception {
+        login("asiayu01@163.com", "yu1306730458");
+
+        //设置时空域Id
+        UserInfo.domain = SDomainId;
+
+        //设置路径
+        PathUtil.setDir(sDomainName,path);
+        logger.error("选择的时空域Id为=" + UserInfo.domain);
+        logger.error("路径信息"+path);
+        //导出时空域基本信息
+        SDomainOutPutModel sDomainOutPutModel = new SDomainOutPutModel();
+        SDomainOutPutModel sDomain = getSDomainById(sDomainOutPutModel,UserInfo.domain);
+        JSONObject jsonObject = (JSONObject) JSONUtil.parse(sDomain);
+        String localpath = PathUtil.baseInfoDir+ "/test.sdomain";
+        exportFile(jsonObject, localpath,sDomain.getName());
+
+        //导出时空域下类模板
+        OtypeUtilts.getOtype();
+        //导出时空域下的关系
+        ERelationUtil.getRelation(sObjectsList);
+        //导出时空域下的行为
+        EModelUtil.getModelsFile(oTypeList);
+        EModelUtil.getEModelScriptFile();
+        //导出时空域下的行为类别
+        EModelDefUtil.loadModelDefFile(oTypeList);
+        //导出时空域下的空间参照
+        ESrsUtil.getSrs(oTypeList);
+        //导出时空域下的时间参照
+        ETrsUtil.getTrs(oTypeList);
+        //字段集合
+        List<Field> fieldList = new ArrayList<>();
+        //属性集合
+        List<Attribute> attributeList = new ArrayList<>();
+        //形态集合
+        List<Form> formList = new ArrayList<>();
+        //导出所有脚本文件
+        ExportDllFile.writeDllFiles();
+        for (SObject sObject : sObjectsList) {
+            if (isEmpty(sObject) || isNull(sObject)) {
+                continue;
+            }
+            //字段处理
+            if (isEmpty(sObject.getAttributes().getAttributeList()) || isEmpty(sObject.getAttributes().getAttributeList())) {
+                continue;
+            } else {
+                attributeList.addAll(sObject.getAttributes().getAttributeList());
+            }
+            //形态处理
+            if (isEmpty(sObject.getForms().getForms()) || isNull(sObject.getForms().getForms())) {
+                continue;
+            } else {
+                sObject.getForms().getForms().stream().sequential().collect(Collectors.toCollection(() -> formList));
+            }
+        }
+        fieldList.addAll(FieldUtils.objectFieldsHandle2(attributeList));
+        //导出时空域下所有使用的属性
+        //List<Field> fieldList = FieldUtils.objectFieldsHandle(sObjectsList);
+        FileTools.exportFile(JSONUtil.parse(fieldList), PathUtil.baseInfoDir+ "/test.fields","field");
+        //导出时空域下所有使用的样式
+        List<EForm> eFormList = FormUtils.dsForms2EForm(formList);
+        List<FormStyle> formStyles = FormUtils.objectFromsHandle2(formList);
+        //导出所有模型（与对象中下载的模型一致）
+        //FormUtils.downLoadModel(ExecuteContainer.modelIds,PathUtil.baseInfoDirData);
+        FileTools.exportFile(JSONUtil.parse(eFormList), PathUtil.baseInfoDir+ "/test.forms","form");
+        FileTools.exportFile(JSONUtil.parse(formStyles), PathUtil.baseInfoDir + "/test.formStyles","formStyle");
+        //导出时空域下所有使用的形态
     }
 }
 

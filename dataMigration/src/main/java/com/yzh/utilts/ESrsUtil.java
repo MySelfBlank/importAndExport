@@ -4,6 +4,7 @@ import cn.hutool.json.JSON;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONUtil;
 import com.yzh.dao.ESpatialReferenceSystem;
+import com.yzh.userInfo.PathUtil;
 import onegis.psde.psdm.OType;
 import onegis.psde.reference.SpatialReferenceSystem;
 
@@ -42,7 +43,7 @@ public class ESrsUtil {
         List<ESpatialReferenceSystem> eSpatialReferenceSystems = jsonArray.toList(ESpatialReferenceSystem.class);
         List<ESpatialReferenceSystem> collect = eSpatialReferenceSystems.stream().distinct().collect(Collectors.toList());
         JSON json = JSONUtil.parse(collect);
-        String path = "E:\\test\\" + sDomain.getName() + "\\test.srs";
+        String path = PathUtil.baseInfoDir + "\\test.srs";
         FileTools.exportFile(json, path,"Srs");
     }
 }

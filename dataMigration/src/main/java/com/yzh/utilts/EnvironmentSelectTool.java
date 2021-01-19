@@ -21,9 +21,9 @@ public class EnvironmentSelectTool {
     public static String localHostUcUrl = "http://172.16.4.129:8085/btuc";
 
 
-    public static String finalUrl = localHostUrl;
-    public static String finalUcUrl=localHostUcUrl;
-    public static String finalModelUrl=modelLocalUrl;
+    public static String finalUrl = produrl;
+    public static String finalUcUrl=prodUcUrl;
+    public static String finalModelUrl=modelProdUrl;
 
     public static void selectEnv(){
         Scanner scanner = new Scanner(System.in);

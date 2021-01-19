@@ -4,12 +4,14 @@ import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONUtil;
 import com.yzh.api.MyApi;
 import com.yzh.dao.EModelDef;
+import com.yzh.userInfo.PathUtil;
 import com.yzh.userInfo.UserInfo;
 import onegis.psde.model.Model;
 import onegis.psde.model.ModelDef;
 import onegis.psde.model.Models;
 import onegis.psde.psdm.OType;
 
+import java.nio.file.Path;
 import java.util.*;
 
 import static cn.hutool.core.util.ObjectUtil.isEmpty;
@@ -92,7 +94,7 @@ public class EModelDefUtil {
                 eModelDefs.add(eModelDef);
             }
         }
-        String path = "E:\\test\\" + sDomain.getName() + "\\test.modelDef";
+        String path = PathUtil.baseInfoDir + "\\test.modelDef";
         exportFile(JSONUtil.parse(eModelDefs), path,"modelDef");
     }
         

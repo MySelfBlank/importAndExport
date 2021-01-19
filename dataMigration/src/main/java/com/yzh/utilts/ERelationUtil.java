@@ -6,6 +6,7 @@ import cn.hutool.json.JSONUtil;
 import com.yzh.api.MyApi;
 import com.yzh.dao.EModel;
 import com.yzh.dao.ERelation;
+import com.yzh.userInfo.PathUtil;
 import com.yzh.userInfo.UserInfo;
 import onegis.psde.model.Model;
 import onegis.psde.psdm.SObject;
@@ -40,7 +41,7 @@ public class ERelationUtil {
         //从对象中取出NetWork获取关系id
         for (SObject sObject : sObjects) {
             Network network = sObject.getNetwork();
-            if (network == null) {
+            if (network == null||network.getNodes().size()==0) {
                 continue;
             }
             List<RNode> nodes = network.getNodes();
@@ -94,7 +95,7 @@ public class ERelationUtil {
         List<Relation> list = JsonUtils.jsonToList(jsonObject.getStr("list"), Relation.class);
 
         List<ERelation> eRelations = dsRelations2ERelation(list);
-        String path = "E:\\test\\" + sDomain.getName() + "\\test.relation";
+        String path = PathUtil.baseInfoDir + "\\test.relation";
         exportFile(JSONUtil.parse(eRelations), path,"relation");
     }
 
@@ -122,6 +123,9 @@ public class ERelationUtil {
     }
 
     public static EModel handOldModelToNewModel(Model model){
+        if (model==null){
+            return new EModel();
+        }
         EModel newModel = new EModel();
         newModel.setId(model.getId());
         newModel.setName(model.getName());

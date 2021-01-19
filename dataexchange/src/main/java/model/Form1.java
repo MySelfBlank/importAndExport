@@ -6,6 +6,7 @@ import com.vividsolutions.jts.geom.GeometryFactory;
 import enums.EFormEnum;
 import onegis.psde.form.Position;
 
+
 public class Form1 {
     @JsonIgnore
     public static final GeometryFactory GEOMETRY_FACTORY = new GeometryFactory();

@@ -2,3 +2,8 @@
 /target/
 src/main/java/com/yzh/loading/Demo.java
 /logs/
+/dataexchange/target/
+/dataMigration/target/
+*.iml
+*.lock
+*.data

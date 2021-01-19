@@ -11,6 +11,7 @@ import com.yzh.dao.EField;
 import com.yzh.dao.EModel;
 import com.yzh.dao.EModelDef;
 import com.yzh.dao.exportModel.*;
+import com.yzh.userInfo.PathUtil;
 import com.yzh.userInfo.UserInfo;
 import onegis.psde.attribute.Field;
 import onegis.psde.attribute.Fields;
@@ -80,7 +81,7 @@ public class OtypeUtilts {
             JSONObject otype = (JSONObject) o.get("otype");
             classIDs.add(otype.getLong("id"));
         }
-        logger.debug("当前时空域下所有的类模板Id=" + classIDs);
+        logger.debug("当前时空域下使用所有的类模板Id=" + classIDs);
         EConnectorUtils.EConnectorHandel(classIDs);
         params.clear();
         params.put("token", UserInfo.token);
@@ -97,7 +98,7 @@ public class OtypeUtilts {
 
         //打印类模板
         JSON parse = JSONUtil.parse(eoTypes);
-        exportFile(parse, "E:\\test\\" + sDomain.getName() + "\\test.otype","Otype");
+        exportFile(parse, PathUtil.baseInfoDir + "\\test.otype","Otype");
     }
 
     public static void filterOtype(List<OType> oTypeList) throws Exception {

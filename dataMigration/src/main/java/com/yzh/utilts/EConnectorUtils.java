@@ -7,6 +7,7 @@ import cn.hutool.json.JSONUtil;
 import com.yzh.Index;
 import com.yzh.api.MyApi;
 import com.yzh.dao.EConnector;
+import com.yzh.userInfo.PathUtil;
 import com.yzh.userInfo.UserInfo;
 import onegis.psde.psdm.OType;
 import onegis.psde.relation.Connector;
@@ -49,7 +50,7 @@ public class EConnectorUtils {
             }
         }
         List<EConnector> eConnectors = connector2EConnector(connectors, classIDs);
-        FileTools.exportFile(JSONUtil.parse(eConnectors), "E:/test/" + Index.sDomain.getName() + "/test.connectors","connectors");
+        FileTools.exportFile(JSONUtil.parse(eConnectors), PathUtil.baseInfoDir + "/test.connectors","connectors");
     }
 
     public static List<EConnector> connector2EConnector(List<Connector> connectors,Set<Long> classIDs) {

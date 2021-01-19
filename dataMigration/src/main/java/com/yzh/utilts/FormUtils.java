@@ -82,7 +82,7 @@ public class FormUtils {
         StringBuffer buffer = new StringBuffer();
         for (Form form : fromList) {
             //形态不是模型的时候取样式id
-            if (!form.getType().getName().equalsIgnoreCase("model")) {
+            if (!form.getType().getName().equalsIgnoreCase("model")&&!form.getType().getName().equalsIgnoreCase("bim")) {
                 //取形态中的样式Id
                 JSONArray jsonArray = JSONArray.parseArray(form.getStyle());
                 if (isNotNull(jsonArray) && isNotEmpty(jsonArray)) {
@@ -163,6 +163,9 @@ public class FormUtils {
      * @param form
      */
     public static void getFormModel(Form form){
+        if (form.getFormref().getRefid()==0){
+            return;
+        }
         if (!form.getType().getName().equals("Model")){
             return;
         }

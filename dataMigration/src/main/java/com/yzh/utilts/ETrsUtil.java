@@ -4,6 +4,7 @@ import cn.hutool.json.JSON;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONUtil;
 import com.yzh.dao.ETrs;
+import com.yzh.userInfo.PathUtil;
 import onegis.psde.psdm.OType;
 import onegis.psde.reference.TimeReferenceSystem;
 
@@ -40,7 +41,7 @@ public class ETrsUtil {
         List<ETrs> collect = eTrsUtils.stream().distinct().collect(Collectors.toList());
 
         JSON parse = JSONUtil.parse(collect);
-        String path="E:\\test\\" + sDomain.getName() + "\\test.trs";
+        String path= PathUtil.baseInfoDir + "\\test.trs";
         FileTools.exportFile(parse,path,"Trs");
     }
 }
