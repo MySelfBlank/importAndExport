@@ -30,9 +30,9 @@ public class FieldImportUtil {
     //日志工厂
     private static final Logger logger = LoggerFactory.getLogger(FieldImportUtil.class);
 
-    public static void fieldImport() {
+    public static void fieldImport(String path) {
         logger.debug("字段开始导入===========》读取字段文件");
-        String fieldsStr = FileTools.readFile("E:\\test\\测试八个方面1223\\test.fields");
+        String fieldsStr = FileTools.readFile(path);
         List<Field> fieldList = FileTools.jsonArray2List(fieldsStr,Field.class);
         //map用于记录新老Id关系
         fieldImport(fieldList);
@@ -71,10 +71,5 @@ public class FieldImportUtil {
 //        System.out.println(fieldsStr);
     }
 
-    public static void main(String[] args)  {
-        login("ceshi@yzh.com", "123456");
-        fieldImport();
-        JSON parse = JSONUtil.parse(fieldOldIdAndNewIdCache);
-        FileTools.exportFile(parse,"E:\\test\\测试八个方面1223\\fieldId.text","fieldId.text");
-    }
+
 }

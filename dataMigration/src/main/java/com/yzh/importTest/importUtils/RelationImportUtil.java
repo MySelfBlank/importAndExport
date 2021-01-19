@@ -9,6 +9,7 @@ import com.yzh.dao.EModel;
 import com.yzh.dao.ERelation;
 import com.yzh.importTest.requestEntity.ModelEntity;
 import com.yzh.importTest.requestEntity.RelationEntity;
+import com.yzh.userInfo.PathUtil;
 import com.yzh.userInfo.UserInfo;
 import com.yzh.utilts.FileTools;
 import onegis.common.utils.JsonUtils;
@@ -56,6 +57,7 @@ public class RelationImportUtil {
             relationEntity.setName(relation.getName());
             relationEntity.setMappingType(relation.getMappingType());
             relationEntity.setModel(exchangeModel(relation.getModel()));
+
             if (relation.getFields()==null) {
                 relationEntity.setFields(relation.getFields());
             }
@@ -77,6 +79,9 @@ public class RelationImportUtil {
     public static ModelEntity exchangeModel(EModel model) throws Exception {
 
         ModelEntity modelEntity = new ModelEntity();
+        if (model.getpLanguage()==null){
+            return new ModelEntity();
+        }
         modelEntity.setpLanguage(Integer.valueOf(model.getpLanguage()));
         modelEntity.setId(Long.parseLong(String.valueOf(IdCache.modelNewIdAndOldId.get(model.getId().toString()))));
         return modelEntity;
@@ -89,9 +94,9 @@ public class RelationImportUtil {
     public static void main(String[] args) throws Exception {
 
         login("ceshi@yzh.com", "123456");
-
-        upLoadRelation("E:\\test\\测试八个方面1223\\test.relation","E:\\test\\测试八个方面1223\\fieldId.text","E:\\test\\测试八个方面1223\\modelId.text");
+        PathUtil.baseInfoDir="C:\\Users\\bluethink\\Desktop\\导出数据\\测试八个方面1223";
+        upLoadRelation( PathUtil.baseInfoDir+"\\test.relation", PathUtil.baseInfoDir+"\\fieldId.text", PathUtil.baseInfoDir+"\\modelId.text");
         JSON parse = JSONUtil.parse(relationNewIdAndOldId);
-        FileTools.exportFile(parse,"E:\\test\\测试八个方面1223\\relationId.text","relationId.text");
+        FileTools.exportFile(parse, PathUtil.baseInfoDir+"\\relationId.text","relationId.text");
     }
 }

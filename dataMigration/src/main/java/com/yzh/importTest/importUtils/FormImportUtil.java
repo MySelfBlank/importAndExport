@@ -7,6 +7,7 @@ import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.yzh.api.MyApi;
 import com.yzh.importTest.requestEntity.FormStyleEntity;
+import com.yzh.userInfo.PathUtil;
 import com.yzh.userInfo.UserInfo;
 import com.yzh.utilts.FileTools;
 import onegis.psde.form.Form;
@@ -59,7 +60,7 @@ public class FormImportUtil {
     public static void formStyleImportHandle(){
         //读取文件
         logger.debug("形态样式开始导入===========》读取形态样式文件");
-        String formStylesStr = FileTools.readFile("E:\\test\\测试八个方面1223\\test.formStyles");
+        String formStylesStr = FileTools.readFile(PathUtil.baseInfoDir+"\\test.formStyles");
         List<FormStyle> formStyles = FileTools.jsonArray2List(formStylesStr, FormStyle.class);
         //过滤掉使用的默认样式collect
         List<FormStyle> formStylesRemoveDef = formStyles.stream().filter(v -> !v.getName().contains("default_")).collect(Collectors.toList());
@@ -86,6 +87,7 @@ public class FormImportUtil {
 
     public static void main(String[] args) {
         login("ceshi@yzh.com", "123456");
+        PathUtil.baseInfoDir="C:\\Users\\bluethink\\Desktop\\导出数据\\测试八个方面1223";
         formStyleImportHandle();
         JSON parse = JSONUtil.parse(formStylesOidAndNewId);
         FileTools.exportFile(parse,"E:\\test\\测试八个方面1223\\formId.text","formId.text");

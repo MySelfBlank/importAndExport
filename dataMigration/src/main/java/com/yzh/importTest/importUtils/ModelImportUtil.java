@@ -11,6 +11,7 @@ import com.yzh.dao.EModelDef;
 import com.yzh.importTest.requestEntity.Model;
 import com.yzh.importTest.requestEntity.ModelDefEntity;
 import com.yzh.importTest.requestEntity.ModelEntity;
+import com.yzh.userInfo.PathUtil;
 import com.yzh.userInfo.UserInfo;
 import com.yzh.utilts.FileTools;
 import com.yzh.utilts.HttpClientUtils;
@@ -62,11 +63,15 @@ public class ModelImportUtil {
 
             modelEntity.setpLanguage(Integer.valueOf(model.getpLanguage()));
             if (model.getpLanguage().equals("1")||model.getpLanguage().equals("2")){
-                if (!model.getMobj().getScript().isEmpty()){
+
+                if (model.getMobj().getScript()!=null) {
+                    if (!model.getMobj().getScript().isEmpty()) {
 //                    uploadModles(modelUrl);
-                    modelEntity.setMobj(model.getMobj());
+                        modelEntity.setMobj(model.getMobj());
+
+                    }
                 }
-            }else {
+            } {
                 String[] mobj = new String[]{};
                 modelEntity.setMobj(null);
             }
@@ -221,9 +226,9 @@ public class ModelImportUtil {
 
     public static void main(String[] args) throws Exception {
         login("ceshi@yzh.com", "123456");
-
-//        modelDefImportHandle("E:\\test\\测试八个方面1223\\test.modelDef","E:\\test\\测试八个方面1223\\fieldId.text");
-        modelImportHandle("E:\\test\\测试八个方面1223\\test.models","E:\\test\\测试八个方面1223\\ModelFile","E:\\test\\测试八个方面1223\\modelDefId.text");
+        PathUtil.baseInfoDir="C:\\Users\\bluethink\\Desktop\\导出数据\\测试八个方面1223";
+//        modelDefImportHandle(PathUtil.baseInfoDir+"\\test.modelDef",PathUtil.baseInfoDir+"\\fieldId.text");
+        modelImportHandle(PathUtil.baseInfoDir+"\\test.models",PathUtil.baseInfoDir+"\\data",PathUtil.baseInfoDir+"\\modelDefId.text");
         cn.hutool.json.JSON parseDef = JSONUtil.parse(modelNewIdAndOldId);
         FileTools.exportFile(parseDef,"E:\\test\\测试八个方面1223\\modelId.text","modelId.text");
     }

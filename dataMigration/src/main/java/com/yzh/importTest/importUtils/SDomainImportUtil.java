@@ -29,10 +29,10 @@ public class SDomainImportUtil {
     //日志工厂
     private static final Logger logger = LoggerFactory.getLogger(FieldImportUtil.class);
 
-    public static void importSDomain()throws Exception{
+    public static void importSDomain(String sDomainPath)throws Exception{
         //读取文件
         logger.debug("时空域开始导入===========》读取文件");
-        String SDomainStr = FileTools.readFile("E:\\test\\测试八个方面1223\\test.sdomain");
+        String SDomainStr = FileTools.readFile(sDomainPath);
         //构建SDomain
         SDomain sDomain = JSONUtil.toBean(SDomainStr, SDomain.class);
         ArrayList<Action> actions = new ArrayList<>();
@@ -70,8 +70,5 @@ public class SDomainImportUtil {
 
     }
 
-    public static void main(String[] args) throws Exception{
-        login("ceshi@yzh.com", "123456");
-        importSDomain();
-    }
+
 }

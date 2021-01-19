@@ -47,7 +47,7 @@ public class Index {
     private static final Logger logger = LoggerFactory.getLogger(Index.class);
 
     public static void main(String[] args) throws Exception {
-        startVoid("C:\\Users\\Cai\\Desktop\\demo","测试八个方面1223",1341568728029622272L);
+//        startVoid("C:\\Users\\Cai\\Desktop\\demo","测试八个方面1223",1341568728029622272L);
         logger.debug("开始运行");
         //用户Token
         Scanner input = new Scanner(System.in);

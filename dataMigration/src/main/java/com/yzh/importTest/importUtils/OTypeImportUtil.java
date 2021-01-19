@@ -9,6 +9,7 @@ import com.yzh.api.MyApi;
 import com.yzh.dao.EField;
 import com.yzh.dao.EModel;
 import com.yzh.dao.exportModel.*;
+import com.yzh.userInfo.PathUtil;
 import com.yzh.userInfo.UserInfo;
 import com.yzh.utilts.FileTools;
 import onegis.psde.util.JsonUtils;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static cn.hutool.core.util.ObjectUtil.isNull;
 import static com.yzh.importTest.importUtils.IdCache.otypeNewIdAndOldId;
 import static com.yzh.utilts.FileTools.login;
 
@@ -33,12 +35,12 @@ public class OTypeImportUtil {
 
 
     public static void importOTpye () throws Exception{
-        IdCache.fieldOldIdAndNewIdCache.putAll(JsonUtils.parserBean(FileTools.readFile("E:\\test\\测试八个方面1223\\fieldId.text"), HashMap.class));
-        IdCache.formStylesOidAndNewId.putAll(JsonUtils.parserBean(FileTools.readFile("E:\\test\\测试八个方面1223\\formId.text"),HashMap.class));
-        IdCache.modelNewIdAndOldId.putAll(JsonUtils.parserBean(FileTools.readFile("E:\\test\\测试八个方面1223\\modelId.text"),HashMap.class));
+        IdCache.fieldOldIdAndNewIdCache.putAll(JsonUtils.parserBean(FileTools.readFile(PathUtil.baseInfoDir+"\\fieldId.text"), HashMap.class));
+        IdCache.formStylesOidAndNewId.putAll(JsonUtils.parserBean(FileTools.readFile(PathUtil.baseInfoDir+"\\formId.text"),HashMap.class));
+        IdCache.modelNewIdAndOldId.putAll(JsonUtils.parserBean(FileTools.readFile(PathUtil.baseInfoDir+"\\modelId.text"),HashMap.class));
 
         logger.debug("类模板开始导入===========》读取文件");
-        String oTypesStr = FileTools.readFile("E:\\test\\测试八个方面1223\\test.otype");
+        String oTypesStr = FileTools.readFile(PathUtil.baseInfoDir+"\\test.otype");
         List<EOType> eClasses = JsonUtils.jsonToList(oTypesStr, EOType.class);
         for (EOType eClass : eClasses) {
             if (!eClass.getFields().getFields().equals("[]")&&eClass.getFields().getFields()!=null){
@@ -102,9 +104,16 @@ public class OTypeImportUtil {
     public static List<EFormStyles> handleFormStylesId(List<EFormStyles> styles){
         List<EFormStyles> newFormStyles = new ArrayList<>();
         for (EFormStyles style : styles) {
+            if (style.getId().equals("null")){
+                return new ArrayList<>();
+            }
             long newStyleId = 0L;
             if(style.getId()!=0){//ID为0的是模型，不处理
-                newStyleId =  Long.parseLong(String.valueOf(IdCache.formStylesOidAndNewId.get(String.valueOf(style.getId()))));
+                Long id= Long.parseLong(String.valueOf(IdCache.formStylesOidAndNewId.get(String.valueOf(style.getId()))));
+                if (isNull(id)){
+                    continue;
+                }
+                newStyleId =  id;
             }
             style.setId(newStyleId);
             newFormStyles.add(style);
@@ -134,8 +143,9 @@ public class OTypeImportUtil {
     }
     public static void main(String[] args) throws Exception {
         login("ceshi@yzh.com", "123456");
+        PathUtil.baseInfoDir="C:\\Users\\bluethink\\Desktop\\导出数据\\测试八个方面1223";
         importOTpye();
         JSON parse = JSONUtil.parse(otypeNewIdAndOldId);
-        FileTools.exportFile(parse,"E:\\test\\测试八个方面1223\\otpyeId.text","otpyeId.text");
+        FileTools.exportFile(parse,PathUtil.baseInfoDir+"\\otpyeId.text","otpyeId.text");
     }
 }
