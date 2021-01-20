@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.yzh.importTest.importUtils.IdCache.formStylesOidAndNewId;
+import static com.yzh.utilts.EnvironmentSelectTool.*;
 import static com.yzh.utilts.FileTools.login;
 
 /**
@@ -63,8 +64,8 @@ public class FormImportUtil {
         String formStylesStr = FileTools.readFile(PathUtil.baseInfoDir+"\\test.formStyles");
         List<FormStyle> formStyles = FileTools.jsonArray2List(formStylesStr, FormStyle.class);
         //过滤掉使用的默认样式collect
-        List<FormStyle> formStylesRemoveDef = formStyles.stream().filter(v -> !v.getName().contains("default_")).collect(Collectors.toList());
-        for (FormStyle formStyle : formStylesRemoveDef) {
+        //List<FormStyle> formStylesRemoveDef = formStyles.stream().filter(v -> !v.getName().contains("default_")).collect(Collectors.toList());
+        for (FormStyle formStyle : formStyles) {
             FormStyleEntity formStyleEntity = new FormStyleEntity();
             formStyleEntity.setName(formStyle.getName());
             formStyleEntity.setDes(formStyle.getDes());
@@ -86,8 +87,11 @@ public class FormImportUtil {
     }
 
     public static void main(String[] args) {
+        finalUrl = localHostUrl;
+        finalUcUrl = localHostUcUrl;
+        finalModelUrl = modelLocalUrl;
         login("ceshi@yzh.com", "123456");
-        PathUtil.baseInfoDir="C:\\Users\\bluethink\\Desktop\\导出数据\\测试八个方面1223";
+        PathUtil.baseInfoDir="C:\\Users\\Cai\\Desktop\\demo\\测试八个方面1223";
         formStyleImportHandle();
         JSON parse = JSONUtil.parse(formStylesOidAndNewId);
         FileTools.exportFile(parse,"E:\\test\\测试八个方面1223\\formId.text","formId.text");

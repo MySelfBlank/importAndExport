@@ -22,6 +22,8 @@ import java.util.List;
 
 import static cn.hutool.core.util.ObjectUtil.isNull;
 import static com.yzh.importTest.importUtils.IdCache.otypeNewIdAndOldId;
+import static com.yzh.utilts.EnvironmentSelectTool.*;
+import static com.yzh.utilts.EnvironmentSelectTool.modelLocalUrl;
 import static com.yzh.utilts.FileTools.login;
 
 /**
@@ -142,8 +144,11 @@ public class OTypeImportUtil {
         return newModels;
     }
     public static void main(String[] args) throws Exception {
+        finalUrl = localHostUrl;
+        finalUcUrl = localHostUcUrl;
+        finalModelUrl = modelLocalUrl;
         login("ceshi@yzh.com", "123456");
-        PathUtil.baseInfoDir="C:\\Users\\bluethink\\Desktop\\导出数据\\测试八个方面1223";
+        PathUtil.baseInfoDir="C:\\Users\\Cai\\Desktop\\demo\\测试八个方面1223";
         importOTpye();
         JSON parse = JSONUtil.parse(otypeNewIdAndOldId);
         FileTools.exportFile(parse,PathUtil.baseInfoDir+"\\otpyeId.text","otpyeId.text");

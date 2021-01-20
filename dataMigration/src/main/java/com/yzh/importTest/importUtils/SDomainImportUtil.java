@@ -1,10 +1,12 @@
 package com.yzh.importTest.importUtils;
 
 import cn.hutool.http.HttpUtil;
+import cn.hutool.json.JSON;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.yzh.api.MyApi;
+import com.yzh.userInfo.PathUtil;
 import com.yzh.userInfo.UserInfo;
 import com.yzh.utilts.FileTools;
 import onegis.psde.form.GeoBox;
@@ -18,6 +20,9 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.yzh.importTest.importUtils.IdCache.formStylesOidAndNewId;
+import static com.yzh.utilts.EnvironmentSelectTool.*;
+import static com.yzh.utilts.EnvironmentSelectTool.modelLocalUrl;
 import static com.yzh.utilts.FileTools.login;
 
 /**
@@ -32,7 +37,7 @@ public class SDomainImportUtil {
     public static void importSDomain(String sDomainPath)throws Exception{
         //读取文件
         logger.debug("时空域开始导入===========》读取文件");
-        String SDomainStr = FileTools.readFile(sDomainPath);
+        String SDomainStr = FileTools.readFile(sDomainPath+"\\test.sdomain");
         //构建SDomain
         SDomain sDomain = JSONUtil.toBean(SDomainStr, SDomain.class);
         ArrayList<Action> actions = new ArrayList<>();
@@ -70,5 +75,14 @@ public class SDomainImportUtil {
 
     }
 
-
+    public static void main(String[] args) throws Exception {
+        finalUrl = localHostUrl;
+        finalUcUrl = localHostUcUrl;
+        finalModelUrl = modelLocalUrl;
+        login("ceshi@yzh.com", "123456");
+        PathUtil.baseInfoDir="C:\\Users\\Cai\\Desktop\\demo\\测试八个方面1223";
+        importSDomain(PathUtil.baseInfoDir);
+        JSON parse = JSONUtil.parse(formStylesOidAndNewId);
+        FileTools.exportFile(parse,"E:\\test\\测试八个方面1223\\formId.text","formId.text");
+    }
 }

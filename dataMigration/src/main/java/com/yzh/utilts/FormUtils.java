@@ -122,11 +122,16 @@ public class FormUtils {
         }
         Set<Long> formList = new HashSet<>();
         StringBuffer buffer = new StringBuffer();
+        List<FormStyle> formStyles = new ArrayList<>();
         for (FormStyle form : fromList) {
             //形态不是模型的时候取样式id
-            if(!form.getType().getName().equalsIgnoreCase("model")&&!form.getType().getName().equalsIgnoreCase("bim")){
+            if(form.getName()!=null){
                 formList.add(form.getId());
+                if (form.getName().contains("default_")){
+                    formStyles.add(form);
+                }
             }
+
         }
 //        for (Form form : fromList) {
 //            //形态不是模型的时候取样式id
@@ -160,7 +165,7 @@ public class FormUtils {
         if (StringUtils.isEmpty(styleListStr)) {
             return new ArrayList<>();
         }
-        List<FormStyle> formStyles = JsonUtils.jsonToList(styleListStr, FormStyle.class);
+         formStyles.addAll( JsonUtils.jsonToList(styleListStr, FormStyle.class));
         return formStyles;
     }
 

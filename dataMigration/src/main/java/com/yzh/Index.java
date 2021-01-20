@@ -47,7 +47,7 @@ public class Index {
     private static final Logger logger = LoggerFactory.getLogger(Index.class);
 
     public static void main(String[] args) throws Exception {
-//        startVoid("C:\\Users\\Cai\\Desktop\\demo","测试八个方面1223",1341568728029622272L);
+        startVoid("C:\\Users\\Cai\\Desktop\\demo","测试八个方面1223",1341568728029622272L);
         logger.debug("开始运行");
         //用户Token
         Scanner input = new Scanner(System.in);
@@ -263,7 +263,9 @@ public class Index {
         FileTools.exportFile(JSONUtil.parse(fieldList), PathUtil.baseInfoDir+ "/test.fields","field");
         //导出时空域下所有使用的样式
         List<EForm> eFormList = FormUtils.dsForms2EForm(formList);
-        List<FormStyle> formStyles = FormUtils.otpyeFromsHandle2(FormStyleList);
+        FormStyleList.addAll(FormUtils.objectFromsHandle2(formList));
+        List<FormStyle> formStyles = new ArrayList<>();
+        formStyles.addAll(FormUtils.otpyeFromsHandle2(FormStyleList));
         //导出所有模型（与对象中下载的模型一致）
         //FormUtils.downLoadModel(ExecuteContainer.modelIds,PathUtil.baseInfoDirData);
         FileTools.exportFile(JSONUtil.parse(eFormList), PathUtil.baseInfoDir+ "/test.forms","form");
