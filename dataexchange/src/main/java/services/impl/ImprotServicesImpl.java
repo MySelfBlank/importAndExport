@@ -9,6 +9,7 @@ import model.*;
 import onegis.common.utils.IdMakerUtils;
 import onegis.common.utils.JsonUtils;
 import onegis.psde.attribute.Attribute;
+import onegis.psde.psdm.OType;
 import org.apache.commons.lang.StringUtils;
 import services.ImportServices;
 import services.RequestServices;
@@ -88,8 +89,13 @@ public class ImprotServicesImpl implements ImportServices {
                 handleOTypeId(customerSObject);
                 //修改字段Id
                 handleFieldId(customerSObject.getAttributes().getAttributeList());
-                //修改形态样式
+                //修改形态样式Id
                 handleFormStyleId(customerSObject.getForms());
+                //修改对象的行为Id
+                handleModelId(customerSObject.getModelList());
+                handleModelId(customerSObject.getModels().getModels());
+                //修改对象使用关系的Id
+                handleNetwork(customerSObject.getNetwork());
             }
             if (i == 0) {
                 if (customerSObjects == null || customerSObjects.isEmpty()) {
@@ -213,39 +219,46 @@ public class ImprotServicesImpl implements ImportServices {
 
     /**
      * 处理对象的类模板Id
+     *
      * @param customerSObject
      */
-    public void handleOTypeId(CustomerSObject customerSObject){
+    public void handleOTypeId(CustomerSObject customerSObject) {
         Long id = customerSObject.getOtype().getId();
         String newId = String.valueOf(otypeIdCache.get(String.valueOf(id)));
-        if(StrUtil.isEmpty(newId)||StrUtil.isBlank(newId)){
-            throw new RuntimeException("对象"+customerSObject.getId()+"类模板Id不存在");
-        }else {
+        if (StrUtil.isEmpty(newId) || StrUtil.isBlank(newId)) {
+            throw new RuntimeException("对象" + customerSObject.getId() + "类模板Id不存在");
+        } else {
             customerSObject.getOtype().setId(Long.parseLong(newId));
         }
     }
 
     /**
      * 处理对象的属性字段
+     *
      * @param attributes
      */
-    public void handleFieldId(List<Attribute> attributes){
-        if (ObjectUtil.isNull(attributes)||ObjectUtil.isEmpty(attributes)){
+    public void handleFieldId(List<Attribute> attributes) {
+        if (ObjectUtil.isNull(attributes) || ObjectUtil.isEmpty(attributes)) {
             return;
         }
         for (Attribute attribute : attributes) {
             Long fid = attribute.getFid();
             String newId = String.valueOf(fieldIdCache.get(String.valueOf(fid)));
-            if(StrUtil.isEmpty(newId)||StrUtil.isBlank(newId)){
-                throw new RuntimeException("字段"+fid+"新Id不存在");
-            }else {
-               attribute.setFid(Long.parseLong(newId));
+            if (StrUtil.isEmpty(newId) || StrUtil.isBlank(newId)) {
+                throw new RuntimeException("字段" + fid + "新Id不存在");
+            } else {
+                attribute.setFid(Long.parseLong(newId));
             }
         }
     }
 
-    public void handleFormStyleId(List<Form1> forms){
-        if (ObjectUtil.isEmpty(forms)||ObjectUtil.isNull(forms)){
+    /**
+     * 处理对象的样式Id
+     *
+     * @param forms
+     */
+    public void handleFormStyleId(List<Form1> forms) {
+        if (ObjectUtil.isEmpty(forms) || ObjectUtil.isNull(forms)) {
             return;
         }
         for (Form1 form : forms) {
@@ -260,21 +273,62 @@ public class ImprotServicesImpl implements ImportServices {
                 List<String> newIdList = new ArrayList<>();
                 List<Integer> newIds = new ArrayList<>();
                 for (Object s : jsonArray) {
-                    if (s instanceof Integer){
-                        newIds.add((int)formIdCache.get(s.toString()));
-                    }else {
+                    if (s instanceof Integer) {
+                        newIds.add((int) formIdCache.get(s.toString()));
+                    } else {
                         newIdList.add(formIdCache.get(s).toString());
                         System.out.println(s);
                     }
 
                 }
                 System.out.println(JSONUtil.parseArray(newIdList).toString());
-                if (newIds.size()!=0){
+                if (newIds.size() != 0) {
                     form.setStyle(JSONUtil.parseArray(newIds).toString());
-                }else {
+                } else {
                     form.setStyle(JSONUtil.parseArray(newIdList).toString());
                 }
             }
         }
+    }
+
+    /**
+     * 处理对象的行为Id  对象无行为挂载直接返回
+     * @param models
+     */
+    public void handleModelId(List<onegis.psde.model.Model> models) {
+        if (models.size() == 0 || ObjectUtil.isNull(models) || ObjectUtil.isEmpty(models)) {
+            return;
+        }
+    }
+
+    public void handleNetwork(ENetWork netWork){
+        if (ObjectUtil.isNull(netWork)||ObjectUtil.isEmpty(netWork)){
+            return;
+        }
+        //获取关系节点
+        List<ERNode> nodes = netWork.getNodes();
+        for (ERNode node : nodes) {
+            //处理关系
+            EREdge edge = node.getEdge();
+            Map relation = handleEdge(edge.getRelation());
+
+            //处理类模板
+            EObase refObject = node.getRefObject();
+            Map oType = handleRefObjectOType(refObject.getotype());
+        }
+    }
+    private Map handleEdge(Map relation){
+        String id = relation.get("id").toString();
+        Integer newId = (Integer) relationIdCache.get(id);
+        relation.remove("id");
+        relation.put("id",newId);
+        return relation;
+    }
+    private Map handleRefObjectOType(Map oType){
+        String id = oType.get("id").toString();
+        Integer newId = (Integer) otypeIdCache.get(id);
+        oType.remove("id");
+        oType.put("id",newId);
+        return oType;
     }
 }
