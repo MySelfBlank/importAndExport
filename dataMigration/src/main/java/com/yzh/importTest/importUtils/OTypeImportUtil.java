@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -40,11 +41,16 @@ public class OTypeImportUtil {
         IdCache.fieldOldIdAndNewIdCache.putAll(JsonUtils.parserBean(FileTools.readFile(PathUtil.baseInfoDir+"\\fieldId.text"), HashMap.class));
         IdCache.formStylesOidAndNewId.putAll(JsonUtils.parserBean(FileTools.readFile(PathUtil.baseInfoDir+"\\formId.text"),HashMap.class));
         IdCache.modelNewIdAndOldId.putAll(JsonUtils.parserBean(FileTools.readFile(PathUtil.baseInfoDir+"\\modelId.text"),HashMap.class));
+        //获取含有动态数据的类模板
+        List<String> DOTypes = Arrays.asList(FileTools.readFile(PathUtil.baseInfoDir + "\\modelId.text").split(","));
 
         logger.debug("类模板开始导入===========》读取文件");
         String oTypesStr = FileTools.readFile(PathUtil.baseInfoDir+"\\test.otype");
         List<EOType> eClasses = JsonUtils.jsonToList(oTypesStr, EOType.class);
         for (EOType eClass : eClasses) {
+            if (DOTypes.contains(String.valueOf(eClass.getId()))){
+                eClass.setTags("trackdata");
+            }
             if (!eClass.getFields().getFields().equals("[]")&&eClass.getFields().getFields()!=null){
                 EFields eField=eClass.getFields();
                 List<EField> fieldList = eField.getFields();

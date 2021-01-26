@@ -151,7 +151,7 @@ public class FormUtils {
 //        System.out.println(buffer);
 //        String[] split = buffer.toString().split(",");
 //        formList.addAll(Arrays.asList(split));
-        System.out.println(formList);
+        System.out.println("需要导出的样式Id"+formList);
         //请求样式数据
         Map<String, Object> params = MapUtil.builder(new HashMap<String, Object>())
                 .put("token", UserInfo.token)

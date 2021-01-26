@@ -69,12 +69,12 @@ public class ImprotServicesImpl implements ImportServices {
         modelDefIdCache.putAll(JsonUtils.parseMap(modelDefIdStr));
         relationIdCache.putAll(JsonUtils.parseMap(relationIdStr));
 
-//        ReadID.resetId(path);//重置ID
-//        ReadID.readId(path);//读取ID文件
-        Map<String, String> modelMap = new HashMap<>();
-//                uploadModles(path + "/data");
+        ReadID.resetId(path);//重置ID
+        ReadID.readId(path);//读取ID文件
+//        Map<String, String> modelMap = new HashMap<>();
+                //uploadModles(path + "/data");
         System.out.println("上传模型成功");
-        importSObjectList(objectNameList, sdomainId, modelMap);
+//        importSObjectList(objectNameList, sdomainId, modelMap);
         System.out.println("上传对象成功");
         importDynamic.saveDynamicDatas(path);
         System.out.println("数据上传完成");
@@ -103,7 +103,7 @@ public class ImprotServicesImpl implements ImportServices {
                 }
                 if (customerSObjects.size() > 0) {
                     Long sdomain = customerSObjects.get(0).getSdomain();
-                    if (sdomain == sdomainId) {
+                    if (sdomain.equals(sdomainId)) {
                         System.out.println("不能使用相同的时空域");
                         break;
                     }

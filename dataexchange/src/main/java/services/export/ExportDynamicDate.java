@@ -1,5 +1,6 @@
 package services.export;
 
+import cn.hutool.core.io.FileUtil;
 import model.EDObject;
 import onegis.common.utils.FileUtils;
 import onegis.common.utils.IdMakerUtils;
@@ -52,6 +53,8 @@ public class ExportDynamicDate {
                         dsDynamicWriter(sObject, objectDynamicData.getDynamicData(),otName);
                         /** 写入动态轨迹数据到文件 */
                         FileUtils.writeString(JsonUtils.objectToJson(objectDynamicData), PathUtil.baseDirData, sObject.getName() + ".track");
+                        /** 拥有类模板的OtypeId*/
+                        ExecuteContainer.DOTypeIdList.add(sObject.getOtype().getId());
                     }
                 }
             }

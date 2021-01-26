@@ -47,7 +47,7 @@ public class Index {
     private static final Logger logger = LoggerFactory.getLogger(Index.class);
 
     public static void main(String[] args) throws Exception {
-        startVoid("C:\\Users\\Cai\\Desktop\\demo","测试八个方面1223",1341568728029622272L);
+        startVoid("C:\\Users\\Cai\\Desktop\\demo","测试八个方面1223",1341568728029622272L,null);
         logger.debug("开始运行");
         //用户Token
         Scanner input = new Scanner(System.in);
@@ -141,7 +141,7 @@ public class Index {
         //导出时空域基本信息
 
         //导出时空域下类模板
-        OtypeUtilts.getOtype();
+        OtypeUtilts.getOtype(null);
         //导出时空域下的关系
         ERelationUtil.getRelation(sObjectsList);
         //导出时空域下的行为
@@ -194,7 +194,7 @@ public class Index {
         logout();
     }
 
-    public static void startVoid(String path,String sDomainName , long SDomainId) throws Exception {
+    public static void startVoid(String path,String sDomainName , long SDomainId ,String DOTypeName) throws Exception {
         login("asiayu01@163.com", "yu1306730458");
 
         //设置时空域Id
@@ -212,7 +212,7 @@ public class Index {
         exportFile(jsonObject, localpath,sDomain.getName());
 
         //导出时空域下类模板
-        OtypeUtilts.getOtype();
+        OtypeUtilts.getOtype(DOTypeName);
         //导出时空域下的关系
         ERelationUtil.getRelation(sObjectsList);
         //导出时空域下的行为

@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.stage.DirectoryChooser;
 import model.DomainModel;
 import model.ResponseResult;
@@ -52,6 +53,14 @@ public class MainFrameController implements Initializable {
     private Button exportButton;
     @FXML
     private Button importButton;
+    @FXML
+    private HBox hBox;
+    @FXML
+    private ToggleButton dotypeButton;
+    @FXML
+    private TextField dotypeInput;
+    @FXML
+    private ProgressIndicator progress;
 
     private RequestServices requestServices = new RequestServicesImpl();
 
@@ -115,7 +124,7 @@ public class MainFrameController implements Initializable {
         //基本信息下载
         new Thread(()->{
             try {
-                Index.startVoid(path,curDoamin.getName(),Long.parseLong(curDoamin.getId()));
+                Index.startVoid(path,curDoamin.getName(),Long.parseLong(curDoamin.getId()),dotypeInput.getText().trim());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -146,11 +155,13 @@ public class MainFrameController implements Initializable {
             protected Void call() throws Exception {
                 exportServices.exportSobject(path,curDoamin.getId(),curDoamin.getName());
                 updateMessage("Finish");
+                updateProgress(1,1);
                 System.out.println("Finish");
                 exportButton.setDisable(false);
                 return null;
             }
         };
+        progress.progressProperty().bind(exportTask.progressProperty());
         new Thread(exportTask).start();
     }
 
@@ -275,5 +286,19 @@ public class MainFrameController implements Initializable {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void inputDOTypeName (){
+        if(dotypeButton.isSelected()){
+            dotypeInput.setVisible(true);
+            hBox.setVisible(true);
+        }else {
+            dotypeInput.setVisible(false);
+            hBox.setVisible(false);
+            //关闭时把类模板名称制空
+            dotypeInput.setText(null);
+        }
+
     }
 }

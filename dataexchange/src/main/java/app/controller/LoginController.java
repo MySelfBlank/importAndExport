@@ -76,6 +76,7 @@ public class LoginController implements Initializable {
                 }
             });
             stage.show();
+
             //关闭当前窗口
             ((Node) (event.getSource())).getScene().getWindow().hide();
         } catch (IOException e) {

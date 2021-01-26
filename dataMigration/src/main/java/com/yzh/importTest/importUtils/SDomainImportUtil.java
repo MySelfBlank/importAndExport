@@ -83,6 +83,6 @@ public class SDomainImportUtil {
         PathUtil.baseInfoDir="C:\\Users\\Cai\\Desktop\\demo\\测试八个方面1223";
         importSDomain(PathUtil.baseInfoDir);
         JSON parse = JSONUtil.parse(formStylesOidAndNewId);
-        FileTools.exportFile(parse,"E:\\test\\测试八个方面1223\\formId.text","formId.text");
+//        FileTools.exportFile(parse,"E:\\test\\测试八个方面1223\\formId.text","formId.text");
     }
 }

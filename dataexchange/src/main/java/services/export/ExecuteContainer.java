@@ -44,6 +44,8 @@ public class ExecuteContainer {
      */
     public static List<Long> oidAllList = new ArrayList<>();
 
+
+    public static Set<Long> DOTypeIdList = new HashSet<>();
     /**
      * 记录原始ID
      */

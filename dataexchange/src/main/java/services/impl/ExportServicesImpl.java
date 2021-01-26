@@ -1,5 +1,7 @@
 package services.impl;
 
+import cn.hutool.core.io.FileUtil;
+import cn.hutool.json.JSONUtil;
 import enums.ConstantDict;
 import onegis.common.paging.PageInfo;
 import onegis.psde.psdm.SObject;
@@ -10,6 +12,8 @@ import utils.PathUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static services.export.ExecuteContainer.DOTypeIdList;
 
 
 public class ExportServicesImpl implements ExportServices {
@@ -41,6 +45,10 @@ public class ExportServicesImpl implements ExportServices {
                 sObjects = requestServices.querySObject(sdomainId, listPageInfo.getList());
                 /**导出动态数据*/
                 exportDynamicDate.downloadDynamicData(sObjects);
+                /** 导出含有动态数据的类模板Id*/
+                if (DOTypeIdList.size()!=0){
+                    FileUtil.writeString(JSONUtil.parseArray(DOTypeIdList).toString(),path+"\\"+sdomainName+"\\DOtypeId.text","utf-8");
+                }
                 handleSObject(sObjects,i);
             }
             /**导出模型文件*/

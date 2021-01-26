@@ -366,7 +366,8 @@ public class RequestServicesImpl implements RequestServices {
 
     @Override
     public OType queryOtype(String tags) throws Exception {
-        String url = BaseUrl.DATASTORE_URL +"/rest/v0.1.0/datastore/otype/query?tags=" +tags;
+//        String url = BaseUrl.DATASTORE_URL +"/rest/v0.1.0/datastore/otype/query?tags=" +tags;
+        String url = "/rest/v0.1.0/datastore/otype/query?tags=" +tags;
         ResponseResult responseResult = HttpClientUtils.doGet(url);
         if(responseResult.getStatus()==200){
             PageInfo<OType> pageInfo = JsonUtils.jsonToPojo(JsonUtils.objectToJson(responseResult.getData()), PageInfo.class);

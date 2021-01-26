@@ -1,5 +1,6 @@
 package com.yzh.utilts;
 
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSON;
 import cn.hutool.json.JSONObject;
@@ -48,23 +49,23 @@ public class OtypeUtilts {
     static Map<String, Object> params = new HashMap<>();
     static List<JSONObject> jsonObjects = new ArrayList<>();
 
-    public static void getOtype() throws Exception {
+    public static void getOtype(String DOTypeName) throws Exception {
         params.put("sdomains", UserInfo.domain);
         params.put("loadForm", true);
         params.put("loadDynamicData", false);
         params.put("loadModel", true);
         params.put("loadNetwork", true);
         params.put("loadObjType", true);
-        params.put("loadDes",true);
+        params.put("loadDes", true);
         params.put("loadAction", true);
         params.put("loadChildren", true);
-        params.put("loadVersion",true);
-        params.put("orderType","VID");
+        params.put("loadVersion", true);
+        params.put("orderType", "VID");
         params.put("descOrAsc", false);
         String objectJsonStr = HttpUtil.get(MyApi.getObject.getValue(), params);
         JSONObject data = formatData(objectJsonStr);
 
-        List<JSONObject> objectList =null;
+        List<JSONObject> objectList = null;
         String objectListStr = data.getStr("list");
         List<SObject> sObjects = JsonUtils.jsonToList(objectListStr, SObject.class);
         sObjectsList.addAll(sObjects);
@@ -89,16 +90,20 @@ public class OtypeUtilts {
         String otypeInfoStr = HttpUtil.get(MyApi.getOtypesByIds.getValue(), params);
         JSONObject otypeInfoJson = formatData(otypeInfoStr);
         //传递过去对象集合对行为类进行处理
-        jsonObjects.addAll(JsonUtils.jsonToList(otypeInfoJson.getStr("list"),JSONObject.class));
+        jsonObjects.addAll(JsonUtils.jsonToList(otypeInfoJson.getStr("list"), JSONObject.class));
 //        EModelUtil.getEModel(jsonObjects);
+        //需要将轨迹数据使用的类模板拿到(根据)
+        if (StrUtil.isNotBlank(DOTypeName) || StrUtil.isNotEmpty(DOTypeName)) {
+            //如果输入了轨迹输入的类模板则去查找
+        }
 
-        oTypeList.addAll(JsonUtils.jsonToList(otypeInfoJson.getStr("list"),OType.class));
-        //处理类模板(暂不处理，直接导出)
+        oTypeList.addAll(JsonUtils.jsonToList(otypeInfoJson.getStr("list"), OType.class));
+        //处理类模板到可导入状态
         List<EOType> eoTypes = handleOType2EOType(oTypeList);
 
         //打印类模板
         JSON parse = JSONUtil.parse(eoTypes);
-        exportFile(parse, PathUtil.baseInfoDir + "\\test.otype","Otype");
+        exportFile(parse, PathUtil.baseInfoDir + "\\test.otype", "Otype");
     }
 
     public static void filterOtype(List<OType> oTypeList) throws Exception {
@@ -126,15 +131,16 @@ public class OtypeUtilts {
         return model;
     }
 
-    public static List<ESObject> sobject2ESObject (List<SObject> sObjectList){
+    public static List<ESObject> sobject2ESObject(List<SObject> sObjectList) {
         List<ESObject> esobject = new ArrayList<>();
-        if(isEmpty(sObjectList)||isNull(sObjectList)){
+        if (isEmpty(sObjectList) || isNull(sObjectList)) {
             return esobject;
         }
         return esobject;
     }
-    public static List<EOType> handleOType2EOType (List<OType> oTypes) {
-        List<EOType> eoTypes= new ArrayList<>();
+
+    public static List<EOType> handleOType2EOType(List<OType> oTypes) {
+        List<EOType> eoTypes = new ArrayList<>();
         for (OType oType : oTypes) {
             EOType eoType = new EOType();
             eoType.setId(oType.getId());
@@ -161,9 +167,10 @@ public class OtypeUtilts {
         }
         return eoTypes;
     }
-    private static List<EFormStyles> handleEFormStyle(FormStyles formStyles){
+
+    private static List<EFormStyles> handleEFormStyle(FormStyles formStyles) {
         List<EFormStyles> eFormStyles = new ArrayList<>();
-        if(isNull(formStyles)||isEmpty(formStyles)){
+        if (isNull(formStyles) || isEmpty(formStyles)) {
             return eFormStyles;
         }
         List<FormStyle> styles = formStyles.getStyles();
@@ -182,9 +189,10 @@ public class OtypeUtilts {
         }
         return eFormStyles;
     }
-    private static List<EModel> handleEModel (Models models){
+
+    private static List<EModel> handleEModel(Models models) {
         List<EModel> eModels = new ArrayList<>();
-        if(isEmpty(models)||isNull(models)){
+        if (isEmpty(models) || isNull(models)) {
             return eModels;
         }
         List<Model> modelS = models.getModels();
@@ -200,7 +208,8 @@ public class OtypeUtilts {
         }
         return eModels;
     }
-    public static EModelDef handleModel(ModelDef modelDef){
+
+    public static EModelDef handleModel(ModelDef modelDef) {
         EModelDef eModelDef = new EModelDef();
         eModelDef.setId(modelDef.getId());
         eModelDef.setName(modelDef.getName());
@@ -213,9 +222,10 @@ public class OtypeUtilts {
         eModelDef.setType(modelDef.getType().getValue());
         return eModelDef;
     }
+
     public static EFields handleFields(Fields fields) {
         EFields efields = new EFields();
-        if (isNull(fields)||isEmpty(fields)){
+        if (isNull(fields) || isEmpty(fields)) {
             return efields;
         }
         List<EField> efieldList = new ArrayList<>();
