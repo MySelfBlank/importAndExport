@@ -1,4 +1,5 @@
 /.idea/
+/out/
 /target/
 src/main/java/com/yzh/loading/Demo.java
 /logs/
@@ -7,3 +8,5 @@ src/main/java/com/yzh/loading/Demo.java
 *.iml
 *.lock
 *.data
+java.io.tempdir/token.index
+java.io.tempdir/user.index

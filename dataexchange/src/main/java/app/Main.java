@@ -18,7 +18,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("./ui/login.fxml"));
         primaryStage.setTitle("登录");
-        primaryStage.setScene(new Scene(root, 248, 180));
+        primaryStage.setScene(new Scene(root, 248, 200));
         primaryStage.setResizable(false);
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override

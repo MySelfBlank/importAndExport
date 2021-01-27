@@ -12,17 +12,23 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 
-<GridPane alignment="CENTER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.LoginController">
+<GridPane alignment="CENTER" prefHeight="265.0" prefWidth="255.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.LoginController">
 
    <children>
       <GridPane alignment="center" hgap="10" prefHeight="160.0" prefWidth="255.0" vgap="10" GridPane.rowIndex="1">
       
          <children>
             <TextField fx:id="userName" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <PasswordField fx:id="userPwd" prefHeight="82.0" prefWidth="161.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <PasswordField fx:id="userPwd" prefHeight="23.0" prefWidth="161.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="用户名：" GridPane.rowIndex="1" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="密码：" GridPane.rowIndex="2" />
             <CheckBox fx:id="isCheck" mnemonicParsing="false" text="记住密码" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <MenuButton mnemonicParsing="false" text="服务器地址配置" GridPane.columnIndex="2">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#openUpdateUrl" text="修改配置" />
+              </items>
+            </MenuButton>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="服务设置：" />
          </children>
          <columnConstraints>
             <ColumnConstraints maxWidth="48.0" minWidth="48.0" prefWidth="48.0" />
@@ -30,9 +36,10 @@
             <ColumnConstraints />
          </columnConstraints>
          <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
             <RowConstraints maxHeight="17.0" minHeight="0.0" prefHeight="0.0" />
-            <RowConstraints maxHeight="27.0" minHeight="6.0" prefHeight="18.0" />
-            <RowConstraints maxHeight="18.0" minHeight="2.0" prefHeight="11.0" />
             <RowConstraints />
          </rowConstraints>
 

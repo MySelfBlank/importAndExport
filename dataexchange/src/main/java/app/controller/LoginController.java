@@ -130,4 +130,14 @@ public class LoginController implements Initializable {
         }
     }
 
+
+    public void openUpdateUrl(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("../ui/urlConfig.fxml"));
+        Stage stage = new Stage();
+        stage.setTitle("修改服务链接配置");
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
 }
