@@ -24,7 +24,7 @@ import services.impl.RequestServicesImpl;
 import utils.BaseUrl;
 import utils.EhcacheUtil;
 import utils.PathUtil;
-
+import com.yzh.importTest.importUtils.ImportBaseInfo;
 import java.io.File;
 import java.net.URL;
 import java.util.List;
@@ -211,13 +211,17 @@ public class MainFrameController implements Initializable {
             }
             @Override
             protected Void call() throws Exception {
+                //对象前先导入基础数据
+                ImportBaseInfo.orderImport(path);
                 importServices.importData(path,Long.parseLong(curDoamin.getId()));
                 updateMessage("Finish");
+                updateProgress(1,1);
                 System.out.println("Finish");
                 importButton.setDisable(false);
                 return null;
             }
         };
+        progress.progressProperty().bind(importTask.progressProperty());
         new Thread(importTask).start();
     }
 

@@ -19,6 +19,7 @@ import java.util.List;
 import static cn.hutool.core.util.ObjectUtil.isNotEmpty;
 import static cn.hutool.core.util.ObjectUtil.isNotNull;
 import static com.yzh.importTest.importUtils.IdCache.fieldOldIdAndNewIdCache;
+import static com.yzh.importTest.importUtils.IdCache.formStylesOidAndNewId;
 import static com.yzh.utilts.FileTools.login;
 
 /**
@@ -68,7 +69,6 @@ public class FieldImportUtil {
             fieldOldIdAndNewIdCache.put(field.getId(), array.get(0, JSONObject.class).getLong("id"));
             logger.info("id" +field.getId() + "导入完毕新Id为："+array.get(0,JSONObject.class).getLong("id"));
         }
-//        System.out.println(fieldsStr);
     }
 
 

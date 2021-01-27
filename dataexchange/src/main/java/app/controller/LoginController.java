@@ -1,9 +1,12 @@
 package app.controller;
 
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.yzh.userInfo.UserInfo;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,10 +14,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import services.RequestServices;
@@ -90,11 +92,11 @@ public class LoginController implements Initializable {
      */
     public void checkUser(ActionEvent event){
         try{
-            if(userName.getText().isEmpty()||userName.getText().trim()==""){
+            if(StrUtil.isBlank(userName.getText()) || StrUtil.isBlank(userName.getText())){
                 AlertController.alert("用户名不能为空！");
                 return;
             }
-            if(userPwd.getText().isEmpty()||userPwd.getText().trim()==""){
+            if(StrUtil.isBlank(userPwd.getText())||StrUtil.isBlank(userPwd.getText())){
                 AlertController.alert("密码不能为空！");
                 return;
             }
@@ -117,6 +119,8 @@ public class LoginController implements Initializable {
                         EhcacheUtil.getInstance().put("user", "password", userPwd.getText());
                     }
                     EhcacheUtil.getInstance().put("user", "auto", isCheck.isSelected() + "");
+                    UserInfo.username=userName.getText().trim();
+                    UserInfo.password=userPwd.getText().trim();
                     open(event);
                 }
             }
@@ -125,4 +129,5 @@ public class LoginController implements Initializable {
             e.printStackTrace();
         }
     }
+
 }

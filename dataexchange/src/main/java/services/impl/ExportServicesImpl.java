@@ -46,9 +46,9 @@ public class ExportServicesImpl implements ExportServices {
                 /**导出动态数据*/
                 exportDynamicDate.downloadDynamicData(sObjects);
                 /** 导出含有动态数据的类模板Id*/
-                if (DOTypeIdList.size()!=0){
-                    FileUtil.writeString(JSONUtil.parseArray(DOTypeIdList).toString(),path+"\\"+sdomainName+"\\DOtypeId.text","utf-8");
-                }
+//                if (DOTypeIdList.size()!=0){
+//                    FileUtil.writeString(JSONUtil.parseArray(DOTypeIdList).toString(),path+"\\"+sdomainName+"\\DOtypeId.text","utf-8");
+//                }
                 handleSObject(sObjects,i);
             }
             /**导出模型文件*/

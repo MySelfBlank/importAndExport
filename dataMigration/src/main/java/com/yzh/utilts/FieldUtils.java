@@ -18,8 +18,8 @@ import org.springframework.util.StringUtils;
 
 import java.util.*;
 
-import static cn.hutool.core.util.ObjectUtil.isEmpty;
-import static cn.hutool.core.util.ObjectUtil.isNull;
+import static cn.hutool.core.util.ObjectUtil.*;
+import static com.yzh.dao.ExecuteContainer.otypeFieldIds;
 
 
 /**
@@ -78,6 +78,9 @@ public class FieldUtils {
         for (Attribute attribute : attributes) {
             fIdSet.add(attribute.getFid());
         }
+        if(otypeFieldIds.size()!=0){
+            fIdSet.addAll(otypeFieldIds);
+        }
         //通过fId查询字段信息
         Map<String, Object> params = MapUtil.builder(new HashMap<String, Object>())
                 .put("token", UserInfo.token)
@@ -91,6 +94,15 @@ public class FieldUtils {
         List<JSONObject> fieldJsonObjList = JSONArray.parseArray(fieldJsonObj.get("list").toString(), JSONObject.class);
         eFieldList.addAll(JsonUtils.jsonToList(fieldJsonObj.get("list").toString(), Field.class));
         return eFieldList;
+    }
+
+    public static void handleOtypeFields(List<Field> fields){
+        if(isEmpty(fields) || isNull(fields)){
+            return;
+        }
+        fields.forEach(v->{
+            otypeFieldIds.add(v.getId());
+        });
     }
 
     /**

@@ -121,7 +121,6 @@ public class FormUtils {
             return new ArrayList<>();
         }
         Set<Long> formList = new HashSet<>();
-        StringBuffer buffer = new StringBuffer();
         List<FormStyle> formStyles = new ArrayList<>();
         for (FormStyle form : fromList) {
             //形态不是模型的时候取样式id
@@ -133,24 +132,6 @@ public class FormUtils {
             }
 
         }
-//        for (Form form : fromList) {
-//            //形态不是模型的时候取样式id
-//            if (!form.getType().getName().equalsIgnoreCase("model")&&!form.getType().getName().equalsIgnoreCase("bim")) {
-//                //取形态中的样式Id
-//                JSONArray jsonArray = JSONArray.parseArray(form.getStyle());
-//                if (isNotNull(jsonArray) && isNotEmpty(jsonArray)) {
-//                    for (Object o : jsonArray) {
-//                        buffer.append("," + o);
-//                    }
-//                }
-//
-//            }
-//        }
-        //去除第一位多余的，
-//        buffer.deleteCharAt(0);
-//        System.out.println(buffer);
-//        String[] split = buffer.toString().split(",");
-//        formList.addAll(Arrays.asList(split));
         System.out.println("需要导出的样式Id"+formList);
         //请求样式数据
         Map<String, Object> params = MapUtil.builder(new HashMap<String, Object>())

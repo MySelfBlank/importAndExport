@@ -93,8 +93,23 @@ public class OtypeUtilts {
         jsonObjects.addAll(JsonUtils.jsonToList(otypeInfoJson.getStr("list"), JSONObject.class));
 //        EModelUtil.getEModel(jsonObjects);
         //需要将轨迹数据使用的类模板拿到(根据)
-        if (StrUtil.isNotBlank(DOTypeName) || StrUtil.isNotEmpty(DOTypeName)) {
+        if (StrUtil.isNotBlank(DOTypeName) && StrUtil.isNotEmpty(DOTypeName)) {
             //如果输入了轨迹输入的类模板则去查找
+            params.clear();
+            params.put("token", UserInfo.token);
+            params.put("names",DOTypeName);
+            String responseStr = HttpUtil.get(MyApi.getOtypesByIds.getValue(), params);
+            if (JSONUtil.parseObj(responseStr).getStr("status").equals("200")){
+                JSONObject dotypeInfoJson = formatData(responseStr);
+                List<OType> list = JsonUtils.jsonToList(dotypeInfoJson.getStr("list"), OType.class);
+                if (list.size()==0){
+                    throw new RuntimeException("未找到轨迹数据模板");
+                }else if (list.size()==1){
+                    oTypeList.addAll(list);
+                }else {
+                    System.out.println("查询到的类模板大于1,无法唯一确定");
+                }
+            }
         }
 
         oTypeList.addAll(JsonUtils.jsonToList(otypeInfoJson.getStr("list"), OType.class));

@@ -20,6 +20,8 @@ public class ExecuteContainer {
     public static Set<Long> modelIds = new HashSet<>();
     public static Map<String, String> modelNamesMap = new HashMap<>();
 
+    public static Set<Long> otypeFieldIds = new HashSet<>();
+
     public static void clear(){
         dObjectList.clear();
     }

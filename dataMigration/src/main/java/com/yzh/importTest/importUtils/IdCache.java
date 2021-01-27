@@ -22,6 +22,16 @@ public class IdCache {
     public static Map<Long,Long>  modelNewIdAndOldId = new HashMap<>();
 
     public static Map<Long,Long>  modelDefNewIdAndOldId = new HashMap<>();
+
+
+    public static void allClear(){
+        fieldOldIdAndNewIdCache.clear();
+        formStylesOidAndNewId.clear();
+        relationNewIdAndOldId.clear();
+        otypeNewIdAndOldId.clear();
+        modelNewIdAndOldId.clear();
+        modelDefNewIdAndOldId.clear();
+    }
 }
 
 
