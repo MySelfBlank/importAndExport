@@ -1,4 +1,4 @@
-package com.yzh.importTest.importUtils;
+package com.yzh.importTask.importUtils;
 
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSON;
@@ -7,8 +7,8 @@ import cn.hutool.json.JSONUtil;
 import com.yzh.api.MyApi;
 import com.yzh.dao.EModel;
 import com.yzh.dao.ERelation;
-import com.yzh.importTest.requestEntity.ModelEntity;
-import com.yzh.importTest.requestEntity.RelationEntity;
+import com.yzh.importTask.requestEntity.ModelEntity;
+import com.yzh.importTask.requestEntity.RelationEntity;
 import com.yzh.userInfo.PathUtil;
 import com.yzh.userInfo.UserInfo;
 import com.yzh.utilts.FileTools;
@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.Map;
 
-import static com.yzh.importTest.importUtils.IdCache.relationNewIdAndOldId;
+import static com.yzh.importTask.importUtils.IdCache.relationNewIdAndOldId;
 import static com.yzh.utilts.FileTools.login;
 
 ;

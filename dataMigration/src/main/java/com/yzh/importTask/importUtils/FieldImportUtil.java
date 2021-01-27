@@ -1,7 +1,6 @@
-package com.yzh.importTest.importUtils;
+package com.yzh.importTask.importUtils;
 
 import cn.hutool.http.HttpUtil;
-import cn.hutool.json.JSON;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
@@ -18,9 +17,7 @@ import java.util.List;
 
 import static cn.hutool.core.util.ObjectUtil.isNotEmpty;
 import static cn.hutool.core.util.ObjectUtil.isNotNull;
-import static com.yzh.importTest.importUtils.IdCache.fieldOldIdAndNewIdCache;
-import static com.yzh.importTest.importUtils.IdCache.formStylesOidAndNewId;
-import static com.yzh.utilts.FileTools.login;
+import static com.yzh.importTask.importUtils.IdCache.fieldOldIdAndNewIdCache;
 
 /**
  * @author Yzh

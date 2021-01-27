@@ -1,4 +1,4 @@
-package com.yzh.importTest.requestEntity;
+package com.yzh.importTask.requestEntity;
 
 /**
  * @ Author        :  yuyazhou

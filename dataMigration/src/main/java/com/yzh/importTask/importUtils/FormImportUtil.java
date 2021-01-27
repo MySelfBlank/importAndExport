@@ -1,4 +1,4 @@
-package com.yzh.importTest.importUtils;
+package com.yzh.importTask.importUtils;
 
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSON;
@@ -6,7 +6,7 @@ import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.yzh.api.MyApi;
-import com.yzh.importTest.requestEntity.FormStyleEntity;
+import com.yzh.importTask.requestEntity.FormStyleEntity;
 import com.yzh.userInfo.PathUtil;
 import com.yzh.userInfo.UserInfo;
 import com.yzh.utilts.FileTools;
@@ -16,9 +16,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-import static com.yzh.importTest.importUtils.IdCache.formStylesOidAndNewId;
+import static com.yzh.importTask.importUtils.IdCache.formStylesOidAndNewId;
 import static com.yzh.utilts.EnvironmentSelectTool.*;
 import static com.yzh.utilts.FileTools.login;
 
@@ -30,8 +29,6 @@ import static com.yzh.utilts.FileTools.login;
 public class FormImportUtil {
     //日志工厂
     private static final Logger logger = LoggerFactory.getLogger(FormImportUtil.class);
-
-
 
     public static void formImportHandle(){
         //读取文件

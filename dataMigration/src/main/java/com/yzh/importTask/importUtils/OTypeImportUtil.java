@@ -1,4 +1,4 @@
-package com.yzh.importTest.importUtils;
+package com.yzh.importTask.importUtils;
 
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSON;
@@ -17,12 +17,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 import static cn.hutool.core.util.ObjectUtil.isNull;
-import static com.yzh.importTest.importUtils.IdCache.otypeNewIdAndOldId;
+import static com.yzh.importTask.importUtils.IdCache.otypeNewIdAndOldId;
 import static com.yzh.utilts.EnvironmentSelectTool.*;
 import static com.yzh.utilts.EnvironmentSelectTool.modelLocalUrl;
 import static com.yzh.utilts.FileTools.login;

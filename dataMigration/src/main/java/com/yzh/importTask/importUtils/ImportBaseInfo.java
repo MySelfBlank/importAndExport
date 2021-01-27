@@ -1,4 +1,4 @@
-package com.yzh.importTest.importUtils;
+package com.yzh.importTask.importUtils;
 
 import cn.hutool.json.JSON;
 import cn.hutool.json.JSONUtil;
@@ -6,10 +6,8 @@ import com.yzh.userInfo.PathUtil;
 import com.yzh.userInfo.UserInfo;
 import com.yzh.utilts.FileTools;
 
-import java.io.File;
-
-import static com.yzh.importTest.importUtils.FormImportUtil.formStyleImportHandle;
-import static com.yzh.importTest.importUtils.IdCache.*;
+import static com.yzh.importTask.importUtils.FormImportUtil.formStyleImportHandle;
+import static com.yzh.importTask.importUtils.IdCache.*;
 import static com.yzh.utilts.FileTools.login;
 
 /**

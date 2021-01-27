@@ -1,10 +1,10 @@
-package com.yzh.importTest.importUtils;
+package com.yzh.importTask.importUtils;
 
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONUtil;
 import com.yzh.api.MyApi;
 import com.yzh.dao.EConnector;
-import com.yzh.importTest.requestEntity.ConnectorEntity;
+import com.yzh.importTask.requestEntity.ConnectorEntity;
 import com.yzh.userInfo.UserInfo;
 import com.yzh.utilts.FileTools;
 import onegis.psde.psdm.OType;
@@ -16,8 +16,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.yzh.importTest.importUtils.IdCache.otypeNewIdAndOldId;
-import static com.yzh.importTest.importUtils.IdCache.relationNewIdAndOldId;
+import static com.yzh.importTask.importUtils.IdCache.otypeNewIdAndOldId;
+import static com.yzh.importTask.importUtils.IdCache.relationNewIdAndOldId;
 import static com.yzh.utilts.FileTools.login;
 
 /**

@@ -1,4 +1,4 @@
-package com.yzh.importTest.importUtils;
+package com.yzh.importTask.importUtils;
 
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONArray;
@@ -8,9 +8,9 @@ import com.alibaba.fastjson.JSON;
 import com.yzh.api.MyApi;
 import com.yzh.dao.EModel;
 import com.yzh.dao.EModelDef;
-import com.yzh.importTest.requestEntity.Model;
-import com.yzh.importTest.requestEntity.ModelDefEntity;
-import com.yzh.importTest.requestEntity.ModelEntity;
+import com.yzh.importTask.requestEntity.Model;
+import com.yzh.importTask.requestEntity.ModelDefEntity;
+import com.yzh.importTask.requestEntity.ModelEntity;
 import com.yzh.userInfo.PathUtil;
 import com.yzh.userInfo.UserInfo;
 import com.yzh.utilts.FileTools;
@@ -28,8 +28,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.*;
 
-import static com.yzh.importTest.importUtils.FieldImportUtil.fieldImport;
-import static com.yzh.importTest.importUtils.IdCache.*;
+import static com.yzh.importTask.importUtils.FieldImportUtil.fieldImport;
+import static com.yzh.importTask.importUtils.IdCache.*;
 import static com.yzh.utilts.FileTools.login;
 
 /**
