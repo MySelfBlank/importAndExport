@@ -31,7 +31,7 @@ import static com.yzh.utilts.tools.FileTools.login;
  */
 public class RelationImportUtil {
     //日志工厂
-    private static final Logger logger = LoggerFactory.getLogger(FieldImportUtil.class);
+    private static final Logger logger = LoggerFactory.getLogger(RelationImportUtil.class);
 
 
     /**

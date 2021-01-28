@@ -38,7 +38,7 @@ public class UrlConfig implements Initializable {
         EnvironmentSelectTool.finalModelUrl = BaseUrl.MODEL_URL = modelUrl.getText().trim();
         EnvironmentSelectTool.finalHDFSUrl = BaseUrl.HDFS_URL = hdfsUrl.getText().trim();
         BaseUrl.GEOMESA_URL = geomesaUrl.getText().trim();
-        EnvironmentSelectTool.finalUrl = BaseUrl.UC_URL = ucUrl.getText().trim();
+        EnvironmentSelectTool.finalUcUrl = BaseUrl.UC_URL = ucUrl.getText().trim();
         Stage stage = (Stage) ok.getScene().getWindow();
         stage.close();
     }

@@ -45,7 +45,7 @@ public class ImportBaseInfo {
         FileTools.exportFile(styleParse,PathUtil.baseInfoDir+"\\formId.text","formId.text");
 
         //时空域的导入
-        SDomainImportUtil.importSDomain(PathUtil.baseInfoDir+"\\test.sdomain");
+        //SDomainImportUtil.importSDomain(PathUtil.baseInfoDir+"\\test.sdomain");
 
         //行为类别的导入
         ModelImportUtil.modelDefImportHandle(PathUtil.baseInfoDir+"\\test.modelDef",PathUtil.baseInfoDir+"\\fieldId.text");
@@ -69,6 +69,8 @@ public class ImportBaseInfo {
 
         //清空Id缓存
         IdCache.allClear();
+
+        System.out.println("基本信息导入完毕~");
     }
 
     /**

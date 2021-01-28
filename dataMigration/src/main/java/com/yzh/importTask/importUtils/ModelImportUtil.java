@@ -49,6 +49,7 @@ public class ModelImportUtil {
         String modelStr = FileTools.readFile(url);
         String idCash = FileTools.readFile(idPath);
         Map<Long,Long> map = JSONUtil.toBean(idCash, Map.class);
+        modelDefNewIdAndOldId.clear();
         modelDefNewIdAndOldId.putAll(map);
         List<EModel> models = JsonUtils.jsonToList(modelStr, EModel.class);
 

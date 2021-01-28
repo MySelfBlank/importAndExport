@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import static cn.hutool.core.util.ObjectUtil.isNull;
-import static com.yzh.importTask.importUtils.IdCache.otypeNewIdAndOldId;
+import static com.yzh.importTask.importUtils.IdCache.*;
 import static com.yzh.utilts.tools.EnvironmentSelectTool.*;
 import static com.yzh.utilts.tools.EnvironmentSelectTool.modelLocalUrl;
 import static com.yzh.utilts.tools.FileTools.login;
@@ -37,9 +37,14 @@ public class OTypeImportUtil {
 
 
     public static void importOTpye () throws Exception{
-        IdCache.fieldOldIdAndNewIdCache.putAll(JsonUtils.parserBean(FileTools.readFile(PathUtil.baseInfoDir+"\\fieldId.text"), HashMap.class));
-        IdCache.formStylesOidAndNewId.putAll(JsonUtils.parserBean(FileTools.readFile(PathUtil.baseInfoDir+"\\formId.text"),HashMap.class));
-        IdCache.modelNewIdAndOldId.putAll(JsonUtils.parserBean(FileTools.readFile(PathUtil.baseInfoDir+"\\modelId.text"),HashMap.class));
+
+        fieldOldIdAndNewIdCache.clear();
+        formStylesOidAndNewId.clear();
+        modelNewIdAndOldId.clear();
+
+        IdCache.fieldOldIdAndNewIdCache.putAll(JSONUtil.toBean(FileTools.readFile(PathUtil.baseInfoDir+"\\fieldId.text"), HashMap.class));
+        IdCache.formStylesOidAndNewId.putAll(JSONUtil.toBean(FileTools.readFile(PathUtil.baseInfoDir+"\\formId.text"),HashMap.class));
+        IdCache.modelNewIdAndOldId.putAll(JSONUtil.toBean(FileTools.readFile(PathUtil.baseInfoDir+"\\modelId.text"),HashMap.class));
 
 
         logger.debug("类模板开始导入===========》读取文件");

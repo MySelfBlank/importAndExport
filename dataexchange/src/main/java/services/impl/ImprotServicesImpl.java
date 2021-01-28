@@ -72,9 +72,9 @@ public class ImprotServicesImpl implements ImportServices {
         ReadID.resetId(path);//重置ID
         ReadID.readId(path);//读取ID文件
 //        Map<String, String> modelMap = new HashMap<>();
-                //uploadModles(path + "/data");
+        Map<String, String> modelMap=uploadModles(path + "/data");
         System.out.println("上传模型成功");
-//        importSObjectList(objectNameList, sdomainId, modelMap);
+        importSObjectList(objectNameList, sdomainId, modelMap);
         System.out.println("上传对象成功");
         importDynamic.saveDynamicDatas(path);
         System.out.println("数据上传完成");
