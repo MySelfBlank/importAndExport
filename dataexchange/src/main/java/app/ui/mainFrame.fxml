@@ -27,7 +27,7 @@
                   <ProgressIndicator fx:id="progress" layoutX="166.0" layoutY="20.0" prefHeight="58.0" prefWidth="51.0" progress="0.0" />
                   <Label layoutX="39.0" layoutY="13.0" text="当前选中：" />
                   <Label fx:id="sdomainName" layoutX="99.0" layoutY="13.0" text="null" />
-                  <CheckBox layoutX="39.0" layoutY="78.0" mnemonicParsing="false" text="导出数据用于新库请勾选" />
+                  <CheckBox fx:id="isExportBaseData" layoutX="39.0" layoutY="78.0" mnemonicParsing="false" text="导出数据用于新库请勾选" />
                </children>
             </AnchorPane>
         </content>

@@ -60,6 +60,8 @@ public class MainFrameController implements Initializable {
     private TextField dotypeInput;
     @FXML
     private ProgressIndicator progress;
+    @FXML
+    private CheckBox isExportBaseData, isImprotBaseData;
 
     private RequestServices requestServices = new RequestServicesImpl();
 
@@ -121,13 +123,15 @@ public class MainFrameController implements Initializable {
         }
         String path = file.getPath();//选择的文件夹路径
         //基本信息下载
-        new Thread(()->{
-            try {
-                Index.startVoid(path,curDoamin.getName(),Long.parseLong(curDoamin.getId()),dotypeInput.getText().trim());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }).start();
+        if(isExportBaseData.isSelected()){
+            new Thread(()->{
+                try {
+                    Index.startVoid(path,curDoamin.getName(),Long.parseLong(curDoamin.getId()),dotypeInput.getText().trim());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }).start();
+        }
         Task<Void> exportTask = new Task<Void>() {
             @Override
             protected void succeeded() {
@@ -211,7 +215,9 @@ public class MainFrameController implements Initializable {
             @Override
             protected Void call() throws Exception {
                 //对象前先导入基础数据
-                ImportBaseInfo.orderImport(path);
+                if(isImprotBaseData.isSelected()){
+                    ImportBaseInfo.orderImport(path);
+                }
                 importServices.importData(path,Long.parseLong(curDoamin.getId()));
                 updateMessage("Finish");
                 updateProgress(1,1);

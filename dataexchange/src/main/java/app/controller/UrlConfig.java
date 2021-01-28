@@ -1,5 +1,6 @@
 package app.controller;
 
+import com.yzh.utilts.EnvironmentSelectTool;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -35,11 +36,11 @@ public class UrlConfig implements Initializable {
 
     @FXML
     public void updateUrl() {
-        BaseUrl.DATASTORE_URL = datastoreUrl.getText().trim();
-        BaseUrl.MODEL_URL = modelUrl.getText().trim();
-        BaseUrl.HDFS_URL = hdfsUrl.getText().trim();
+        EnvironmentSelectTool.finalUrl = BaseUrl.DATASTORE_URL = datastoreUrl.getText().trim();
+        EnvironmentSelectTool.finalModelUrl = BaseUrl.MODEL_URL = modelUrl.getText().trim();
+        EnvironmentSelectTool.finalHDFSUrl = BaseUrl.HDFS_URL = hdfsUrl.getText().trim();
         BaseUrl.GEOMESA_URL = geomesaUrl.getText().trim();
-        BaseUrl.UC_URL = ucUrl.getText().trim();
+        EnvironmentSelectTool.finalUrl = BaseUrl.UC_URL = ucUrl.getText().trim();
         Stage stage = (Stage) ok.getScene().getWindow();
         stage.close();
     }

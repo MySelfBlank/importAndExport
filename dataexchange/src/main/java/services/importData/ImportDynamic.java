@@ -53,6 +53,7 @@ public class ImportDynamic {
         });
         List<ObjectDynamicDatas> objectDynamicDatasList = new ArrayList<>();
         Map<String,List<ObjectDynamicData>> nameMapDy = new HashMap<>();
+
         for(File file:files){
             String fileName = file.getName();
             String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
@@ -80,6 +81,7 @@ public class ImportDynamic {
                 nameMapDy.put(otName,objectDynamicDataL);
             }
         }
+
         for(String key:nameMapDy.keySet()){
             OType oType = requestServices.queryOtype(key);
             if(oType==null){

@@ -51,20 +51,20 @@ public enum MyApi {
     //导入行为
     insertModel("insertModel",finalUrl+"/rest/v0.1.0/datastore/model/insert"),
 
-    uploadModel("uploadModel","http://bt1.geosts.ac.cn/api/dae"+dev+"/model-service/model/rest/v0.1.0/datastore/slave/model/file/upload"),
+    uploadModel("uploadModel",finalModelUrl+"/rest/v0.1.0/datastore/slave/model/file/upload"),
     //导入行为类别post
     insertModelDef("insertModelDef",finalUrl+"/rest/v0.1.0/datastore/modeldef/insert"),
     //获取行为类别传入id
     getModelDefById("getModelDefById",finalUrl+"/rest/v0.1.0/datastore/modeldef/query"),
 
     //行为脚本的下载
-    getModelScript("getModelScript","http://bt1.geosts.ac.cn/api/dae"+dev+"/hdfs-service/hdfs/rest/v0.1.0/datastore/slave/hdfs/download"),
+    getModelScript("getModelScript",finalHDFSUrl+"/rest/v0.1.0/datastore/slave/hdfs/download"),
 
     //获取Dobject根据Id
     getDObject("getDObject",finalUrl+"/rest/v0.1.0/datastore/dobject/queryByFrom"),
 
     //下载dll文件
-    getDll("getDll","http://bt1.geosts.ac.cn/api/dae"+dev+"/hdfs-service/hdfs/rest/v0.1.0/datastore/slave/hdfs/download"),
+    getDll("getDll",finalHDFSUrl+"/rest/v0.1.0/datastore/slave/hdfs/download"),
 
     //获取样式模型
     getModelInfo("getModelInfo",finalModelUrl+"/rest/v0.1.0/datastore/slave/model/file/query"),
