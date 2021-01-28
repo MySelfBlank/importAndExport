@@ -13,7 +13,7 @@ import com.yzh.importTask.requestEntity.ModelDefEntity;
 import com.yzh.importTask.requestEntity.ModelEntity;
 import com.yzh.userInfo.PathUtil;
 import com.yzh.userInfo.UserInfo;
-import com.yzh.utilts.FileTools;
+import com.yzh.utilts.tools.FileTools;
 import com.yzh.utilts.HttpClientUtils;
 import onegis.common.utils.JsonUtils;
 import onegis.psde.attribute.Field;
@@ -30,7 +30,7 @@ import java.util.*;
 
 import static com.yzh.importTask.importUtils.FieldImportUtil.fieldImport;
 import static com.yzh.importTask.importUtils.IdCache.*;
-import static com.yzh.utilts.FileTools.login;
+import static com.yzh.utilts.tools.FileTools.login;
 
 /**
  * @ Author        :  yuyazhou

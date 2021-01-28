@@ -11,14 +11,12 @@ import onegis.psde.model.ModelDef;
 import onegis.psde.model.Models;
 import onegis.psde.psdm.OType;
 
-import java.nio.file.Path;
 import java.util.*;
 
 import static cn.hutool.core.util.ObjectUtil.isEmpty;
 import static cn.hutool.core.util.ObjectUtil.isNull;
-import static com.yzh.Index.sDomain;
-import static com.yzh.utilts.FileTools.exportFile;
-import static com.yzh.utilts.FileTools.forJsonList;
+import static com.yzh.utilts.tools.FileTools.exportFile;
+import static com.yzh.utilts.tools.FileTools.forJsonList;
 
 /**
  * 行为类的导出

@@ -3,12 +3,12 @@ package com.yzh;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.yzh.dao.EForm;
-import com.yzh.dao.ExecuteContainer;
 import com.yzh.dao.SDomainOutPutModel;
 import com.yzh.services.export.ExportDllFile;
 import com.yzh.userInfo.PathUtil;
 import com.yzh.userInfo.UserInfo;
 import com.yzh.utilts.*;
+import com.yzh.utilts.tools.FileTools;
 import onegis.psde.attribute.Attribute;
 import onegis.psde.attribute.Field;
 import onegis.psde.form.Form;
@@ -21,14 +21,11 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import java.util.stream.Collectors;
 
 import static cn.hutool.core.util.ObjectUtil.*;
 import static com.yzh.utilts.FieldUtils.handleOtypeFields;
-import static com.yzh.utilts.FileTools.*;
-import static com.yzh.utilts.SDomainPagesTools.getPages;
-import static com.yzh.utilts.SDomainUtil.getSDomain;
+import static com.yzh.utilts.tools.FileTools.*;
 import static com.yzh.utilts.SDomainUtil.getSDomainById;
 
 /**

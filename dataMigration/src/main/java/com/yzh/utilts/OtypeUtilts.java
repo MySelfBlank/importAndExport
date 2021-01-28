@@ -7,7 +7,6 @@ import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.yzh.api.MyApi;
-import com.yzh.dao.EClassesOutPutModel;
 import com.yzh.dao.EField;
 import com.yzh.dao.EModel;
 import com.yzh.dao.EModelDef;
@@ -32,8 +31,8 @@ import java.util.*;
 import static cn.hutool.core.util.ObjectUtil.isEmpty;
 import static cn.hutool.core.util.ObjectUtil.isNull;
 import static com.yzh.Index.*;
-import static com.yzh.utilts.FileTools.exportFile;
-import static com.yzh.utilts.FileTools.formatData;
+import static com.yzh.utilts.tools.FileTools.exportFile;
+import static com.yzh.utilts.tools.FileTools.formatData;
 
 /**
  * @author Yzh

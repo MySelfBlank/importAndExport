@@ -6,7 +6,7 @@ import com.yzh.api.MyApi;
 import com.yzh.dao.EConnector;
 import com.yzh.importTask.requestEntity.ConnectorEntity;
 import com.yzh.userInfo.UserInfo;
-import com.yzh.utilts.FileTools;
+import com.yzh.utilts.tools.FileTools;
 import onegis.psde.psdm.OType;
 import onegis.psde.util.JsonUtils;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import java.util.Map;
 
 import static com.yzh.importTask.importUtils.IdCache.otypeNewIdAndOldId;
 import static com.yzh.importTask.importUtils.IdCache.relationNewIdAndOldId;
-import static com.yzh.utilts.FileTools.login;
+import static com.yzh.utilts.tools.FileTools.login;
 
 /**
  * @author Yzh

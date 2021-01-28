@@ -5,6 +5,7 @@ import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONUtil;
 import com.yzh.dao.ETrs;
 import com.yzh.userInfo.PathUtil;
+import com.yzh.utilts.tools.FileTools;
 import onegis.psde.psdm.OType;
 import onegis.psde.reference.TimeReferenceSystem;
 
@@ -14,7 +15,6 @@ import java.util.stream.Collectors;
 
 import static cn.hutool.core.util.ObjectUtil.isEmpty;
 import static cn.hutool.core.util.ObjectUtil.isNull;
-import static com.yzh.Index.sDomain;
 
 /**
  * @ Author        :  yuyazhou

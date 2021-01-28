@@ -8,7 +8,7 @@ import cn.hutool.json.JSONUtil;
 import com.yzh.api.MyApi;
 import com.yzh.userInfo.PathUtil;
 import com.yzh.userInfo.UserInfo;
-import com.yzh.utilts.FileTools;
+import com.yzh.utilts.tools.FileTools;
 import onegis.psde.form.GeoBox;
 import onegis.psde.psdm.Action;
 import onegis.psde.psdm.SDomain;
@@ -21,9 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.yzh.importTask.importUtils.IdCache.formStylesOidAndNewId;
-import static com.yzh.utilts.EnvironmentSelectTool.*;
-import static com.yzh.utilts.EnvironmentSelectTool.modelLocalUrl;
-import static com.yzh.utilts.FileTools.login;
+import static com.yzh.utilts.tools.EnvironmentSelectTool.*;
+import static com.yzh.utilts.tools.EnvironmentSelectTool.modelLocalUrl;
+import static com.yzh.utilts.tools.FileTools.login;
 
 /**
  * @author Yzh

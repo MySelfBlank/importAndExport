@@ -1,6 +1,6 @@
 package com.yzh.api;
 
-import static com.yzh.utilts.EnvironmentSelectTool.*;
+import static com.yzh.utilts.tools.EnvironmentSelectTool.*;
 
 /**
  * @author Yzh

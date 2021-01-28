@@ -9,7 +9,7 @@ import com.yzh.api.MyApi;
 import com.yzh.importTask.requestEntity.FormStyleEntity;
 import com.yzh.userInfo.PathUtil;
 import com.yzh.userInfo.UserInfo;
-import com.yzh.utilts.FileTools;
+import com.yzh.utilts.tools.FileTools;
 import onegis.psde.form.Form;
 import onegis.psde.form.FormStyle;
 import org.slf4j.Logger;
@@ -18,8 +18,8 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 import static com.yzh.importTask.importUtils.IdCache.formStylesOidAndNewId;
-import static com.yzh.utilts.EnvironmentSelectTool.*;
-import static com.yzh.utilts.FileTools.login;
+import static com.yzh.utilts.tools.EnvironmentSelectTool.*;
+import static com.yzh.utilts.tools.FileTools.login;
 
 /**
  * @author Yzh

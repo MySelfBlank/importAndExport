@@ -1,4 +1,4 @@
-package com.yzh.utilts;
+package com.yzh.utilts.tools;
 
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONObject;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-import static com.yzh.utilts.FileTools.formatData;
+import static com.yzh.utilts.tools.FileTools.formatData;
 
 /**
  * @author Yzh

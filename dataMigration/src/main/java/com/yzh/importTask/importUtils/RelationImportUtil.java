@@ -11,7 +11,7 @@ import com.yzh.importTask.requestEntity.ModelEntity;
 import com.yzh.importTask.requestEntity.RelationEntity;
 import com.yzh.userInfo.PathUtil;
 import com.yzh.userInfo.UserInfo;
-import com.yzh.utilts.FileTools;
+import com.yzh.utilts.tools.FileTools;
 import onegis.common.utils.JsonUtils;
 import onegis.psde.model.Model;
 import org.slf4j.Logger;
@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.yzh.importTask.importUtils.IdCache.relationNewIdAndOldId;
-import static com.yzh.utilts.FileTools.login;
+import static com.yzh.utilts.tools.FileTools.login;
 
 ;
 

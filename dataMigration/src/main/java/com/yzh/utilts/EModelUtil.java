@@ -20,9 +20,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.*;
 
-import static com.yzh.Index.sDomain;
-import static com.yzh.utilts.FileTools.exportFile;
-import static com.yzh.utilts.FileTools.forJsonList;
+import static com.yzh.utilts.tools.FileTools.exportFile;
+import static com.yzh.utilts.tools.FileTools.forJsonList;
 import static java.util.Objects.isNull;
 
 

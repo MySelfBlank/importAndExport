@@ -8,6 +8,7 @@ import com.yzh.dao.EModel;
 import com.yzh.dao.ERelation;
 import com.yzh.userInfo.PathUtil;
 import com.yzh.userInfo.UserInfo;
+import com.yzh.utilts.tools.FileTools;
 import onegis.psde.model.Model;
 import onegis.psde.psdm.SObject;
 import onegis.psde.relation.Network;
@@ -20,8 +21,7 @@ import java.util.*;
 
 import static cn.hutool.core.util.ObjectUtil.isEmpty;
 import static cn.hutool.core.util.ObjectUtil.isNull;
-import static com.yzh.Index.sDomain;
-import static com.yzh.utilts.FileTools.exportFile;
+import static com.yzh.utilts.tools.FileTools.exportFile;
 
 /**
  * @ Author        :  yuyazhou
