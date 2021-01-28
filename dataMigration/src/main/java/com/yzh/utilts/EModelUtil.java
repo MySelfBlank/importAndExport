@@ -34,18 +34,6 @@ import static java.util.Objects.isNull;
 public class EModelUtil {
     
     static List<EModel> list=new ArrayList<>();
-//    public static List<EModel>  getEModel(List<JSONObject> objects) throws Exception {
-//        if (objects==null||objects.size()==0){
-//            return new ArrayList<>();
-//        }
-//        List<EModel> eModels=new ArrayList<>();
-//        for (JSONObject object : objects) {
-//            JSONObject models= (JSONObject)object.get("models");
-//            String models1 = models.getStr("models");
-//            eModels.addAll(JsonUtils.jsonToList(models1, EModel.class));
-//        }
-//        return eModels;
-//    }
     
     /**
      * 获取行为id

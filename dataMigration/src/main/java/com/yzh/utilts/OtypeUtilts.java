@@ -32,12 +32,8 @@ import java.util.*;
 import static cn.hutool.core.util.ObjectUtil.isEmpty;
 import static cn.hutool.core.util.ObjectUtil.isNull;
 import static com.yzh.Index.*;
-import static com.yzh.utilts.ConnectorUtils.dsConnectors2EConnectors;
-import static com.yzh.utilts.EDObjectUTil.getDObjectList;
-import static com.yzh.utilts.FieldUtils.dsField2Field;
 import static com.yzh.utilts.FileTools.exportFile;
 import static com.yzh.utilts.FileTools.formatData;
-import static com.yzh.utilts.FormStyleUtils.forms2EForms;
 
 /**
  * @author Yzh
@@ -72,7 +68,7 @@ public class OtypeUtilts {
         objectList = JSONArray.parseArray(objectListStr, JSONObject.class);
 
         //获取数据对象
-        getDObjectList(sObjects);
+        //getDObjectList(sObjects);
         //处理SObject
 
         //获取当前时空域下的所有类模板Id
@@ -119,39 +115,6 @@ public class OtypeUtilts {
         //打印类模板
         JSON parse = JSONUtil.parse(eoTypes);
         exportFile(parse, PathUtil.baseInfoDir + "\\test.otype", "Otype");
-    }
-
-    public static void filterOtype(List<OType> oTypeList) throws Exception {
-        List<EClassesOutPutModel> eClassesOutPutModelList = new ArrayList<>();
-        for (OType oType : oTypeList) {
-            eClassesOutPutModelList.add(otype2Class(oType));
-        }
-    }
-
-    public static EClassesOutPutModel otype2Class(OType oType) throws Exception {
-        EClassesOutPutModel model = new EClassesOutPutModel();
-        model.setId(oType.getId());
-        model.setName(oType.getName());
-        //处理关系
-        model.setConnectors(dsConnectors2EConnectors(oType.getConnectors(), classIDs));
-        //处理字段
-        model.setFields(dsField2Field(oType.getFields()));
-        //处理形态
-        model.setForms(forms2EForms(oType.getFormStyles()));
-        //处理行为
-
-        model.setDesc(oType.getDes());
-        model.setSrs("epsg:4326");
-        model.setTrs("onegis:1001");
-        return model;
-    }
-
-    public static List<ESObject> sobject2ESObject(List<SObject> sObjectList) {
-        List<ESObject> esobject = new ArrayList<>();
-        if (isEmpty(sObjectList) || isNull(sObjectList)) {
-            return esobject;
-        }
-        return esobject;
     }
 
     public static List<EOType> handleOType2EOType(List<OType> oTypes) {
