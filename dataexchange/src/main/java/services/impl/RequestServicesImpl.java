@@ -350,6 +350,7 @@ public class RequestServicesImpl implements RequestServices {
     @Override
     public ResponseResult saveDynamicDatas(String dataJson) throws Exception{
         String url = BaseUrl.DATASTORE_URL + "/rest/v0.1.0/datastore/object/saveDynamicData?token=" + BaseUrl.token;
+//        String url = "http://127.0.0.1:8080/rest/v0.1.0/datastore/object/saveDynamicData?token=" + BaseUrl.token;
         ResponseResult responseResult = HttpClientUtils.doPostWithJson(url, dataJson);
         return responseResult;
     }
@@ -366,8 +367,7 @@ public class RequestServicesImpl implements RequestServices {
 
     @Override
     public OType queryOtype(String tags) throws Exception {
-//        String url = BaseUrl.DATASTORE_URL +"/rest/v0.1.0/datastore/otype/query?tags=" +tags;
-        String url = "/rest/v0.1.0/datastore/otype/query?tags=" +tags;
+        String url = BaseUrl.DATASTORE_URL +"/rest/v0.1.0/datastore/otype/query?tags=" +tags;
         ResponseResult responseResult = HttpClientUtils.doGet(url);
         if(responseResult.getStatus()==200){
             PageInfo<OType> pageInfo = JsonUtils.jsonToPojo(JsonUtils.objectToJson(responseResult.getData()), PageInfo.class);

@@ -154,9 +154,9 @@ public class OTypeImportUtil {
         finalUcUrl = localHostUcUrl;
         finalModelUrl = modelLocalUrl;
         login("ceshi@yzh.com", "123456");
-        PathUtil.baseInfoDir="C:\\Users\\Cai\\Desktop\\demo\\测试八个方面1223";
+        PathUtil.baseInfoDir="g:\\二次测试\\测试八个方面1223";
         importOTpye();
-        JSON parse = JSONUtil.parse(otypeNewIdAndOldId);
-        FileTools.exportFile(parse,PathUtil.baseInfoDir+"\\otpyeId.text","otpyeId.text");
+//        JSON parse = JSONUtil.parse(otypeNewIdAndOldId);
+//        FileTools.exportFile(parse,PathUtil.baseInfoDir+"\\otpyeId.text","otpyeId.text");
     }
 }
