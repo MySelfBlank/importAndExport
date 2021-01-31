@@ -24,6 +24,8 @@ import services.impl.RequestServicesImpl;
 import utils.BaseUrl;
 import utils.EhcacheUtil;
 import com.yzh.importTask.importUtils.ImportBaseInfo;
+import utils.PathUtil;
+
 import java.io.File;
 import java.net.URL;
 import java.util.List;
@@ -157,12 +159,15 @@ public class MainFrameController implements Initializable {
         };
         progress.progressProperty().bind(exportTask.progressProperty());
         new Thread(exportTask).start();
-        
+
         //基本信息下载
         if(isExportBaseData.isSelected()){
             new Thread(()->{
                 try {
-                    Index.startVoid(path,curDoamin.getName(),Long.parseLong(curDoamin.getId()),dotypeInput.getText().trim());
+                    PageInfo<String> listPageInfo = requestServices.queryObjectIds(curDoamin.getId(), "1", "1000");
+                    long total = listPageInfo.getTotal();
+                    PathUtil.setDir(total,curDoamin.getName(),path);//设置路径
+                    Index.startVoid(PathUtil.baseInfoDir ,curDoamin.getName(),Long.parseLong(curDoamin.getId()),dotypeInput.getText().trim());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

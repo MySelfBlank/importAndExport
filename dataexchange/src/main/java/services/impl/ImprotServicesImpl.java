@@ -53,8 +53,7 @@ public class ImprotServicesImpl implements ImportServices {
 //            throw new RuntimeException("未解析出时空对象");
 //        }
         //读取本地Id缓存
-        int i = path.indexOf("(");
-        String idpath = path.substring(0, i);
+        String idpath = path+"\\base";
         String otpyeIdStr = FileUtils.readFile(idpath + "\\otpyeId.text");
         String fieldIdStr = FileUtils.readFile(idpath + "\\fieldId.text");
         String formIdStr = FileUtils.readFile(idpath + "\\formId.text");

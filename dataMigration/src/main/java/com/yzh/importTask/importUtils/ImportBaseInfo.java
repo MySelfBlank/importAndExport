@@ -30,8 +30,7 @@ public class ImportBaseInfo {
     public static void orderImport(String path) throws Exception{
         login(UserInfo.username, UserInfo.password);
         //处理路径信息
-        int i = path.indexOf("(");
-        PathUtil.baseInfoDir=path.substring(0,i);
+        PathUtil.baseInfoDir=path+"\\base";
         //对字段的导入
         FieldImportUtil.fieldImport(PathUtil.baseInfoDir+"\\test.fields");
 

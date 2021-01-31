@@ -9,7 +9,7 @@ public class PathUtil {
     public static String baseInfoDirData="";
 
     public static void setDir(String sdomainName,String baseDir) {
-        PathUtil.baseInfoDir = baseDir + "\\"+ sdomainName;
+        PathUtil.baseInfoDir = baseDir;
         PathUtil.baseInfoDirData = baseDir + "\\"+ sdomainName+"\\data";
     }
 
