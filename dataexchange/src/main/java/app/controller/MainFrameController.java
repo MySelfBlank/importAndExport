@@ -122,16 +122,7 @@ public class MainFrameController implements Initializable {
             return;
         }
         String path = file.getPath();//选择的文件夹路径
-        //基本信息下载
-        if(isExportBaseData.isSelected()){
-            new Thread(()->{
-                try {
-                    Index.startVoid(path,curDoamin.getName(),Long.parseLong(curDoamin.getId()),dotypeInput.getText().trim());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }).start();
-        }
+
         Task<Void> exportTask = new Task<Void>() {
             @Override
             protected void succeeded() {
@@ -166,6 +157,17 @@ public class MainFrameController implements Initializable {
         };
         progress.progressProperty().bind(exportTask.progressProperty());
         new Thread(exportTask).start();
+        
+        //基本信息下载
+        if(isExportBaseData.isSelected()){
+            new Thread(()->{
+                try {
+                    Index.startVoid(path,curDoamin.getName(),Long.parseLong(curDoamin.getId()),dotypeInput.getText().trim());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }).start();
+        }
     }
 
     /**
