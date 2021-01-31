@@ -124,7 +124,19 @@ public class MainFrameController implements Initializable {
             return;
         }
         String path = file.getPath();//选择的文件夹路径
-
+        //基本信息下载
+        if(isExportBaseData.isSelected()){
+            new Thread(()->{
+                try {
+                    PageInfo<String> listPageInfo = requestServices.queryObjectIds(curDoamin.getId(), "1", "1000");
+                    long total = listPageInfo.getTotal();
+                    PathUtil.setDir(total,curDoamin.getName(),path);//设置路径
+                    Index.startVoid(PathUtil.baseInfoDir ,curDoamin.getName(),Long.parseLong(curDoamin.getId()),dotypeInput.getText().trim());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }).start();
+        }
         Task<Void> exportTask = new Task<Void>() {
             @Override
             protected void succeeded() {
@@ -159,20 +171,6 @@ public class MainFrameController implements Initializable {
         };
         progress.progressProperty().bind(exportTask.progressProperty());
         new Thread(exportTask).start();
-
-        //基本信息下载
-        if(isExportBaseData.isSelected()){
-            new Thread(()->{
-                try {
-                    PageInfo<String> listPageInfo = requestServices.queryObjectIds(curDoamin.getId(), "1", "1000");
-                    long total = listPageInfo.getTotal();
-                    PathUtil.setDir(total,curDoamin.getName(),path);//设置路径
-                    Index.startVoid(PathUtil.baseInfoDir ,curDoamin.getName(),Long.parseLong(curDoamin.getId()),dotypeInput.getText().trim());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }).start();
-        }
     }
 
     /**
