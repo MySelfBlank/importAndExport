@@ -3,8 +3,10 @@ package app.controller;
 import com.yzh.utilts.tools.EnvironmentSelectTool;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
 import utils.BaseUrl;
 
@@ -22,6 +24,8 @@ public class UrlConfig implements Initializable {
     private TextField datastoreUrl, modelUrl, hdfsUrl, geomesaUrl, ucUrl;
     @FXML
     private Button ok, cancel;
+    @FXML
+    private TilePane pane;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

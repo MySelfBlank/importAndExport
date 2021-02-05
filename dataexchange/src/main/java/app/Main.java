@@ -8,6 +8,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import jfxtras.styles.jmetro.JMetro;
+import jfxtras.styles.jmetro.Style;
 import utils.EhcacheUtil;
 
 
@@ -18,7 +20,10 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("./ui/login.fxml"));
         primaryStage.setTitle("登录");
-        primaryStage.setScene(new Scene(root, 248, 200));
+        JMetro jMetro = new JMetro(Style.LIGHT);
+        Scene scene = new Scene(root);
+        jMetro.setScene(scene);
+        primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override

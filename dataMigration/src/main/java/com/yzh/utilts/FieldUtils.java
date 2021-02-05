@@ -1,5 +1,6 @@
 package com.yzh.utilts;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.http.HttpUtil;
@@ -53,17 +54,38 @@ public class FieldUtils {
         for (Attribute attribute : attributeList) {
             fIdSet.add(attribute.getFid());
         }
-        //通过fId查询字段信息
-        Map<String, Object> params = MapUtil.builder(new HashMap<String, Object>())
-                .put("token", UserInfo.token)
-                .put("orderType", "ID")
-                .put("descOrAsc", true)
-                .put("ids", fIdSet.toArray())
-                .build();
-        String fieldJsonStr = HttpUtil.get(MyApi.getFieldByFid.getValue(), params);
-        JSONObject fieldJsonObj = FileTools.formatData(fieldJsonStr);
-        List<JSONObject> fieldJsonObjList = JSONArray.parseArray(fieldJsonObj.get("list").toString(), JSONObject.class);
-        eFieldList.addAll(JsonUtils.jsonToList(fieldJsonObj.get("list").toString(), Field.class));
+        //解决字段参数过大的问题
+        List<List<Long>> split = new ArrayList<>();
+        if (fIdSet.size() > 1000) {
+            split = CollUtil.split(fIdSet, 50);
+        }
+
+        if (CollUtil.isEmpty(split) || split.size() == 0) {
+            //通过fId查询字段信息
+            Map<String, Object> params = MapUtil.builder(new HashMap<String, Object>())
+                    .put("token", UserInfo.token)
+                    .put("orderType", "ID")
+                    .put("descOrAsc", true)
+                    .put("ids", fIdSet.toArray())
+                    .build();
+            String fieldJsonStr = HttpUtil.get(MyApi.getFieldByFid.getValue(), params);
+            JSONObject fieldJsonObj = FileTools.formatData(fieldJsonStr);
+            List<JSONObject> fieldJsonObjList = JSONArray.parseArray(fieldJsonObj.get("list").toString(), JSONObject.class);
+            eFieldList.addAll(JsonUtils.jsonToList(fieldJsonObj.get("list").toString(), Field.class));
+            return eFieldList;
+        }
+        for (List<Long> longs : split) {
+            Map<String, Object> params = MapUtil.builder(new HashMap<String, Object>())
+                    .put("token", UserInfo.token)
+                    .put("orderType", "ID")
+                    .put("descOrAsc", true)
+                    .put("ids", longs.toArray())
+                    .build();
+            String fieldJsonStr = HttpUtil.get(MyApi.getFieldByFid.getValue(), params);
+            JSONObject fieldJsonObj = FileTools.formatData(fieldJsonStr);
+            eFieldList.addAll(JsonUtils.jsonToList(fieldJsonObj.get("list").toString(), Field.class));
+
+        }
         return eFieldList;
     }
 
@@ -79,29 +101,49 @@ public class FieldUtils {
         for (Attribute attribute : attributes) {
             fIdSet.add(attribute.getFid());
         }
-        if(otypeFieldIds.size()!=0){
+        if (otypeFieldIds.size() != 0) {
             fIdSet.addAll(otypeFieldIds);
         }
-        //通过fId查询字段信息
-        Map<String, Object> params = MapUtil.builder(new HashMap<String, Object>())
-                .put("token", UserInfo.token)
-                .put("orderType", "ID")
-                .put("descOrAsc", true)
-                .put("ids", fIdSet.toArray())
-                .build();
+        //解决字段参数过大的问题
+        List<List<Long>> split = new ArrayList<>();
+        if (fIdSet.size() > 1000) {
+            split = CollUtil.split(fIdSet, 50);
+        }
+        if (split.size()==0||CollUtil.isEmpty(split)){
+            //通过fId查询字段信息
+            Map<String, Object> params = MapUtil.builder(new HashMap<String, Object>())
+                    .put("token", UserInfo.token)
+                    .put("orderType", "ID")
+                    .put("descOrAsc", true)
+                    .put("ids", fIdSet.toArray())
+                    .build();
 
-        String fieldJsonStr = HttpUtil.get(MyApi.getFieldByFid.getValue(), params);
-        JSONObject fieldJsonObj = FileTools.formatData(fieldJsonStr);
-        List<JSONObject> fieldJsonObjList = JSONArray.parseArray(fieldJsonObj.get("list").toString(), JSONObject.class);
-        eFieldList.addAll(JsonUtils.jsonToList(fieldJsonObj.get("list").toString(), Field.class));
-        return eFieldList;
+            String fieldJsonStr = HttpUtil.get(MyApi.getFieldByFid.getValue(), params);
+            JSONObject fieldJsonObj = FileTools.formatData(fieldJsonStr);
+            List<JSONObject> fieldJsonObjList = JSONArray.parseArray(fieldJsonObj.get("list").toString(), JSONObject.class);
+            eFieldList.addAll(JsonUtils.jsonToList(fieldJsonObj.get("list").toString(), Field.class));
+            return eFieldList;
+        }
+        for (List<Long> fids : split) {
+            Map<String, Object> params = MapUtil.builder(new HashMap<String, Object>())
+                    .put("token", UserInfo.token)
+                    .put("orderType", "ID")
+                    .put("descOrAsc", true)
+                    .put("ids", fids.toArray())
+                    .build();
+            String fieldJsonStr = HttpUtil.get(MyApi.getFieldByFid.getValue(), params);
+            JSONObject fieldJsonObj = FileTools.formatData(fieldJsonStr);
+            eFieldList.addAll(JsonUtils.jsonToList(fieldJsonObj.get("list").toString(), Field.class));
+        }
+        return  eFieldList;
+
     }
 
-    public static void handleOtypeFields(List<Field> fields){
-        if(isEmpty(fields) || isNull(fields)){
+    public static void handleOtypeFields(List<Field> fields) {
+        if (isEmpty(fields) || isNull(fields)) {
             return;
         }
-        fields.forEach(v->{
+        fields.forEach(v -> {
             otypeFieldIds.add(v.getId());
         });
     }

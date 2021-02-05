@@ -19,6 +19,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import jfxtras.styles.jmetro.JMetro;
+import jfxtras.styles.jmetro.Style;
 import services.RequestServices;
 import services.impl.RequestServicesImpl;
 import utils.BaseUrl;
@@ -66,7 +68,10 @@ public class LoginController implements Initializable {
             Parent root = FXMLLoader.load(getClass().getResource("../ui/mainFrame.fxml"));
             Stage stage = new Stage();
             stage.setTitle("导入导出工具");
-            stage.setScene(new Scene(root));
+            JMetro jMetro = new JMetro(Style.LIGHT);
+            Scene scene = new Scene(root);
+            jMetro.setScene(scene);
+            stage.setScene(scene);
             stage.setResizable(false);
             stage.setFocused(true);
             stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -125,7 +130,7 @@ public class LoginController implements Initializable {
                 }
             }
 
-        } catch (Exception e) {
+            } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -133,9 +138,12 @@ public class LoginController implements Initializable {
 
     public void openUpdateUrl(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../ui/urlConfig.fxml"));
+        JMetro jMetro = new JMetro(Style.DARK);
+
         Stage stage = new Stage();
         stage.setTitle("修改服务链接配置");
         Scene scene = new Scene(root);
+        jMetro.setScene(scene);
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();

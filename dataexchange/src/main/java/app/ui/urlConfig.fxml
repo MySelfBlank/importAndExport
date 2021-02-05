@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
@@ -7,11 +8,12 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 
-
-<AnchorPane prefHeight="262.0" prefWidth="395.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.UrlConfig">
+<AnchorPane prefHeight="262.0" prefWidth="395.0" styleClass="bg" stylesheets="@../../style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.UrlConfig">
    <children>
-      <TitledPane animated="false" collapsible="false" layoutX="21.0" layoutY="17.0" prefHeight="204.0" prefWidth="343.0" text="链接配置">
+      <TitledPane animated="false" collapsible="false" contentDisplay="TEXT_ONLY" layoutX="21.0" layoutY="17.0" opacity="0.65" prefHeight="204.0" prefWidth="343.0" scaleShape="false" text="📌链接配置">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
         </content>

@@ -64,7 +64,7 @@ public class OtypeUtilts {
         String objectListStr = data.getStr("list");
         List<SObject> sObjects = JsonUtils.jsonToList(objectListStr, SObject.class);
         sObjectsList.addAll(sObjects);
-        objectList = JSONArray.parseArray(objectListStr, JSONObject.class);
+//        objectList = JSONArray.parseArray(objectListStr, JSONObject.class);
 
         //获取数据对象
         //getDObjectList(sObjects);
@@ -72,11 +72,14 @@ public class OtypeUtilts {
 
         //获取当前时空域下的所有类模板Id
 
-        //获取当前时空域下的所有类模板Id
-        for (JSONObject o : objectList) {
-            JSONObject otype = (JSONObject) o.get("otype");
-            classIDs.add(otype.getLong("id"));
+        for (SObject sObject : sObjectsList) {
+            classIDs.add(sObject.getOtype().getId());
         }
+        //获取当前时空域下的所有类模板Id
+//        for (JSONObject o : objectList) {
+//            JSONObject otype = (JSONObject) o.get("otype");
+//            classIDs.add(otype.getLong("id"));
+//        }
         logger.debug("当前时空域下使用所有的类模板Id=" + classIDs);
         EConnectorUtils.EConnectorHandel(classIDs);
         params.clear();

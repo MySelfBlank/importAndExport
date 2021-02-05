@@ -24,10 +24,10 @@ public class EnvironmentSelectTool {
     public static String localHDFSUrl = "http://172.16.4.129:8085/hdfs";
 
 
-    public static String finalUrl = localHostUrl;
-    public static String finalUcUrl=localHostUcUrl;
-    public static String finalModelUrl=modelLocalUrl;
-    public static String finalHDFSUrl = localHDFSUrl;
+    public static String finalUrl = produrl;
+    public static String finalUcUrl=prodUcUrl;
+    public static String finalModelUrl=modelProdUrl;
+    public static String finalHDFSUrl = devHDFSUrl;
 
 
 }

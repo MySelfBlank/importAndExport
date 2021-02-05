@@ -128,7 +128,11 @@ public class EModelUtil {
             return new HashSet<>();
         }
         Set<String> scriptSet = new HashSet<>();
+        String [] languages = new String[]{"1","2"};
         for (EModel eModel : list) {
+            if (!Arrays.asList(languages).contains(eModel.getpLanguage())){
+                continue;
+            }
             Mobj mobj = eModel.getMobj();
             if (!isNull(mobj)){
                 if (mobj.getScript()!=null&&!mobj.getScript().equals("")) {

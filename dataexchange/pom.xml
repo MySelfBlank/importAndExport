@@ -16,7 +16,9 @@
             <id>osgeo-repos</id>
             <name>osgeo Repository</name>
             <url>https://repo.osgeo.org/repository/release/</url>
-            <snapshots><enabled>false</enabled></snapshots>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
         </repository>
         <repository>
             <id>52north-repos</id>
@@ -148,6 +150,7 @@
             <artifactId>dataMigration</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+
     </dependencies>
 
     <build>
@@ -158,6 +161,8 @@
                 <includes>
                     <include>**/*.fxml</include>
                     <include>**/fxml/*.fxml</include>
+                    <include>**/*.css</include>
+                    <include>**/resources/*.css</include>
                     <!-- 如果想要弄个包名专门放fxml文件，像上一行这样添加设置 -->
                     <!-- 之后，使用getResource("fxml/xx.fxml")这样子 -->
                 </includes>
@@ -170,6 +175,8 @@
                     <include>*.properties</include>
                     <include>*.xml</include>
                     <include>**/img/*.png</include>
+                    <include>**/*.css</include>
+                    <include>**/resources/*.css</include>
                 </includes>
                 <filtering>false</filtering>
             </resource>

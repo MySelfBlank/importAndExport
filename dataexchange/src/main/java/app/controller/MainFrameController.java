@@ -6,11 +6,13 @@ import enums.KeyType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.stage.DirectoryChooser;
 import model.DomainModel;
 import model.ResponseResult;
@@ -64,6 +66,10 @@ public class MainFrameController implements Initializable {
     private ProgressIndicator progress;
     @FXML
     private CheckBox isExportBaseData, isImprotBaseData;
+    @FXML
+    private Pane sPane,ePane,iPane;
+    @FXML
+    private Button sButton,eButton,iButton;
 
     private RequestServices requestServices = new RequestServicesImpl();
 
@@ -314,5 +320,29 @@ public class MainFrameController implements Initializable {
             dotypeInput.setText(null);
         }
 
+    }
+
+    public void handleClicks(ActionEvent actionEvent) {
+        if (actionEvent.getSource() == sButton) {
+//            sPane.setStyle("-fx-background-color : #1620A1");
+            sPane.setVisible(true);
+            ePane.setVisible(false);
+            iPane.setVisible(false);
+//            sPane.toFront();
+        }
+        if (actionEvent.getSource() == eButton) {
+//            ePane.setStyle("-fx-background-color : #53639F");
+            sPane.setVisible(false);
+            ePane.setVisible(true);
+            iPane.setVisible(false);
+//            ePane.toFront();
+        }
+        if (actionEvent.getSource() == iButton) {
+//            iPane.setStyle("-fx-background-color : #02030A");
+            sPane.setVisible(false);
+            ePane.setVisible(false);
+            iPane.setVisible(true);
+//            iPane.toFront();
+        }
     }
 }

@@ -1,0 +1,51 @@
+.bg{
+    -fx-background-image: url("/img/bg.png");
+    -fx-background-repeat: no-repeat;
+    /*-fx-background-size: 900 506;*/
+    -fx-background-size: 100% 100%;
+}
+.loginButton {
+    -fx-appearance: none;
+    -fx-outline: 0;
+    -fx-background-color: white;
+    -fx-border: 0;
+    -fx-padding: 10px 15px;
+    -fx-border-radius: 3px;
+    -fx-width: 250px;
+    -fx-cursor: pointer;
+    -fx-font-size: 18px;
+    -fx-transition-duration: 0.25s;
+}
+
+.loginButton:hover{
+    -fx-background-color: rgb(245, 247, 249);
+ }
+
+.mButton
+{
+    -fx-background-color : #ffffff;
+    -fx-text-fill : #05071f;
+    -fx-background-radius: 5;
+    -fx-background-insets: 3;
+}
+
+.mButton:hover{
+    -fx-background-color : #e7e7fa;
+}
+
+.mButton:pressed
+{
+    -fx-background-radius: 5;
+    -fx-background-insets: 3;
+    -fx-background-color : #ffffff;
+}
+
+.mButton:selected
+{
+    -fx-background-radius: 5;
+    -fx-background-insets: 3;
+    -fx-background-color : #e7e7fa;
+}
+
+.check-box{
+}
