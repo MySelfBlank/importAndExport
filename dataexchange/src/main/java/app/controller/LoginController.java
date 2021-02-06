@@ -18,6 +18,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
@@ -70,6 +71,7 @@ public class LoginController implements Initializable {
             stage.setTitle("导入导出工具");
             JMetro jMetro = new JMetro(Style.LIGHT);
             Scene scene = new Scene(root);
+            stage.initStyle(StageStyle.UNIFIED);
             jMetro.setScene(scene);
             stage.setScene(scene);
             stage.setResizable(false);

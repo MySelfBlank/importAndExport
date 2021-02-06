@@ -16,9 +16,6 @@ import static com.yzh.utilts.tools.FileTools.login;
  */
 public class ImportBaseInfo {
     public static void main(String[] args) throws Exception {
-
-
-
         orderImport("C:\\Users\\bluethink\\Desktop\\导出数据\\测试八个方面1223");
     }
 

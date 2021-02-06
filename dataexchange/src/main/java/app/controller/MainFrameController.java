@@ -3,6 +3,7 @@ package app.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.yzh.Index;
 import enums.KeyType;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -14,6 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.Stage;
 import model.DomainModel;
 import model.ResponseResult;
 import onegis.common.paging.PageInfo;
@@ -69,7 +71,7 @@ public class MainFrameController implements Initializable {
     @FXML
     private Pane sPane,ePane,iPane;
     @FXML
-    private Button sButton,eButton,iButton;
+    private Button sButton,eButton,iButton,logoutBut;
 
     private RequestServices requestServices = new RequestServicesImpl();
 
@@ -324,25 +326,25 @@ public class MainFrameController implements Initializable {
 
     public void handleClicks(ActionEvent actionEvent) {
         if (actionEvent.getSource() == sButton) {
-//            sPane.setStyle("-fx-background-color : #1620A1");
             sPane.setVisible(true);
             ePane.setVisible(false);
             iPane.setVisible(false);
-//            sPane.toFront();
         }
         if (actionEvent.getSource() == eButton) {
-//            ePane.setStyle("-fx-background-color : #53639F");
             sPane.setVisible(false);
             ePane.setVisible(true);
             iPane.setVisible(false);
-//            ePane.toFront();
         }
         if (actionEvent.getSource() == iButton) {
-//            iPane.setStyle("-fx-background-color : #02030A");
             sPane.setVisible(false);
             ePane.setVisible(false);
             iPane.setVisible(true);
-//            iPane.toFront();
+        }
+        if (actionEvent.getSource() == logoutBut) {
+            Stage stage = (Stage) logoutBut.getScene().getWindow();
+            stage.close();
+            Platform.exit();
+            System.exit(0);
         }
     }
 }

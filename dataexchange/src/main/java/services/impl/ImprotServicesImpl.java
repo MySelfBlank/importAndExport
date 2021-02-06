@@ -223,7 +223,7 @@ public class ImprotServicesImpl implements ImportServices {
      */
     public void handleOTypeId(CustomerSObject customerSObject) {
         Long id = customerSObject.getOtype().getId();
-        String newId = String.valueOf(otypeIdCache.get(String.valueOf(id)));
+        String newId = String.valueOf(Optional.ofNullable(otypeIdCache.get(String.valueOf(id))).orElse(null));
         if (StrUtil.isEmpty(newId) || StrUtil.isBlank(newId)) {
             throw new RuntimeException("对象" + customerSObject.getId() + "类模板Id不存在");
         } else {
@@ -242,7 +242,7 @@ public class ImprotServicesImpl implements ImportServices {
         }
         for (Attribute attribute : attributes) {
             Long fid = attribute.getFid();
-            String newId = String.valueOf(fieldIdCache.get(String.valueOf(fid)));
+            String newId = String.valueOf(Optional.ofNullable(fieldIdCache.get(String.valueOf(fid))).orElseGet(()->{return -1L;}));
             if (StrUtil.isEmpty(newId) || StrUtil.isBlank(newId)) {
                 throw new RuntimeException("字段" + fid + "新Id不存在");
             } else {
@@ -273,12 +273,11 @@ public class ImprotServicesImpl implements ImportServices {
                 List<Integer> newIds = new ArrayList<>();
                 for (Object s : jsonArray) {
                     if (s instanceof Integer) {
-                        newIds.add((int) formIdCache.get(s.toString()));
+                        newIds.add(Integer.parseInt(Optional.ofNullable(formIdCache.get(s.toString())).toString()));
                     } else {
-                        newIdList.add(formIdCache.get(s).toString());
-                        System.out.println(s);
+                        newIdList.add(Optional.ofNullable(formIdCache.get(s)).orElseGet(()->-1L).toString());
+                        System.out.println("样式ID="+s);
                     }
-
                 }
                 System.out.println(JSONUtil.parseArray(newIdList).toString());
                 if (newIds.size() != 0) {
