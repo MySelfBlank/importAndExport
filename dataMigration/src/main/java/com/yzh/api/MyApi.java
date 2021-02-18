@@ -82,6 +82,7 @@ public enum MyApi {
     //创建连接器
     insertConnector("insertConnector",finalUrl+"/rest/v0.1.0/datastore/oconnector/insert"),
 
+
     //注销本次登录
     logout("logout", finalUcUrl+"/api/v2/account/logout");
 

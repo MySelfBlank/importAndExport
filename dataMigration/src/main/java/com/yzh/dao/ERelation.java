@@ -1,6 +1,7 @@
 package com.yzh.dao;
 
 import com.yzh.dao.exportModel.AbstractObject;
+import com.yzh.dao.exportModel.EFields;
 import onegis.psde.attribute.Fields;
 
 /**
@@ -11,7 +12,7 @@ public class ERelation extends AbstractObject {
     /**
      * 描述关系的字段
      */
-    private Fields fields;
+    private EFields fields;
     /**
      * 关系映射类型
      */
@@ -22,11 +23,11 @@ public class ERelation extends AbstractObject {
      */
     public EModel model;
 
-    public Fields getFields() {
+    public EFields getFields() {
         return fields;
     }
 
-    public void setFields(Fields fields) {
+    public void setFields(EFields fields) {
         this.fields = fields;
     }
 

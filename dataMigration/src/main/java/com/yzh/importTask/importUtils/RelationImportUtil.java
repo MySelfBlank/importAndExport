@@ -1,25 +1,33 @@
 package com.yzh.importTask.importUtils;
 
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSON;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.yzh.api.MyApi;
+import com.yzh.dao.EField;
 import com.yzh.dao.EModel;
 import com.yzh.dao.ERelation;
+import com.yzh.dao.exportModel.EFields;
 import com.yzh.importTask.requestEntity.ModelEntity;
 import com.yzh.importTask.requestEntity.RelationEntity;
 import com.yzh.userInfo.PathUtil;
 import com.yzh.userInfo.UserInfo;
 import com.yzh.utilts.tools.FileTools;
 import onegis.common.utils.JsonUtils;
+import onegis.psde.attribute.Field;
+import onegis.psde.attribute.Fields;
 import onegis.psde.model.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
+import static com.yzh.importTask.importUtils.IdCache.fieldOldIdAndNewIdCache;
 import static com.yzh.importTask.importUtils.IdCache.relationNewIdAndOldId;
 import static com.yzh.utilts.tools.FileTools.login;
 
@@ -58,8 +66,8 @@ public class RelationImportUtil {
             relationEntity.setMappingType(relation.getMappingType());
             relationEntity.setModel(exchangeModel(relation.getModel()));
 
-            if (relation.getFields()==null) {
-                relationEntity.setFields(relation.getFields());
+            if (relation.getFields()!=null) {
+                relationEntity.setFields(eFieldsToFields(relation.getFields()));
             }
             //处理响应的数据
             String paramStr = JSONUtil.parseObj(relationEntity).toString();
@@ -83,7 +91,7 @@ public class RelationImportUtil {
             return new ModelEntity();
         }
         modelEntity.setpLanguage(Integer.valueOf(model.getpLanguage()));
-        modelEntity.setId(Long.parseLong(String.valueOf(IdCache.modelNewIdAndOldId.get(model.getId().toString()))));
+        modelEntity.setId(Long.parseLong(String.valueOf(Optional.ofNullable(IdCache.modelNewIdAndOldId.get(model.getId().toString())).orElse(-1L))));
         return modelEntity;
     }
      public static EModel modelToEModel(Model model){
@@ -91,6 +99,27 @@ public class RelationImportUtil {
         eModel.setName(model.getName());
         return eModel;
     }
+    public static Fields eFieldsToFields(EFields eFields){
+        Fields fields = new Fields();
+        List<EField> eFieldList = eFields.getFields();
+        List<Field> fieldList = new ArrayList<>();
+        for (EField eField : eFieldList) {
+            Field field = new Field();
+            //替换字段Id
+            if(ObjectUtil.isNull(fieldOldIdAndNewIdCache.get(String.valueOf(eField.getId())))){
+
+            }else {
+                field.setId(Long.parseLong(String.valueOf(fieldOldIdAndNewIdCache.get(String.valueOf(eField.getId())))));
+            }
+            field.setName(eField.getName());
+            field.setType(null);
+            field.setUitype(null);
+            fieldList.add(field);
+        }
+        fields.setFields(fieldList);
+        return fields;
+    }
+
     public static void main(String[] args) throws Exception {
 
         login("ceshi@yzh.com", "123456");

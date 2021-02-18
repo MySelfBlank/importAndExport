@@ -78,7 +78,7 @@ public class FileTools {
 
     public static Boolean judgeImportState(String response){
         JSONObject sourceData = JSONUtil.parseObj(response);
-        if(sourceData.getInt("status").equals(400)){
+        if(!sourceData.getInt("status").equals(200)){
             return true;
         }
         return false;

@@ -1,5 +1,6 @@
 package com.yzh.importTask.importUtils;
 
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
@@ -58,8 +59,14 @@ public class ModelImportUtil {
             modelEntity.setName(model.getName());
             EModelDef mdef = model.getMdef();
             ModelDefEntity modelDefEntity = new ModelDefEntity();
-            modelDefEntity.setId(Long.parseLong(String.valueOf(modelDefNewIdAndOldId.get(mdef.getId().toString()))));
-//            EModelDef newModelDef = JSONUtil.parse(modelDefEntity).toBean(EModelDef.class);
+            //在缓存找不到的话去查一下
+            if (ObjectUtil.isNull(modelDefNewIdAndOldId.get(mdef.getId().toString()))){
+                List<EModelDef> list = FileTools.forJsonList(HttpUtil.get(MyApi.getModelDefById.getValue() + "?names=" + model.getMdef().getName()), EModelDef.class);
+                modelDefEntity.setId(list.get(0).getId());
+            }else {
+                modelDefEntity.setId(Long.parseLong(String.valueOf(modelDefNewIdAndOldId.get(mdef.getId().toString()))));
+            }
+            //EModelDef newModelDef = JSONUtil.parse(modelDefEntity).toBean(EModelDef.class);
             modelEntity.setMdef(modelDefEntity);
 
             modelEntity.setpLanguage(Integer.valueOf(model.getpLanguage()));
@@ -86,6 +93,7 @@ public class ModelImportUtil {
         String response = HttpUtil.post(MyApi.insertModel.getValue()+"?token="+ UserInfo.token, paramStr.toString());
         if (FileTools.judgeImportState(response)) {
             logger.error("name为" + model.getName() + "的关系导入失败");
+            return;
         }
         //对新老的id进行处理
         JSONObject jsonObject1 = FileTools.formatData(response);
@@ -182,7 +190,7 @@ public class ModelImportUtil {
                 List<Field> eFields = new ArrayList<>();
                 for (int i = 0; i <foreInFields.size(); i++) {
                     Field field = foreInFields.get(i);
-                    field.setId(fieldOldIdAndNewIdCache.get(foreInFields.get(i).getId()));
+                    field.setId(Optional.ofNullable(fieldOldIdAndNewIdCache.get(foreInFields.get(i).getId())).orElse(-1L));
                     eFields.add(field);
                 }
                 String newModelDef = JSONUtil.parse(eFields).toString();
@@ -199,7 +207,7 @@ public class ModelImportUtil {
                 List<Field> eFields = new ArrayList<>();
                 for (int i = 0; i <foreFields.size(); i++) {
                     Field field = foreFields.get(i);
-                    Long id = fieldOldIdAndNewIdCache.get(foreFields.get(i).getId());
+                    Long id = Optional.ofNullable(fieldOldIdAndNewIdCache.get(foreFields.get(i).getId())).orElse(-1L);
                     field.setId(id);
                     eFields.add(field);
                 }
