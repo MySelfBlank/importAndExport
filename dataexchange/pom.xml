@@ -151,6 +151,28 @@
             <groupId>com.yzh</groupId>
             <artifactId>dataMigration</artifactId>
             <version>1.0-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>bluethink</groupId>
+                    <artifactId>onegis.base</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>bluethink</groupId>
+                    <artifactId>onegis.core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>bluethink</groupId>
+                    <artifactId>onegis.common</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>bluethink</groupId>
+                    <artifactId>onegis.protobuf</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.google.protobuf</groupId>
+                    <artifactId>protobuf-java</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -162,41 +184,41 @@
         <dependency>
             <groupId>onegis</groupId>
             <artifactId>onegis.base</artifactId>
-            <version>0.1.0</version>
+            <version>1.0.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/onegis.base-0.1.0-SNAPSHOT.jar</systemPath>
+            <systemPath>${project.basedir}/src/main/resources/lib/onegis.base-0.1.0-SNAPSHOT.jar</systemPath>
         </dependency>
 
         <dependency>
             <groupId>onegis</groupId>
             <artifactId>onegis.common</artifactId>
-            <version>0.1.0</version>
+            <version>1.0.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/onegis.common-0.1.0-SNAPSHOT.jar</systemPath>
+            <systemPath>${project.basedir}/src/main/resources/lib/onegis.common-0.1.0-SNAPSHOT.jar</systemPath>
         </dependency>
 
         <dependency>
             <groupId>onegis</groupId>
             <artifactId>onegis.core</artifactId>
-            <version>0.1.0</version>
+            <version>1.0.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/onegis.core-0.1.0-SNAPSHOT.jar</systemPath>
+            <systemPath>${project.basedir}/src/main/resources/lib/onegis.core-0.1.0-SNAPSHOT.jar</systemPath>
         </dependency>
 
         <dependency>
             <groupId>onegis</groupId>
             <artifactId>onegis.protobuf</artifactId>
-            <version>0.1.0</version>
+            <version>1.0.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/onegis.protobuf-0.1.0-SNAPSHOT.jar</systemPath>
+            <systemPath>${project.basedir}/src/main/resources/lib/onegis.protobuf-0.1.0-SNAPSHOT.jar</systemPath>
         </dependency>
 
         <dependency>
             <groupId>protobuf</groupId>
             <artifactId>protobuf</artifactId>
-            <version>0.1.0</version>
+            <version>1.0.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/protobuf-java-0.1.0-SNAPSHOT.jar</systemPath>
+            <systemPath>${project.basedir}/src/main/resources/lib/protobuf-java-0.1.0-SNAPSHOT.jar</systemPath>
         </dependency>
 
     </dependencies>
@@ -223,6 +245,8 @@
                     <include>**/img/*.png</include>
                     <include>**/*.css</include>
                     <include>**/resources/*.css</include>
+                    <include>**/*.jar</include>
+                    <include>**/resources/*.jar</include>
                 </includes>
                 <filtering>true</filtering>
             </resource>
