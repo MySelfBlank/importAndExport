@@ -8,7 +8,7 @@ import onegis.psde.psdm.AObject;
  * @details
  */
 public class FormStyleEntity extends AObject {
-    private String className="oformstyle";
+    private String className = "oformstyle";
     private String des;
     private int style;
     private String data;

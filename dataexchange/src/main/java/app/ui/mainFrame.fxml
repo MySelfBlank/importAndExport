@@ -6,125 +6,158 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="477.0" prefWidth="768.0" styleClass="bg" stylesheets="@../../style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.MainFrameController">
-   <children>
-      <VBox alignment="CENTER" prefHeight="477.0" prefWidth="231.0">
-         <children>
-            <ProgressIndicator fx:id="progress" prefHeight="65.0" prefWidth="51.0" progress="0.0" />
-            <Label prefHeight="40.0" text="欢迎：" />
-            <Label fx:id="userName" prefHeight="40.0" text="Root">
-               <font>
-                  <Font size="16.0" />
-               </font></Label>
-            <Button fx:id="sButton" mnemonicParsing="false" onAction="#handleClicks" prefHeight="39.0" prefWidth="231.0" styleClass="mButton" text="查询时空域">
-               <graphic>
-                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../img/s.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin></Button>
-            <Button fx:id="eButton" mnemonicParsing="false" onAction="#handleClicks" prefHeight="39.0" prefWidth="231.0" styleClass="mButton" text="导出时空对象">
-               <graphic>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../img/e.png" />
-                     </image></ImageView>
-               </graphic>
-               <VBox.margin>
-                  <Insets bottom="10.0" top="10.0" />
-               </VBox.margin></Button>
-            <Button fx:id="iButton" mnemonicParsing="false" onAction="#handleClicks" prefHeight="39.0" prefWidth="231.0" styleClass="mButton" text="导入时空对象">
-               <graphic>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
-                     <image>
-                        <Image url="@../../img/i.png" />
-                     </image></ImageView>
-               </graphic></Button>
-            <Button fx:id="logoutBut" mnemonicParsing="false" onAction="#handleClicks" prefHeight="39.0" prefWidth="231.0" styleClass="mButton" text="退出此工具">
-               <graphic>
-                  <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../img/logout.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-            </Button>
-         </children>
-         <padding>
-            <Insets left="10.0" />
-         </padding>
-      </VBox>
-      <StackPane layoutX="254.0" layoutY="-2.0" prefHeight="477.0" prefWidth="515.0">
-         <children>
-            <Pane fx:id="sPane" prefHeight="477.0" prefWidth="515.0">
-               <children>
-                  <TitledPane animated="false" collapsible="false" opacity="0.8" prefHeight="497.0" prefWidth="530.0" text="查询时空域">
-                    <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0">
-                           <children>
-                              <TableView fx:id="table" layoutX="47.0" layoutY="104.0" onMouseClicked="#click" opacity="0.8" prefHeight="298.0" prefWidth="420.0">
-                                 <columns>
-                                    <TableColumn fx:id="tabIndex" editable="false" prefWidth="87.0" sortable="false" text="序号" />
-                                    <TableColumn fx:id="tabName" editable="false" prefWidth="120.0" sortable="false" text="名称" />
-                                    <TableColumn fx:id="tabId" editable="false" prefWidth="212.0" sortable="false" text="ID" />
-                                 </columns>
-                              </TableView>
-                              <Button fx:id="previous" layoutX="47.0" layoutY="422.0" mnemonicParsing="false" onMouseClicked="#PreviousSdomain" text="上一页" />
-                              <Label fx:id="pages" layoutX="248.0" layoutY="426.0" text="1/1" />
-                              <Button fx:id="next" layoutX="416.0" layoutY="422.0" mnemonicParsing="false" onMouseClicked="#NextSdomain" text="下一页" />
-                              <Label layoutX="47.0" layoutY="22.0" text="时空域：" />
-                              <TextField fx:id="keyword" layoutX="108.0" layoutY="16.0" prefHeight="28.0" />
-                              <Button layoutX="315.0" layoutY="18.0" mnemonicParsing="false" onMouseClicked="#querySdomain" prefHeight="23.0" prefWidth="68.0" text="查询" />
-                              <HBox fx:id="hBox" alignment="CENTER" layoutX="188.0" layoutY="59.0" prefHeight="36.0" prefWidth="161.0">
-                                 <children>
-                                    <TextField fx:id="dotypeInput" prefHeight="28.0" prefWidth="136.0" promptText="请输入相关类模板名称" visible="false" />
-                                 </children>
-                              </HBox>
-                              <ToggleButton fx:id="dotypeButton" layoutX="48.0" layoutY="65.0" mnemonicParsing="false" onMouseClicked="#inputDOTypeName" text="选择轨迹数据类模板" />
-                           </children>
-                        </AnchorPane>
-                    </content>
-                  </TitledPane>
-               </children>
-            </Pane>
-            <Pane fx:id="ePane" prefHeight="477.0" prefWidth="515.0" visible="false">
-               <children>
-                  <TitledPane animated="false" collapsible="false" layoutX="-1.0" opacity="0.8" prefHeight="497.0" prefWidth="530.0" text="导出数据">
-                    <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" opacity="0.8">
-                           <children>
-                              <Button fx:id="exportButton" layoutX="39.0" layoutY="39.0" mnemonicParsing="false" onMouseClicked="#ExportData" prefHeight="27.0" prefWidth="58.0" text="导出" />
-                              <Label layoutX="39.0" layoutY="13.0" text="当前选中：" />
-                              <Label fx:id="sdomainName" layoutX="99.0" layoutY="13.0" text="null" />
-                              <CheckBox fx:id="isExportBaseData" layoutX="39.0" layoutY="78.0" mnemonicParsing="false" text="导出数据用于新库请勾选" />
-                           </children>
-                        </AnchorPane>
-                    </content>
-                  </TitledPane>
-               </children>
-            </Pane>
-            <Pane fx:id="iPane" prefHeight="477.0" prefWidth="515.0" visible="false">
-               <children>
-                  <TitledPane animated="false" collapsible="false" layoutX="-1.0" opacity="0.8" prefHeight="497.0" prefWidth="530.0" text="导入数据">
-                    <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0">
-                           <children>
-                              <Button fx:id="importButton" layoutX="47.0" layoutY="63.0" mnemonicParsing="false" onMouseClicked="#ImportData" text="导入数据" />
-                              <CheckBox fx:id="isImprotBaseData" layoutX="47.0" layoutY="30.0" mnemonicParsing="false" text="导入新系统请勾选" />
-                           </children>
-                        </AnchorPane>
-                    </content>
-                  </TitledPane>
-               </children>
-            </Pane>
-         </children>
-      </StackPane>
-   </children>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="477.0"
+      prefWidth="768.0" styleClass="bg" stylesheets="@../../style.css" xmlns="http://javafx.com/javafx/8"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.MainFrameController">
+    <children>
+        <VBox alignment="CENTER" prefHeight="477.0" prefWidth="231.0">
+            <children>
+                <ProgressIndicator fx:id="progress" prefHeight="65.0" prefWidth="51.0" progress="0.0"/>
+                <Label prefHeight="40.0" text="欢迎："/>
+                <Label fx:id="userName" prefHeight="40.0" text="Root">
+                    <font>
+                        <Font size="16.0"/>
+                    </font>
+                </Label>
+                <Button fx:id="sButton" mnemonicParsing="false" onAction="#handleClicks" prefHeight="39.0"
+                        prefWidth="231.0" styleClass="mButton" text="查询时空域">
+                    <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../img/s.png"/>
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <VBox.margin>
+                        <Insets/>
+                    </VBox.margin>
+                </Button>
+                <Button fx:id="eButton" mnemonicParsing="false" onAction="#handleClicks" prefHeight="39.0"
+                        prefWidth="231.0" styleClass="mButton" text="导出时空对象">
+                    <graphic>
+                        <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../img/e.png"/>
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <VBox.margin>
+                        <Insets bottom="10.0" top="10.0"/>
+                    </VBox.margin>
+                </Button>
+                <Button fx:id="iButton" mnemonicParsing="false" onAction="#handleClicks" prefHeight="39.0"
+                        prefWidth="231.0" styleClass="mButton" text="导入时空对象">
+                    <graphic>
+                        <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true"
+                                   rotate="180.0">
+                            <image>
+                                <Image url="@../../img/i.png"/>
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button fx:id="logoutBut" mnemonicParsing="false" onAction="#handleClicks" prefHeight="39.0"
+                        prefWidth="231.0" styleClass="mButton" text="退出此工具">
+                    <graphic>
+                        <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../img/logout.png"/>
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <VBox.margin>
+                        <Insets top="10.0"/>
+                    </VBox.margin>
+                </Button>
+            </children>
+            <padding>
+                <Insets left="10.0"/>
+            </padding>
+        </VBox>
+        <StackPane layoutX="254.0" layoutY="-2.0" prefHeight="477.0" prefWidth="515.0">
+            <children>
+                <Pane fx:id="sPane" prefHeight="477.0" prefWidth="515.0">
+                    <children>
+                        <TitledPane animated="false" collapsible="false" opacity="0.8" prefHeight="497.0"
+                                    prefWidth="530.0" text="查询时空域">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0">
+                                    <children>
+                                        <TableView fx:id="table" layoutX="47.0" layoutY="104.0" onMouseClicked="#click"
+                                                   opacity="0.8" prefHeight="298.0" prefWidth="420.0">
+                                            <columns>
+                                                <TableColumn fx:id="tabIndex" editable="false" prefWidth="87.0"
+                                                             sortable="false" text="序号"/>
+                                                <TableColumn fx:id="tabName" editable="false" prefWidth="120.0"
+                                                             sortable="false" text="名称"/>
+                                                <TableColumn fx:id="tabId" editable="false" prefWidth="212.0"
+                                                             sortable="false" text="ID"/>
+                                            </columns>
+                                        </TableView>
+                                        <Button fx:id="previous" layoutX="47.0" layoutY="422.0" mnemonicParsing="false"
+                                                onMouseClicked="#PreviousSdomain" text="上一页"/>
+                                        <Label fx:id="pages" layoutX="248.0" layoutY="426.0" text="1/1"/>
+                                        <Button fx:id="next" layoutX="416.0" layoutY="422.0" mnemonicParsing="false"
+                                                onMouseClicked="#NextSdomain" text="下一页"/>
+                                        <Label layoutX="47.0" layoutY="22.0" text="时空域："/>
+                                        <TextField fx:id="keyword" layoutX="108.0" layoutY="16.0" prefHeight="28.0"/>
+                                        <Button layoutX="315.0" layoutY="18.0" mnemonicParsing="false"
+                                                onMouseClicked="#querySdomain" prefHeight="23.0" prefWidth="68.0"
+                                                text="查询"/>
+                                        <HBox fx:id="hBox" alignment="CENTER" layoutX="188.0" layoutY="59.0"
+                                              prefHeight="36.0" prefWidth="161.0">
+                                            <children>
+                                                <TextField fx:id="dotypeInput" prefHeight="28.0" prefWidth="136.0"
+                                                           promptText="请输入相关类模板名称" visible="false"/>
+                                            </children>
+                                        </HBox>
+                                        <ToggleButton fx:id="dotypeButton" layoutX="48.0" layoutY="65.0"
+                                                      mnemonicParsing="false" onMouseClicked="#inputDOTypeName"
+                                                      text="选择轨迹数据类模板"/>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </TitledPane>
+                    </children>
+                </Pane>
+                <Pane fx:id="ePane" prefHeight="477.0" prefWidth="515.0" visible="false">
+                    <children>
+                        <TitledPane animated="false" collapsible="false" layoutX="-1.0" opacity="0.8" prefHeight="497.0"
+                                    prefWidth="530.0" text="导出数据">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" opacity="0.8">
+                                    <children>
+                                        <Button fx:id="exportButton" layoutX="39.0" layoutY="39.0"
+                                                mnemonicParsing="false" onMouseClicked="#ExportData" prefHeight="27.0"
+                                                prefWidth="58.0" text="导出"/>
+                                        <Label layoutX="39.0" layoutY="13.0" text="当前选中："/>
+                                        <Label fx:id="sdomainName" layoutX="99.0" layoutY="13.0" text="null"/>
+                                        <CheckBox fx:id="isExportBaseData" layoutX="39.0" layoutY="78.0"
+                                                  mnemonicParsing="false" text="导出数据用于新库请勾选"/>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </TitledPane>
+                    </children>
+                </Pane>
+                <Pane fx:id="iPane" prefHeight="477.0" prefWidth="515.0" visible="false">
+                    <children>
+                        <TitledPane animated="false" collapsible="false" layoutX="-1.0" opacity="0.8" prefHeight="497.0"
+                                    prefWidth="530.0" text="导入数据">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0">
+                                    <children>
+                                        <Button fx:id="importButton" layoutX="47.0" layoutY="63.0"
+                                                mnemonicParsing="false" onMouseClicked="#ImportData" text="导入数据"/>
+                                        <CheckBox fx:id="isImprotBaseData" layoutX="47.0" layoutY="30.0"
+                                                  mnemonicParsing="false" text="导入新系统请勾选"/>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </TitledPane>
+                    </children>
+                </Pane>
+            </children>
+        </StackPane>
+    </children>
 </Pane>

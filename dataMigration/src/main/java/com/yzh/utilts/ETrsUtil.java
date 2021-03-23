@@ -24,15 +24,16 @@ public class ETrsUtil {
 
     /**
      * 获取时间参照
+     *
      * @param oTypeList
      */
-    public static void getTrs(List<OType> oTypeList){
-        if (oTypeList==null||oTypeList.size()==0){
-            return ;
+    public static void getTrs(List<OType> oTypeList) {
+        if (oTypeList == null || oTypeList.size() == 0) {
+            return;
         }
-       List<TimeReferenceSystem> trsList = new ArrayList<>();
+        List<TimeReferenceSystem> trsList = new ArrayList<>();
         for (OType oType : oTypeList) {
-            if (!isNull(oType)&&!isEmpty(oType)){
+            if (!isNull(oType) && !isEmpty(oType)) {
                 trsList.add(oType.getTrs());
             }
         }
@@ -41,7 +42,7 @@ public class ETrsUtil {
         List<ETrs> collect = eTrsUtils.stream().distinct().collect(Collectors.toList());
 
         JSON parse = JSONUtil.parse(collect);
-        String path= PathUtil.baseInfoDir + "\\test.trs";
-        FileTools.exportFile(parse,path,"Trs");
+        String path = PathUtil.baseInfoDir + "\\test.trs";
+        FileTools.exportFile(parse, path, "Trs");
     }
 }

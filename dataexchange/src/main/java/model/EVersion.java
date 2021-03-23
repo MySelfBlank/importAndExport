@@ -46,23 +46,23 @@ public class EVersion {
      */
     private ENetWork network;
 
-    public void addAction(EAction eAction){
+    public void addAction(EAction eAction) {
         this.actions.add(eAction);
     }
 
-    public void addForm(EForm eForm){
+    public void addForm(EForm eForm) {
         this.forms.add(eForm);
     }
 
-    public void addAttr(EAttribute eAttribute){
+    public void addAttr(EAttribute eAttribute) {
         this.attributes.add(eAttribute);
     }
 
-    public void addModel(EModel eModel){
+    public void addModel(EModel eModel) {
         this.models.add(eModel);
     }
 
-    public void addCompose(ECompose eCompose){
+    public void addCompose(ECompose eCompose) {
         this.composes.add(eCompose);
     }
 

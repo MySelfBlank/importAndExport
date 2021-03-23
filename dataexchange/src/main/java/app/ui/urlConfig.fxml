@@ -6,44 +6,54 @@
 <?import javafx.scene.layout.*?>
 
 
-<AnchorPane prefHeight="262.0" prefWidth="395.0" styleClass="bg" stylesheets="@../../style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.UrlConfig">
-   <children>
-      <TitledPane animated="false" collapsible="false" contentDisplay="TEXT_ONLY" layoutX="21.0" layoutY="17.0" opacity="0.65" prefHeight="204.0" prefWidth="343.0" scaleShape="false" text="📌链接配置">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-        </content>
-      </TitledPane>
-      <TextField fx:id="ucUrl" layoutX="175.0" layoutY="180.0" />
-      <TextField fx:id="geomesaUrl" layoutX="175.0" layoutY="148.0" />
-      <TextField fx:id="hdfsUrl" layoutX="175.0" layoutY="118.0" />
-      <TextField fx:id="modelUrl" layoutX="175.0" layoutY="86.0" />
-      <TextField fx:id="datastoreUrl" layoutX="175.0" layoutY="53.0" />
-      <Text layoutX="40.0" layoutY="196.0" strokeType="OUTSIDE" strokeWidth="0.0" text="UC_URL:" wrappingWidth="115.240234375">
-         <font>
-            <Font size="13.0" />
-         </font>
-      </Text>
-      <Text layoutX="40.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GEOMESA_URL:" wrappingWidth="115.240234375">
-         <font>
-            <Font size="13.0" />
-         </font>
-      </Text>
-      <Text layoutX="40.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HDFS_URL:" wrappingWidth="115.240234375">
-         <font>
-            <Font size="13.0" />
-         </font>
-      </Text>
-      <Text layoutX="40.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MODEL_URL:" wrappingWidth="115.240234375">
-         <font>
-            <Font size="13.0" />
-         </font>
-      </Text>
-      <Text layoutX="40.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DATASTORE_URL:" wrappingWidth="115.240234375">
-         <font>
-            <Font size="13.0" />
-         </font>
-      </Text>
-      <Button fx:id="ok" layoutX="323.0" layoutY="225.0" mnemonicParsing="false" onMouseClicked="#updateUrl" text="确定" />
-      <Button fx:id="cancel" layoutX="257.0" layoutY="225.0" mnemonicParsing="false" onMouseClicked="#cancel" text="取消" />
-   </children>
+<AnchorPane prefHeight="262.0" prefWidth="395.0" styleClass="bg" stylesheets="@../../style.css"
+            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="app.controller.UrlConfig">
+    <children>
+        <TitledPane animated="false" collapsible="false" contentDisplay="TEXT_ONLY" layoutX="21.0" layoutY="17.0"
+                    opacity="0.65" prefHeight="204.0" prefWidth="343.0" scaleShape="false" text="📌链接配置">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+            </content>
+        </TitledPane>
+        <TextField fx:id="ucUrl" layoutX="175.0" layoutY="180.0"/>
+        <TextField fx:id="geomesaUrl" layoutX="175.0" layoutY="148.0"/>
+        <TextField fx:id="hdfsUrl" layoutX="175.0" layoutY="118.0"/>
+        <TextField fx:id="modelUrl" layoutX="175.0" layoutY="86.0"/>
+        <TextField fx:id="datastoreUrl" layoutX="175.0" layoutY="53.0"/>
+        <Text layoutX="40.0" layoutY="196.0" strokeType="OUTSIDE" strokeWidth="0.0" text="UC_URL:"
+              wrappingWidth="115.240234375">
+            <font>
+                <Font size="13.0"/>
+            </font>
+        </Text>
+        <Text layoutX="40.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GEOMESA_URL:"
+              wrappingWidth="115.240234375">
+            <font>
+                <Font size="13.0"/>
+            </font>
+        </Text>
+        <Text layoutX="40.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HDFS_URL:"
+              wrappingWidth="115.240234375">
+            <font>
+                <Font size="13.0"/>
+            </font>
+        </Text>
+        <Text layoutX="40.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MODEL_URL:"
+              wrappingWidth="115.240234375">
+            <font>
+                <Font size="13.0"/>
+            </font>
+        </Text>
+        <Text layoutX="40.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DATASTORE_URL:"
+              wrappingWidth="115.240234375">
+            <font>
+                <Font size="13.0"/>
+            </font>
+        </Text>
+        <Button fx:id="ok" layoutX="323.0" layoutY="225.0" mnemonicParsing="false" onMouseClicked="#updateUrl"
+                text="确定"/>
+        <Button fx:id="cancel" layoutX="257.0" layoutY="225.0" mnemonicParsing="false" onMouseClicked="#cancel"
+                text="取消"/>
+    </children>
 </AnchorPane>

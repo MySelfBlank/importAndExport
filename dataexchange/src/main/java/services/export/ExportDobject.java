@@ -23,7 +23,7 @@ public class ExportDobject {
     /**
      * 保存Dobject文件到本地
      */
-    public void writeDoject(){
+    public void writeDoject() {
         if (ExecuteContainer.dObjectList != null) {
             FileUtils.writeContent(JsonUtils.objectToJson(ExecuteContainer.dObjectList), PathUtil.baseDir, ConstantDict.DOBJECT_DATA_FILE_NAME.getName(), false);
         }
@@ -31,10 +31,11 @@ public class ExportDobject {
 
     /**
      * 提取EDobject
+     *
      * @param sObjects
      */
     public void dsDObject2DataFile(List<SObject> sObjects) {
-        if(sObjects==null||sObjects.size()==0){
+        if (sObjects == null || sObjects.size() == 0) {
             return;
         }
         Set<Long> dobjectfromIds = new HashSet<>(16);
@@ -45,17 +46,17 @@ public class ExportDobject {
             }
         });
 
-        if(dobjectfromIds.size()>0){
+        if (dobjectfromIds.size() > 0) {
             List<Long> dobjectIds = new ArrayList<>(dobjectfromIds);
             List<EDObject> edObjects = new ArrayList<>();
             List<List<Long>> partition = Lists.partition(dobjectIds, 10);
-            try{
+            try {
                 List<DObject> dObjects = new ArrayList<>();
                 for (List<Long> list : partition) {
                     dObjects.addAll(requestServices.getDobjectByIds(list));
                 }
                 edObjects = dsDobjectsToEDObjects(dObjects);
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             ExecuteContainer.addDObject(edObjects);
@@ -63,18 +64,17 @@ public class ExportDobject {
     }
 
     /**
-     *
      * @param dObjects
      * @return
      * @throws Exception
      */
-    public  List<EDObject> dsDobjectsToEDObjects(List<DObject> dObjects) throws Exception {
-        if (dObjects == null||dObjects.size() == 0) {
+    public List<EDObject> dsDobjectsToEDObjects(List<DObject> dObjects) throws Exception {
+        if (dObjects == null || dObjects.size() == 0) {
             return null;
         }
         List<EDObject> edObjects = new ArrayList<>(dObjects.size());
-        for(DObject dObject : dObjects){
-            if (dObject.getDataRef() != null && !"".equals(dObject.getDataRef())){
+        for (DObject dObject : dObjects) {
+            if (dObject.getDataRef() != null && !"".equals(dObject.getDataRef())) {
                 /**下载模型文件*/
                 requestServices.downLoadDll(dObject.getDataRef(), PathUtil.baseDirData);
             }
@@ -87,10 +87,11 @@ public class ExportDobject {
 
     /**
      * 创建EDObject
+     *
      * @param dObject
      * @return
      */
-    private  EDObject dsDobjectToEDObject(DObject dObject) {
+    private EDObject dsDobjectToEDObject(DObject dObject) {
         EDObject edObject = new EDObject();
         edObject.setId(dObject.getId());
         edObject.setName(dObject.getName());

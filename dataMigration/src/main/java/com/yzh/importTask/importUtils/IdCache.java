@@ -17,14 +17,14 @@ public class IdCache {
     public static Map<Long, Long> relationNewIdAndOldId = new HashMap<>();
 
     //类模板新旧ID缓存
-    public static Map<Long,Long> otypeNewIdAndOldId = new HashMap<>();
-    
-    public static Map<Long,Long>  modelNewIdAndOldId = new HashMap<>();
+    public static Map<Long, Long> otypeNewIdAndOldId = new HashMap<>();
 
-    public static Map<Long,Long>  modelDefNewIdAndOldId = new HashMap<>();
+    public static Map<Long, Long> modelNewIdAndOldId = new HashMap<>();
+
+    public static Map<Long, Long> modelDefNewIdAndOldId = new HashMap<>();
 
 
-    public static void allClear(){
+    public static void allClear() {
         fieldOldIdAndNewIdCache.clear();
         formStylesOidAndNewId.clear();
         relationNewIdAndOldId.clear();

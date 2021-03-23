@@ -45,7 +45,7 @@ import static org.jaitools.CollectionFactory.map;
 public class RequestServicesImpl implements RequestServices {
 
     @Override
-    public PageInfo<String> queryObjectIds(String sdomainId, String pageNum, String pageSize) throws Exception{
+    public PageInfo<String> queryObjectIds(String sdomainId, String pageNum, String pageSize) throws Exception {
         Map<String, String> params = new HashMap<>();
         params.put("sDomainId", sdomainId);
         params.put("pageSize", pageSize);
@@ -80,7 +80,7 @@ public class RequestServicesImpl implements RequestServices {
             oIds.addAll(ids);
             spatialFilter.setIds(oIds);
         }
-        try{
+        try {
             ResponseResult responseResult = HttpClientUtils.doPostWithJson(POST_URL, JsonUtils.objectToJson(spatialFilter));
             if (responseResult.getStatus() != ResponseMessage.OK.getStatus()) {
                 System.out.println(String.format("IDS: %s 的对象查询失败，失败原因：%s", JSONObject.toJSONString(ids), responseResult.getMessage()));
@@ -89,34 +89,34 @@ public class RequestServicesImpl implements RequestServices {
             Object data = responseResult.getData();
             PageInfo resultdata = JsonUtils.jsonToPojo(JsonUtils.objectToJson(data), PageInfo.class);
             Object resultdataData = resultdata.getList();
-            List<SObject> sObjects =  JsonUtils.jsonToList(JsonUtils.objectToJson(resultdataData), SObject.class);
-            return  sObjects;
-        }catch (Exception e){
+            List<SObject> sObjects = JsonUtils.jsonToList(JsonUtils.objectToJson(resultdataData), SObject.class);
+            return sObjects;
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
     @Override
-    public ResponseResult queryDomain(int pageNum, int pageSize, String name) throws Exception{
+    public ResponseResult queryDomain(int pageNum, int pageSize, String name) throws Exception {
         String url = BaseUrl.DATASTORE_URL + "/rest/v0.1.0/datastore/sdomain/query?pageNum=" + pageNum + "&pageSize=" + pageSize;
-        if (name!= null && !name.equals("")) {
-            url += "&names=" + URLEncoder.encode(name,"utf-8");
+        if (name != null && !name.equals("")) {
+            url += "&names=" + URLEncoder.encode(name, "utf-8");
         }
         ResponseResult responseResult = HttpClientUtils.doGet(url);
         return responseResult;
     }
 
     @Override
-    public JSONObject queryUser(String userName, String pwd) throws Exception{
-        String url = BaseUrl.UC_URL + "/api/v2/account/login?"+"username=" + userName + "&" + "password=" + pwd;
+    public JSONObject queryUser(String userName, String pwd) throws Exception {
+        String url = BaseUrl.UC_URL + "/api/v2/account/login?" + "username=" + userName + "&" + "password=" + pwd;
         JSONObject jsonObject = HttpClientUtils.doPost(url);
         return jsonObject;
     }
 
     @Override
     public String getNickName(String token) throws Exception {
-        String url = BaseUrl.UC_URL + "/api/v2/account/authorize?token="+token;
+        String url = BaseUrl.UC_URL + "/api/v2/account/authorize?token=" + token;
         ResponseResult responseResult = HttpClientUtils.doGet(url);
         Object data = responseResult.getData();
         JSONObject user = JSON.parseObject(data.toString());
@@ -128,32 +128,33 @@ public class RequestServicesImpl implements RequestServices {
     public List<OType> getOtypes(Set<Long> allOtIds) throws Exception {
         String httpUrl = BaseUrl.DATASTORE_URL + "/rest/v0.1.0/datastore/otype/query";
         Map<String, String> params = new HashMap<>();
-        params.put("ids", allOtIds.toString().substring(1, allOtIds.toString().length() -1));
+        params.put("ids", allOtIds.toString().substring(1, allOtIds.toString().length() - 1));
         params.put("loadModel", "true");
         ResponseResult responseResult = HttpClientUtils.doGet(httpUrl, params);
-        if(responseResult==null||responseResult.getStatus()!=200){
+        if (responseResult == null || responseResult.getStatus() != 200) {
             return new ArrayList<>();
         }
         Object data = responseResult.getData();
-        if(data==null){
+        if (data == null) {
             return new ArrayList<>();
         }
         JSONObject jsonObject = JSONObject.parseObject(data.toString());
         PageInfo pageInfo = jsonObject.toJavaObject(PageInfo.class);
         List list = pageInfo.getList();
         ObjectMapper objectMapper = new ObjectMapper();
-        List<OType> oTypes = objectMapper.readValue(objectMapper.writeValueAsString(pageInfo.getList()), new TypeReference<List<OType>>(){});
+        List<OType> oTypes = objectMapper.readValue(objectMapper.writeValueAsString(pageInfo.getList()), new TypeReference<List<OType>>() {
+        });
         return oTypes;
     }
 
     @Override
-    public void downLoadDll(String srcPath, String downloadPath) throws Exception{
+    public void downLoadDll(String srcPath, String downloadPath) throws Exception {
         String url = BaseUrl.HDFS_URL + "/rest/v0.1.0/datastore/slave/hdfs/download?srcPath=" + srcPath;
-        HttpClientUtils.execDownlLoad(url,downloadPath,srcPath);
+        HttpClientUtils.execDownlLoad(url, downloadPath, srcPath);
     }
 
     @Override
-    public void downLoadModle(String modelID, String downloadPath){
+    public void downLoadModle(String modelID, String downloadPath) {
         if (!GeneralUtils.isNotEmpty(modelID)) {
             return;
         }
@@ -187,11 +188,11 @@ public class RequestServicesImpl implements RequestServices {
                     output.write(ch, 0, len);
                 }
                 output.close();
-                System.out.println(PathUtil.baseDirData+"\\"+ fname + "." + fileMode.getFileExt() + "-- 下载成功！");
+                System.out.println(PathUtil.baseDirData + "\\" + fname + "." + fileMode.getFileExt() + "-- 下载成功！");
             } else {
                 System.out.println("下载模型文件：" + modelID + ",失败");
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("下载模型文件：" + modelID + ",异常 -- " + e.getMessage());
         }
     }
@@ -199,27 +200,27 @@ public class RequestServicesImpl implements RequestServices {
     @Override
     public SDomain getSDomain(Long sdomainId) throws Exception {
         String utl = BaseUrl.DATASTORE_URL + "/rest/v0.1.0/datastore/sdomain/query";
-        HashMap<String,String> params = new HashMap<>();
-        params.put("ids",sdomainId+"");
+        HashMap<String, String> params = new HashMap<>();
+        params.put("ids", sdomainId + "");
         ResponseResult responseResult = HttpClientUtils.doGet(utl, params);
-        if(responseResult.getStatus()==200){
+        if (responseResult.getStatus() == 200) {
             Object data = responseResult.getData();
-            if(data!=null){
+            if (data != null) {
                 String msg = JSONObject.toJSONString(data);
                 PageInfo pageInfo = JSONObject.parseObject(msg, PageInfo.class);
                 List list = pageInfo.getList();
-                if (list!=null&&list.size()>0){
+                if (list != null && list.size() > 0) {
                     SDomain sDomain = JSONObject.parseObject(list.get(0).toString(), SDomain.class);
                     return sDomain;
-                }else {
+                } else {
                     System.out.println("不存在该时空域");
                     return null;
                 }
 
-            }else {
+            } else {
                 return null;
             }
-        }else {
+        } else {
             System.out.println(responseResult.getMessage());
             return null;
         }
@@ -231,7 +232,7 @@ public class RequestServicesImpl implements RequestServices {
         String url = BaseUrl.DATASTORE_URL + "/rest/v0.1.0/datastore/getRelationCatalog?sdomain=" + sdomainId;
         ResponseResult responseResult = HttpClientUtils.doGet(url);
         List<SDomainRelationCatalog> sDomainRelationCatalogs = new ArrayList<>();
-        if(responseResult.getStatus()==200){
+        if (responseResult.getStatus() == 200) {
             sDomainRelationCatalogs = JsonUtils.jsonToList(JsonUtils.objectToJson(responseResult.getData()), SDomainRelationCatalog.class);
         }
         if (sDomainRelationCatalogs == null || sDomainRelationCatalogs.isEmpty()) {
@@ -257,11 +258,11 @@ public class RequestServicesImpl implements RequestServices {
     @Override
     public List<DObject> getDobjectByIds(List<Long> dobjectIds) throws Exception {
         /**注意不要让ids过大*/
-        String requestUrl = BaseUrl.DATASTORE_URL +"/rest/v0.1.0/datastore/dobject/queryByFrom?fromIds=";
+        String requestUrl = BaseUrl.DATASTORE_URL + "/rest/v0.1.0/datastore/dobject/queryByFrom?fromIds=";
         String idsString = setToString(dobjectIds);
         requestUrl += idsString;
         ResponseResult responseResult = HttpClientUtils.doGet(requestUrl);
-        if(responseResult.getStatus() != 200){
+        if (responseResult.getStatus() != 200) {
             System.out.println("==============>>>>>>>> DObject查询失败，失败原因：" + responseResult.getMessage());
             throw new BaseException(ResponseMessage.BAD_REQUEST, responseResult.getMessage());
         }
@@ -275,7 +276,7 @@ public class RequestServicesImpl implements RequestServices {
     public List<ModelBlock> getModel(Long fid) throws Exception {
         String url = BaseUrl.MODEL_URL + "/rest/v0.1.0/datastore/slave/model/file/query?fids=" + fid;
         ResponseResult responseResult = HttpClientUtils.doGet(url);
-        if(responseResult.getStatus()==200){
+        if (responseResult.getStatus() == 200) {
             PageInfo<ModelBlock> modelBlockPageInfo = JsonUtils.jsonToPojo(JsonUtils.objectToJson(responseResult.getData()), PageInfo.class);
             List<ModelBlock> modelBlocks = JsonUtils.jsonToList(JsonUtils.objectToJson(modelBlockPageInfo.getList()), ModelBlock.class);
             return modelBlocks;
@@ -289,7 +290,7 @@ public class RequestServicesImpl implements RequestServices {
         String url = BaseUrl.GEOMESA_URL + "/rest/v0.1.0/datastore/slave/geomesa/query";
         String json = "{\"oids\":[" + oids + "],\"tableName\":\"" + tableName + "\"}";
         ResponseResult responseResult = HttpClientUtils.doPostWithJson(url, json);
-        if(responseResult.getStatus()==200){
+        if (responseResult.getStatus() == 200) {
             Object data = responseResult.getData();
             ResultData resultdata = JsonUtils.jsonToPojo(JsonUtils.objectToJson(data), ResultData.class);
             Object resultdataData = resultdata.getData();
@@ -301,10 +302,10 @@ public class RequestServicesImpl implements RequestServices {
     }
 
     @Override
-    public ResponseResult saveSObject(String token, List<CustomerSObject> sObjects,Integer num) throws Exception{
+    public ResponseResult saveSObject(String token, List<CustomerSObject> sObjects, Integer num) throws Exception {
         String url = BaseUrl.DATASTORE_URL + "/rest/v0.1.0/datastore/object/saveObject?token=" + token + "&idstrategy=true";
         ObjectMapper objectMapper = new ObjectMapper();
-        for(CustomerSObject customerSObject:sObjects){
+        for (CustomerSObject customerSObject : sObjects) {
             Long id = customerSObject.getId();
             List<CustomerSObject> sObjectList = new ArrayList<>();
             sObjectList.add(customerSObject);
@@ -313,11 +314,11 @@ public class RequestServicesImpl implements RequestServices {
             Optional<List<ERNode>> erNodesOp = Optional.of(customerSObject).map(so -> so.getNetwork()).map(network -> network.getNodes());
             List<ERNode> erNodes = erNodesOp.orElse(null);
 
-            String content = ReadSObject.changID(json, id + "",erNodes);
+            String content = ReadSObject.changID(json, id + "", erNodes);
             ResponseResult responseResult = HttpClientUtils.doPostWithJson(url, content);
-            if(responseResult.getStatus()!=200){
-                System.out.println("导入错误："+responseResult.getMessage()+"--Name:"+customerSObject.getName()+"--num:"+num);
-                System.out.println("url:"+url+"\r\n+json:"+content);
+            if (responseResult.getStatus() != 200) {
+                System.out.println("导入错误：" + responseResult.getMessage() + "--Name:" + customerSObject.getName() + "--num:" + num);
+                System.out.println("url:" + url + "\r\n+json:" + content);
             }
         }
         ResponseResult responseResult = new ResponseResult(200);
@@ -339,16 +340,16 @@ public class RequestServicesImpl implements RequestServices {
         onegis.result.response.ResponseResult responseResult = JsonUtils.jsonToPojo(result, onegis.result.response.ResponseResult.class);
         if (responseResult.getStatus() == 200) {
             Model model = JSON.parseObject(JSON.toJSONString(responseResult.getData()), Model.class);
-            System.out.println("模型" +  model.getFname() +"保存成功，fid：" + model.getFid());
+            System.out.println("模型" + model.getFname() + "保存成功，fid：" + model.getFid());
             return model;
-        }else {
-            System.out.println("模型" +  file.getName() +"保存失败" );
+        } else {
+            System.out.println("模型" + file.getName() + "保存失败");
         }
         return null;
     }
 
     @Override
-    public ResponseResult saveDynamicDatas(String dataJson) throws Exception{
+    public ResponseResult saveDynamicDatas(String dataJson) throws Exception {
         String url = BaseUrl.DATASTORE_URL + "/rest/v0.1.0/datastore/object/saveDynamicData?token=" + BaseUrl.token;
 //        String url = "http://127.0.0.1:8080/rest/v0.1.0/datastore/object/saveDynamicData?token=" + BaseUrl.token;
         ResponseResult responseResult = HttpClientUtils.doPostWithJson(url, dataJson);
@@ -357,9 +358,9 @@ public class RequestServicesImpl implements RequestServices {
 
     @Override
     public Boolean isExistTag(String tags) throws Exception {
-        String url = BaseUrl.DATASTORE_URL +"/rest/v0.1.0/datastore/otype/isExistTags?tags="+tags;
+        String url = BaseUrl.DATASTORE_URL + "/rest/v0.1.0/datastore/otype/isExistTags?tags=" + tags;
         ResponseResult responseResult = HttpClientUtils.doGet(url);
-        if(responseResult.getStatus()==1){//status==1代表该标签是存在的
+        if (responseResult.getStatus() == 1) {//status==1代表该标签是存在的
             return true;
         }
         return false;
@@ -367,11 +368,11 @@ public class RequestServicesImpl implements RequestServices {
 
     @Override
     public OType queryOtype(String tags) throws Exception {
-        String url = BaseUrl.DATASTORE_URL +"/rest/v0.1.0/datastore/otype/query?tags=" +tags;
+        String url = BaseUrl.DATASTORE_URL + "/rest/v0.1.0/datastore/otype/query?tags=" + tags;
         ResponseResult responseResult = HttpClientUtils.doGet(url);
-        if(responseResult.getStatus()==200){
+        if (responseResult.getStatus() == 200) {
             PageInfo<OType> pageInfo = JsonUtils.jsonToPojo(JsonUtils.objectToJson(responseResult.getData()), PageInfo.class);
-            if(pageInfo.getTotal()>0){
+            if (pageInfo.getTotal() > 0) {
                 List<OType> oTypes = JsonUtils.jsonToList(JsonUtils.objectToJson(pageInfo.getList()), OType.class);
                 return oTypes.get(0);
             }
@@ -379,8 +380,8 @@ public class RequestServicesImpl implements RequestServices {
         return null;
     }
 
-    private String setToString(List<Long> ids){
-        if (ids == null||ids.size() == 0) {
+    private String setToString(List<Long> ids) {
+        if (ids == null || ids.size() == 0) {
             return "";
         }
         StringBuilder idsBuilder = new StringBuilder();

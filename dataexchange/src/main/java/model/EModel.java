@@ -6,7 +6,7 @@ import onegis.psde.model.Mobj;
 /**
  * 模型
  */
-public class EModel extends AbstractObject{
+public class EModel extends AbstractObject {
 
     /**
      * 初始化信息

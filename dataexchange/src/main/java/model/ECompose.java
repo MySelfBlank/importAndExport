@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * 组成结构
  */
-public class ECompose extends AbstractObject{
+public class ECompose extends AbstractObject {
 
     /**
      * 描述
@@ -21,7 +21,7 @@ public class ECompose extends AbstractObject{
      */
     private Boolean strong = false;
 
-    public void addElement(EComposeElement element){
+    public void addElement(EComposeElement element) {
         this.elements.add(element);
     }
 

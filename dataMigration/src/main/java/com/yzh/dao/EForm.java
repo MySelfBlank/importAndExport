@@ -71,7 +71,7 @@ public class EForm extends AbstractObject {
             EForm other = (EForm) obj;
             //需要比较的字段相等，则这两个对象相等
             if (equalsStr(this.getId(), other.getId())) {
-                if(equalsStr(this.getStyle(), other.getStyle())){
+                if (equalsStr(this.getStyle(), other.getStyle())) {
                     return true;
                 }
                 return false;
@@ -90,6 +90,7 @@ public class EForm extends AbstractObject {
         }
         return false;
     }
+
     private boolean equalsStr(String str1, String str2) {
         if (StringUtils.isEmpty(str1) && StringUtils.isEmpty(str2)) {
             return true;

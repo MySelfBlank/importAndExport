@@ -7,67 +7,74 @@
 <?import javafx.scene.layout.*?>
 
 
-<Pane fx:id="bg" prefHeight="370.0" prefWidth="538.0" styleClass="bg" stylesheets="@../../style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.LoginController">
-   <children>
-      <GridPane alignment="CENTER_LEFT" prefHeight="385.0" prefWidth="539.0">
+<Pane fx:id="bg" prefHeight="370.0" prefWidth="538.0" styleClass="bg" stylesheets="@../../style.css"
+      xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="app.controller.LoginController">
+    <children>
+        <GridPane alignment="CENTER_LEFT" prefHeight="385.0" prefWidth="539.0">
 
-         <children>
-            <GridPane alignment="center" hgap="10.0" prefHeight="160.0" prefWidth="255.0" vgap="10" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <children>
+                <GridPane alignment="center" hgap="10.0" prefHeight="160.0" prefWidth="255.0" vgap="10"
+                          GridPane.columnIndex="1" GridPane.rowIndex="1">
 
-               <children>
-                  <TextField styleClass="input" fx:id="userName" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                  <PasswordField styleClass="input" fx:id="userPwd" prefHeight="23.0" prefWidth="161.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="用户名：" GridPane.rowIndex="1" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="密码：" GridPane.rowIndex="2" />
-                  <CheckBox fx:id="isCheck" mnemonicParsing="false" text="记住密码" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                  <MenuButton mnemonicParsing="false" text="服务器地址配置" GridPane.columnIndex="2">
-                    <items>
-                      <MenuItem mnemonicParsing="false" onAction="#openUpdateUrl" text="修改配置" />
-                    </items>
-                  </MenuButton>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="服务设置：" />
-               </children>
-               <columnConstraints>
-                  <ColumnConstraints maxWidth="48.0" minWidth="48.0" prefWidth="48.0" />
-                  <ColumnConstraints maxWidth="0.0" minWidth="0.0" prefWidth="0.0" />
-                  <ColumnConstraints />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints />
-                  <RowConstraints />
-                  <RowConstraints />
-                  <RowConstraints maxHeight="17.0" minHeight="0.0" prefHeight="0.0" />
-                  <RowConstraints />
-               </rowConstraints>
+                    <children>
+                        <TextField styleClass="input" fx:id="userName" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+                        <PasswordField styleClass="input" fx:id="userPwd" prefHeight="23.0" prefWidth="161.0"
+                                       GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="用户名：" GridPane.rowIndex="1"/>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="密码：" GridPane.rowIndex="2"/>
+                        <CheckBox fx:id="isCheck" mnemonicParsing="false" text="记住密码" GridPane.columnIndex="2"
+                                  GridPane.rowIndex="3"/>
+                        <MenuButton mnemonicParsing="false" text="服务器地址配置" GridPane.columnIndex="2">
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#openUpdateUrl" text="修改配置"/>
+                            </items>
+                        </MenuButton>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="服务设置："/>
+                    </children>
+                    <columnConstraints>
+                        <ColumnConstraints maxWidth="48.0" minWidth="48.0" prefWidth="48.0"/>
+                        <ColumnConstraints maxWidth="0.0" minWidth="0.0" prefWidth="0.0"/>
+                        <ColumnConstraints/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                        <RowConstraints/>
+                        <RowConstraints maxHeight="17.0" minHeight="0.0" prefHeight="0.0"/>
+                        <RowConstraints/>
+                    </rowConstraints>
 
-            </GridPane>
-            <ImageView fx:id="imageView" fitHeight="68.0" fitWidth="252.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
-               <image>
-                  <Image url="@../../img/icon.png" />
-               </image>
-               <GridPane.margin>
-                  <Insets left="25.0" />
-               </GridPane.margin>
-            </ImageView>
-            <Button mnemonicParsing="false" onAction="#checkUser" prefHeight="23.0" prefWidth="255.0" styleClass="loginButton" text="登录" GridPane.columnIndex="1" GridPane.rowIndex="2">
-               <GridPane.margin>
-                  <Insets />
-               </GridPane.margin>
-            </Button>
-         </children>
-         <columnConstraints>
-            <ColumnConstraints />
-            <ColumnConstraints maxWidth="255.0" minWidth="255.0" prefWidth="255.0" />
-            <ColumnConstraints maxWidth="0.0" minWidth="0.0" prefWidth="0.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-         </rowConstraints>
-         <padding>
-            <Insets left="30.0" />
-         </padding>
-      </GridPane>
-   </children>
+                </GridPane>
+                <ImageView fx:id="imageView" fitHeight="68.0" fitWidth="252.0" pickOnBounds="true" preserveRatio="true"
+                           GridPane.columnIndex="1">
+                    <image>
+                        <Image url="@../../img/icon.png"/>
+                    </image>
+                    <GridPane.margin>
+                        <Insets left="25.0"/>
+                    </GridPane.margin>
+                </ImageView>
+                <Button mnemonicParsing="false" onAction="#checkUser" prefHeight="23.0" prefWidth="255.0"
+                        styleClass="loginButton" text="登录" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                    <GridPane.margin>
+                        <Insets/>
+                    </GridPane.margin>
+                </Button>
+            </children>
+            <columnConstraints>
+                <ColumnConstraints/>
+                <ColumnConstraints maxWidth="255.0" minWidth="255.0" prefWidth="255.0"/>
+                <ColumnConstraints maxWidth="0.0" minWidth="0.0" prefWidth="0.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+            </rowConstraints>
+            <padding>
+                <Insets left="30.0"/>
+            </padding>
+        </GridPane>
+    </children>
 </Pane>

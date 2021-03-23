@@ -38,7 +38,7 @@ import java.util.stream.Collectors;
 
 public class ExportSObject {
 
-    public static void writeSObject(List<SObject> sObjects,Integer region){
+    public static void writeSObject(List<SObject> sObjects, Integer region) {
         Map<Long, List<Long>> dobjectMap = getEDObjectMap();
         List<ESObject> esObjects = dsSObjects2ex(sObjects, dobjectMap);
         /**对数据ID进行重置*/
@@ -47,20 +47,23 @@ public class ExportSObject {
                 PathUtil.baseDir, ConstantDict.SOBJECT_DATA_FILE_NAME.getName() + String.format("(%s)", region), false);
     }
 
-    public static Map<Long, List<Long>> getEDObjectMap(){
+    public static Map<Long, List<Long>> getEDObjectMap() {
         Map<Long, List<Long>> map = new HashMap<>(8);
         List<EDObject> dObjectList = ExecuteContainer.dObjectList;
-        if (dObjectList.size() > 0){
+        if (dObjectList.size() > 0) {
             dObjectList.forEach(d -> {
-                if (map.containsKey(d.getDataSource())){
+                if (map.containsKey(d.getDataSource())) {
                     map.get(d.getDataSource()).add(d.getId());
-                }else {
-                    map.put(d.getDataSource(), new ArrayList<Long>(){{add(d.getId());}});
+                } else {
+                    map.put(d.getDataSource(), new ArrayList<Long>() {{
+                        add(d.getId());
+                    }});
                 }
             });
         }
         return map;
     }
+
     /**
      * 空间对象列表转交换格式空间列表
      *
@@ -68,7 +71,7 @@ public class ExportSObject {
      * @param dobjectMap 空间对象对应产生的数据文件ID
      * @return List<ESObject>
      */
-    public  static List<ESObject> dsSObjects2ex(List<SObject> sObjects, Map<Long, List<Long>> dobjectMap) {
+    public static List<ESObject> dsSObjects2ex(List<SObject> sObjects, Map<Long, List<Long>> dobjectMap) {
         List<ESObject> esObjects = new ArrayList<>();
         if (!GeneralUtils.isNotEmpty(sObjects)) {
             System.out.println("空间对象列表null");
@@ -152,6 +155,7 @@ public class ExportSObject {
         setCompose(esObject, startSObject);
         return esObject;
     }
+
     /**
      * 拿到对象列表中，初始状态的对象
      *
@@ -178,12 +182,14 @@ public class ExportSObject {
         }
         return sObject;
     }
+
     /**
      * 空间对象列表分组
+     *
      * @param sObjects
      * @return
      */
-    public static  HashMap<Long, List<SObject>> groupSObjects(List<SObject> sObjects){
+    public static HashMap<Long, List<SObject>> groupSObjects(List<SObject> sObjects) {
         // 1、对象分组
         HashMap<Long, List<SObject>> sobjectGroups = new HashMap<>();
         if (!GeneralUtils.isNotEmpty(sObjects)) {
@@ -206,6 +212,7 @@ public class ExportSObject {
 
     /**
      * 判断基本信息是否发生变化
+     *
      * @param allSObjects
      * @return
      */
@@ -227,13 +234,14 @@ public class ExportSObject {
 
     /**
      * 构建单个对象的基本信息变化,目前只判断code是否发生变化
+     *
      * @param sObjects
      * @return
      */
     private static List<EVersion> buildBaseActions(List<SObject> sObjects) {
         List<EVersion> list = new ArrayList<>();
         SObject lastSObject = sObjects.get(0);
-        for (int i=1; i<sObjects.size(); i++) {
+        for (int i = 1; i < sObjects.size(); i++) {
             SObject thisSObject = sObjects.get(i);
             EVersion eVersion = new EVersion();
             eVersion.setVtime(thisSObject.getRealTime());
@@ -293,7 +301,7 @@ public class ExportSObject {
 //            }
 //        }
 
-        if(realTime!=null){
+        if (realTime != null) {
             esObject.setRealTime(sObject.getRealTime());
         }
 
@@ -329,6 +337,7 @@ public class ExportSObject {
         otypeMap.put("name", otype.getName());
         esObject.setOtype(otypeMap);
     }
+
     /**
      * 设置属性
      */
@@ -486,41 +495,41 @@ public class ExportSObject {
 
     /**
      * 重置数据ID
+     *
      * @param esObjecs
      */
-    private static void resetId(List<ESObject> esObjecs){
-        for(ESObject esObject:esObjecs){
+    private static void resetId(List<ESObject> esObjecs) {
+        for (ESObject esObject : esObjecs) {
             Long id = esObject.getId();
             List<String> idList = new ArrayList<>();
             /**
              * 对象ID
              */
-            idList.add(id+"");
+            idList.add(id + "");
             List<EForm> forms = esObject.getForms();
-            if(forms!=null&&forms.size()>0){
+            if (forms != null && forms.size() > 0) {
                 for (EForm form1 : forms) {
                     /**
                      * 形态ID
                      */
                     String oldFormId = form1.getId().toString();
-                    idList.add(oldFormId+"");
+                    idList.add(oldFormId + "");
 
                     String oldFormFId = form1.getFid().toString();
-                    idList.add(oldFormFId+"");
+                    idList.add(oldFormFId + "");
                     /**
                      * 位置ID
                      */
                     EPosition customerGeom = form1.getGeom();
                     if (customerGeom != null && customerGeom.getId() != null && StringUtils.isNotBlank(customerGeom.getId().toString())) {
                         Long geomId = customerGeom.getId();
-                        idList.add(geomId+"");
+                        idList.add(geomId + "");
                     }
                 }
             }
-            ExecuteContainer.addNewId(id+"",idList);
+            ExecuteContainer.addNewId(id + "", idList);
         }
     }
-
 
 
 }

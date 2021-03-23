@@ -34,7 +34,7 @@ public class FormStyleUtils {
         }
         if (formStyle.getType() != null) {
             eForm.setType(formStyle.getType().getName().toLowerCase());
-            if (eForm.getType().equals("bim")){
+            if (eForm.getType().equals("bim")) {
                 eForm.setType(FormEnum.getEnum(50).getName().toLowerCase());
             }
         }

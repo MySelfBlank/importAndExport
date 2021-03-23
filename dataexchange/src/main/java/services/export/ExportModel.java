@@ -12,10 +12,11 @@ import java.util.Set;
 public class ExportModel {
 
     private RequestServices requestServices = new RequestServicesImpl();
-    public void downloadModel(){
+
+    public void downloadModel() {
         Set<Long> modelIds = ExecuteContainer.modelIds;
-        for(Long modelId:modelIds){
-            requestServices.downLoadModle(modelId+"", PathUtil.baseDirData);
+        for (Long modelId : modelIds) {
+            requestServices.downLoadModle(modelId + "", PathUtil.baseDirData);
         }
     }
 }

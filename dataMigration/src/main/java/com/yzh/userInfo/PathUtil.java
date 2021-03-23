@@ -5,12 +5,12 @@ package com.yzh.userInfo;
  */
 public class PathUtil {
 
-    public static String baseInfoDir="";
-    public static String baseInfoDirData="";
+    public static String baseInfoDir = "";
+    public static String baseInfoDirData = "";
 
-    public static void setDir(String sdomainName,String baseDir) {
+    public static void setDir(String sdomainName, String baseDir) {
         PathUtil.baseInfoDir = baseDir;
-        PathUtil.baseInfoDirData = baseDir + "\\"+ sdomainName+"\\data";
+        PathUtil.baseInfoDirData = baseDir + "\\" + sdomainName + "\\data";
     }
 
 }

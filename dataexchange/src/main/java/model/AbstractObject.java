@@ -18,16 +18,17 @@ public class AbstractObject {
 
     /**
      * 构建空间盒子【范围】
+     *
      * @param geobox 盒子对象
-     * @param minx 最小X
-     * @param miny 最小Y
-     * @param minz 最小Z
-     * @param maxx 最大X
-     * @param maxy 最大Y
-     * @param maxz 最大Z
+     * @param minx   最小X
+     * @param miny   最小Y
+     * @param minz   最小Z
+     * @param maxx   最大X
+     * @param maxy   最大Y
+     * @param maxz   最大Z
      */
     public void addGeobox(List<Double> geobox, double minx, double miny, double minz,
-                          double maxx, double maxy, double maxz){
+                          double maxx, double maxy, double maxz) {
         geobox.add(minx);
         geobox.add(miny);
         geobox.add(minz);

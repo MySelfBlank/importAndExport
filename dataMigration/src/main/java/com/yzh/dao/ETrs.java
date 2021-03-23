@@ -19,26 +19,27 @@ public class ETrs extends TimeReferenceSystem {
 
     @Override
     public boolean equals(Object obj) {
-        if (this==obj){
+        if (this == obj) {
             return true;
         }
-        if (obj==null){
+        if (obj == null) {
             return false;
         }
-        if (obj instanceof TimeReferenceSystem){
-            TimeReferenceSystem trs =(TimeReferenceSystem) obj;
-            if (equalsStr(this.getName(),trs.getName())&&
-            equalsStr(this.getId(),trs.getId())){
+        if (obj instanceof TimeReferenceSystem) {
+            TimeReferenceSystem trs = (TimeReferenceSystem) obj;
+            if (equalsStr(this.getName(), trs.getName()) &&
+                    equalsStr(this.getId(), trs.getId())) {
                 return true;
             }
         }
         return false;
     }
-    private boolean equalsStr(String str1, String str2){
-        if(StringUtils.isEmpty(str1) && StringUtils.isEmpty(str2)){
+
+    private boolean equalsStr(String str1, String str2) {
+        if (StringUtils.isEmpty(str1) && StringUtils.isEmpty(str2)) {
             return true;
         }
-        if(!StringUtils.isEmpty(str1) && str1.equals(str2)){
+        if (!StringUtils.isEmpty(str1) && str1.equals(str2)) {
             return true;
         }
         return false;

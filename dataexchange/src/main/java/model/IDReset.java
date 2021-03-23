@@ -4,7 +4,7 @@ import java.util.Map;
 
 public class IDReset {
     private String id;
-    private Map<String,String> idMpas;
+    private Map<String, String> idMpas;
 
     public String getId() {
         return id;

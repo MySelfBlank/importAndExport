@@ -18,6 +18,7 @@ public class BuildBaseAction {
 
     /**
      * 判断基本信息的变化，目前只判断code，生成action
+     *
      * @param eVersion
      * @param lastSObject
      * @param thisSObject
@@ -87,7 +88,8 @@ public class BuildBaseAction {
     }
 
     /**
-     *  判断是否是消亡版本
+     * 判断是否是消亡版本
+     *
      * @param eVersion
      * @param thisSObject
      */

@@ -20,12 +20,14 @@ import static com.yzh.utilts.tools.FileTools.forJsonList;
 
 /**
  * 行为类的导出
+ *
  * @ Author        :  yuyazhou
  * @ CreateDate    :  2020/12/22 15:31
  */
 public class EModelDefUtil {
     /**
      * 获取行为类别的id
+     *
      * @param oTypeList
      * @return
      */
@@ -45,7 +47,6 @@ public class EModelDefUtil {
     }
 
     /**
-     *
      * @param models
      * @return
      */
@@ -68,33 +69,33 @@ public class EModelDefUtil {
     }
 
 
-
     /**
      * 行为类别文件下载
+     *
      * @param oTypeList
      */
-    public static void loadModelDefFile( List<OType> oTypeList) throws Exception {
+    public static void loadModelDefFile(List<OType> oTypeList) throws Exception {
         Set<Long> ModelDefIds = getModelDefId(oTypeList);
-        if (ModelDefIds.size()==0){
+        if (ModelDefIds.size() == 0) {
             return;
         }
         Map<String, Object> param = new HashMap<>();
         param.put("token", UserInfo.token);
         param.put("ids", ModelDefIds.toArray());
-        param.put("DESCOrAsc","true");
+        param.put("DESCOrAsc", "true");
         String relationStr = HttpUtil.get(MyApi.getModelDefById.getValue(), param);
 
-        List<ModelDef> list = forJsonList(relationStr,ModelDef.class);
-        List<EModelDef> eModelDefs =new ArrayList<>();
+        List<ModelDef> list = forJsonList(relationStr, ModelDef.class);
+        List<EModelDef> eModelDefs = new ArrayList<>();
         for (ModelDef modelDef : list) {
-            if (modelDef!=null){
+            if (modelDef != null) {
                 EModelDef eModelDef = OtypeUtilts.handleModel(modelDef);
                 eModelDefs.add(eModelDef);
             }
         }
         String path = PathUtil.baseInfoDir + "\\test.modelDef";
-        exportFile(JSONUtil.parse(eModelDefs), path,"modelDef");
+        exportFile(JSONUtil.parse(eModelDefs), path, "modelDef");
     }
-        
-    }
+
+}
 

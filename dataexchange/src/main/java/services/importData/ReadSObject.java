@@ -1,5 +1,6 @@
 package services.importData;
 
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -23,19 +24,19 @@ import onegis.psde.util.JsonUtils;
 import org.apache.commons.lang.StringUtils;
 import utils.FileUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ReadSObject {
 
-    /**记录消亡对象*/
+    /**
+     * 记录消亡对象
+     */
     public static List<CustomerSObject> deleteSObjectList = new ArrayList<>();
 
     /**
      * 读取本地的SObject对象文件
+     *
      * @param filePath
      * @param setFid
      * @return
@@ -47,7 +48,8 @@ public class ReadSObject {
         String objectJson = FileUtils.readFile(filePath);
         /**替换对象属性名，方便转为自定义的类型*/
         objectJson = objectJson.replaceAll("\"srs\"", "\"srsStr\"").replaceAll("\"trs\"", "\"trsStr\"").replaceAll("\"geoBox\"", "\"geoBoxList\"").replaceAll("\"models\"", "\"modelList\"").replaceAll("\"parent\"", "\"parentId\"");
-        List<CustomerSObject>  customerSObjects = objectMapper.readValue(objectJson, new TypeReference<List<CustomerSObject>>(){});
+        List<CustomerSObject> customerSObjects = objectMapper.readValue(objectJson, new TypeReference<List<CustomerSObject>>() {
+        });
 
         for (CustomerSObject customerSObject : customerSObjects) {
             // 设置action
@@ -72,7 +74,7 @@ public class ReadSObject {
             // 时间参考
             String trsStr = customerSObject.getTrsStr();
             if (trsStr != null && !trsStr.isEmpty()) {
-                trsStr = trsStr.substring(trsStr.indexOf(":")+1, trsStr.length());
+                trsStr = trsStr.substring(trsStr.indexOf(":") + 1, trsStr.length());
                 trsStr = trsStr.replaceAll(" ", "");
                 if (trsStr != null && !trsStr.isEmpty()) {
                     TimeReferenceSystem trs = new TimeReferenceSystem();
@@ -84,7 +86,7 @@ public class ReadSObject {
             // 空间参考
             String srsStr = customerSObject.getSrsStr();
             if (srsStr != null && !srsStr.isEmpty()) {
-                srsStr = srsStr.substring(srsStr.indexOf(":")+1, srsStr.length());
+                srsStr = srsStr.substring(srsStr.indexOf(":") + 1, srsStr.length());
                 srsStr = srsStr.replaceAll(" ", "");
                 if (srsStr != null && !srsStr.isEmpty()) {
                     SpatialReferenceSystem srs = new SpatialReferenceSystem();
@@ -109,19 +111,24 @@ public class ReadSObject {
             // 设置forms的id和fid和geotype
             ArrayList<Form1> form1s = customerSObject.getForms();
             if (form1s != null && !form1s.isEmpty()) {
-                form1s.forEach(f -> {if (setFid) {f.setFid(f.getId());} f.setGeotype(f.getType().getValue());});
+                form1s.forEach(f -> {
+                    if (setFid) {
+                        f.setFid(f.getId());
+                    }
+                    f.setGeotype(f.getType().getValue());
+                });
             }
             customerSObject.setForms(form1s);//
 
             ENetWork network = customerSObject.getNetwork();
-            if(network!=null){
-                if(network.getNodes()!=null){
+            if (network != null) {
+                if (network.getNodes() != null) {
                     List<ERNode> nodes = network.getNodes();
-                    for(ERNode node:nodes){
-                        if(node.getRefObject()!=null){
+                    for (ERNode node : nodes) {
+                        if (node.getRefObject() != null) {
                             node.setLabel(node.getRefObject().getName());
                         }
-                        if(node.getProperties()==null||node.getProperties().size()==0){
+                        if (node.getProperties() == null || node.getProperties().size() == 0) {
                             node.setProperties(null);
                         }
                     }
@@ -140,7 +147,7 @@ public class ReadSObject {
     public static List<CustomerSObject> buildSObjectWithVersion(List<CustomerSObject> CustomerSObjectList) throws Exception {
         deleteSObjectList.clear();
         List<CustomerSObject> result = new ArrayList<>();
-        for (int i=0; i<CustomerSObjectList.size(); i++) {
+        for (int i = 0; i < CustomerSObjectList.size(); i++) {
             CustomerSObject customerSObject = CustomerSObjectList.get(i);
             // 获取对象所有版本
             List<EVersion> versions = customerSObject.getVersions();
@@ -152,7 +159,7 @@ public class ReadSObject {
             if (forms != null && !forms.isEmpty()) {
                 forms.forEach(form1 -> lastIds.put(form1.getFid(), form1.getId()));
             }
-            for(EVersion eVersion : versions){
+            for (EVersion eVersion : versions) {
                 CustomerSObject customerSObjectVersion = buildSObjectByVersion(customerSObject, eVersion, lastIds);
                 customerSObjectVersion.setVersions(new ArrayList<>());
                 customerSObject = customerSObjectVersion;
@@ -188,6 +195,7 @@ public class ReadSObject {
 
     /**
      * 编辑对象版本信息
+     *
      * @param CustomerSObject
      * @param eVersion
      * @param lastIds
@@ -259,8 +267,8 @@ public class ReadSObject {
             String actionOperationType = operation.getActionOperationType() == null ? "" : operation.getActionOperationType();
             String objectOperationType = operation.getObjectOperationType() == null ? "" : operation.getObjectOperationType();
 
-            switch (objectOperationType){
-                case "BASE" :
+            switch (objectOperationType) {
+                case "BASE":
                     action1.setId(result.getId());
                     action1.setOperation(Action.MODIFY | Action.BASE);
                     if (eVersion.getBase() != null) {
@@ -300,7 +308,7 @@ public class ReadSObject {
                     // 去除该fid的属性
                     List<Attribute> attributeList = new ArrayList<>(attributes);
                     Integer removeIndex = null;
-                    for (int i=0; i<attributes.size(); i++) {
+                    for (int i = 0; i < attributes.size(); i++) {
                         Attribute attribute = attributes.get(i);
                         if (id != null && id.equals(attribute.getFid())) {
                             attributes.remove(attribute);
@@ -450,11 +458,11 @@ public class ReadSObject {
                     if (actionOperationType.equals("MODIFY")) {
                         action1.setOperation(Action.MODIFY | Action.RELEATION);
                     }
-                    if(netWork_version!=null){
-                        if(netWork_version.getNodes()!=null){
+                    if (netWork_version != null) {
+                        if (netWork_version.getNodes() != null) {
                             List<ERNode> nodes = netWork_version.getNodes();
-                            for(ERNode node:nodes){
-                                if(node.getRefObject()!=null){
+                            for (ERNode node : nodes) {
+                                if (node.getRefObject() != null) {
                                     node.setLabel(node.getRefObject().getName());
                                 }
                             }
@@ -533,7 +541,7 @@ public class ReadSObject {
                 if (refObject != null) {
                     node.setRelatedObjectId(refObject.getId().toString());
                 }
-                List<ERNode.Properties> properties  = node.getProperties();
+                List<ERNode.Properties> properties = node.getProperties();
                 if (properties == null || properties.isEmpty()) {
                     node.setProperties(null);
                     continue;
@@ -576,23 +584,30 @@ public class ReadSObject {
 
     /**
      * 替换ID
+     *
      * @param orgContent
      * @param id
      * @param erNodeList node需要单独替换ID
      * @return
      */
-    public static String changID(String orgContent, String id, List<ERNode> erNodeList){
+    public static String changID(String orgContent, String id, List<ERNode> erNodeList) {
         Map<String, Map<String, String>> idMaps = ReadID.idMaps;
         Map<String, String> idMap = idMaps.get(id);
-        for(String key:idMap.keySet()){
+        for (String key : idMap.keySet()) {
             orgContent = orgContent.replaceAll(key, idMap.get(key));
         }
         /**单独提取node中的id*/
-        if(erNodeList!=null&&erNodeList.size()>0){
-            for(ERNode erNode:erNodeList){
-                String relatedObjectId = erNode.getRelatedObjectId();
-                String nodeId = idMaps.get(relatedObjectId).get(relatedObjectId);
-                orgContent = orgContent.replaceAll(relatedObjectId, nodeId);
+        if (erNodeList != null && erNodeList.size() > 0) {
+            for (ERNode erNode : erNodeList) {
+                try {
+                    String relatedObjectId = erNode.getRelatedObjectId();
+                    String nodeId = idMaps.get(relatedObjectId).get(relatedObjectId);
+                    if (StrUtil.isNotEmpty(nodeId) && StrUtil.isNotBlank(nodeId)) {
+                        orgContent = orgContent.replaceAll(relatedObjectId, nodeId);
+                    }
+                } catch (NullPointerException exception) {
+                    System.out.println("network对应对象为：" + exception.getMessage());
+                }
             }
         }
         return orgContent;

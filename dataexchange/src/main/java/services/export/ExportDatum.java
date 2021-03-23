@@ -8,7 +8,7 @@ import onegis.common.utils.FileUtils;
  */
 public class ExportDatum {
 
-    public static void writeDatum(String path){
+    public static void writeDatum(String path) {
         FileUtils.writeContent(datum, path, ConstantDict.DATUM_DATA_FILE_NAME.getName(), false);
     }
 

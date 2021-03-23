@@ -2,7 +2,7 @@ package model;
 
 import javafx.beans.property.SimpleStringProperty;
 
-public  class DomainModel {
+public class DomainModel {
     private final SimpleStringProperty name;
     private final SimpleStringProperty id;
     private final SimpleStringProperty index;

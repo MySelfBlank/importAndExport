@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * 时空域
  */
-public class ESDomain extends AbstractObject{
+public class ESDomain extends AbstractObject {
     /**
      * 描述
      */
@@ -43,8 +43,8 @@ public class ESDomain extends AbstractObject{
     private List<Double> geoBox = new ArrayList<>();
 
     public void addGeobox(double minx, double miny, double minz,
-                          double maxx, double maxy, double maxz){
-        this.addGeobox(this.geoBox,minx ,miny ,minz ,maxx ,maxy ,maxz );
+                          double maxx, double maxy, double maxz) {
+        this.addGeobox(this.geoBox, minx, miny, minz, maxx, maxy, maxz);
     }
 
     public ESDomain() {

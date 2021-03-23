@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
  */
 public class EFields {
     private List<EField> fields;
+
     public EFields() {
         this.fields = new ArrayList();
     }
@@ -30,7 +31,7 @@ public class EFields {
     }
 
     public List<Long> toList() {
-        return (List)this.fields.stream().map((f) -> {
+        return (List) this.fields.stream().map((f) -> {
             return f.getId();
         }).collect(Collectors.toList());
     }
@@ -46,7 +47,7 @@ public class EFields {
     public String toString() {
         String result = "[]";
         if (this.fields != null) {
-            List<Long> fieldIdList = (List)this.fields.stream().map((f) -> {
+            List<Long> fieldIdList = (List) this.fields.stream().map((f) -> {
                 return f.getId();
             }).collect(Collectors.toList());
             result = fieldIdList.toString();

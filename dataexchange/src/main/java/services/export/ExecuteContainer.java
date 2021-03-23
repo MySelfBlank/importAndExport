@@ -54,10 +54,11 @@ public class ExecuteContainer {
      * 记录原始ID和新生成的ID的对应关系
      */
     public static List<IDReset> newIDList = new ArrayList<>();
+
     /**
      * 清空记录
      */
-    public static void clear(){
+    public static void clear() {
         srsSystemIdList.clear();
         srsSystemList.clear();
         trsSystemIdList.clear();
@@ -72,8 +73,10 @@ public class ExecuteContainer {
         newIdSets.clear();
         newIDList.clear();
     }
+
     /**
      * 添加空间参考
+     *
      * @param srsSystem
      */
     public static void addSrsSystem(SpatialReferenceSystem srsSystem) {
@@ -85,7 +88,7 @@ public class ExecuteContainer {
         }
 
         String srsId = srsSystem.getId();
-        if (srsId == null || srsId.isEmpty()||srsId.equals("")) {
+        if (srsId == null || srsId.isEmpty() || srsId.equals("")) {
             return;
         }
         if (srsSystemIdList.contains(srsId)) {
@@ -103,6 +106,7 @@ public class ExecuteContainer {
 
     /**
      * 添加时间参考
+     *
      * @param trsSystem
      */
     public static void addTrsSystem(TimeReferenceSystem trsSystem) {
@@ -113,7 +117,7 @@ public class ExecuteContainer {
             trsSystemList = new ArrayList<>();
         }
         String trsId = trsSystem.getId();
-        if (trsId == null || trsId.isEmpty() ||trsId.equals("")) {
+        if (trsId == null || trsId.isEmpty() || trsId.equals("")) {
             return;
         }
         if (trsSystemIdList.contains(trsSystem.getId())) {
@@ -131,13 +135,16 @@ public class ExecuteContainer {
 
     /**
      * 添加关系
+     *
      * @param relation
      */
     public static void addRelation(ERelation relation) {
         relationList.add(relation);
     }
+
     /**
      * 添加对象类
+     *
      * @param oType
      */
     public static void addOType(OType oType) {
@@ -152,6 +159,7 @@ public class ExecuteContainer {
         }
         oTypeList.add(oType);
     }
+
     public static void addOTypeId(Long otId) {
         if (oTypeIdSet == null) {
             oTypeIdSet = new HashSet<>();
@@ -176,22 +184,22 @@ public class ExecuteContainer {
 
     /**
      * 生成新的ID
+     *
      * @param id
      */
-    public static void addNewId(String id,List<String> ids){
-        if(!newIdSets.contains(id)){
+    public static void addNewId(String id, List<String> ids) {
+        if (!newIdSets.contains(id)) {
             IDReset idReset = new IDReset();
             idReset.setId(id);
-            Map<String,String> newIdMap = new HashMap<>();
-            for(String oldId:ids){
+            Map<String, String> newIdMap = new HashMap<>();
+            for (String oldId : ids) {
                 long newID = new IdMakerUtils().nextId();
-                newIdMap.put(oldId,newID+"");
+                newIdMap.put(oldId, newID + "");
             }
             idReset.setIdMpas(newIdMap);
             newIDList.add(idReset);
         }
     }
-
 
 
 }

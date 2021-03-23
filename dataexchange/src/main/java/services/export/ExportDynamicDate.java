@@ -24,25 +24,25 @@ public class ExportDynamicDate {
 
     private RequestServices requestServices = new RequestServicesImpl();
 
-    public void downloadDynamicData(List<SObject> sObjects){
-        for (SObject sObject:sObjects){
-            try{
+    public void downloadDynamicData(List<SObject> sObjects) {
+        for (SObject sObject : sObjects) {
+            try {
                 Long id = sObject.getId();
                 DynamicDatas dynamicDates = requestServices.getDynamicDate(id + "");
-                handleDynamicData(sObject,dynamicDates);
-            }catch (Exception e){
+                handleDynamicData(sObject, dynamicDates);
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
 
-    private void handleDynamicData(SObject sObject,DynamicDatas dynamicDates) throws Exception{
+    private void handleDynamicData(SObject sObject, DynamicDatas dynamicDates) throws Exception {
         Long oid = sObject.getId();
-        if(ExecuteContainer.oidAllList.contains(oid)){
+        if (ExecuteContainer.oidAllList.contains(oid)) {
             return;
         }
         ExecuteContainer.oidAllList.add(oid);
-        if(dynamicDates!=null){
+        if (dynamicDates != null) {
             List<ObjectDynamicDatas> objectDynamicDatasList = dynamicDates.getObjectDynamicDatasList();
             for (ObjectDynamicDatas objectDynamicDatas : objectDynamicDatasList) {
                 String otName = objectDynamicDatas.getOtype().getName();
@@ -50,7 +50,7 @@ public class ExportDynamicDate {
                 for (ObjectDynamicData objectDynamicData : objectDynamicDataList) {
                     if (objectDynamicData.getDynamicData() != null && objectDynamicData.getDynamicData().size() > 0) {
                         /** 构建EClasses 、DObject和 dynamicDataCorn*/
-                        dsDynamicWriter(sObject, objectDynamicData.getDynamicData(),otName);
+                        dsDynamicWriter(sObject, objectDynamicData.getDynamicData(), otName);
                         /** 写入动态轨迹数据到文件 */
                         FileUtils.writeString(JsonUtils.objectToJson(objectDynamicData), PathUtil.baseDirData, sObject.getName() + ".track");
                         /** 拥有类模板的OtypeId*/
@@ -61,7 +61,7 @@ public class ExportDynamicDate {
         }
     }
 
-    private void dsDynamicWriter(SObject sObject, List<DynamicData> dynamicDatas,String otName) throws Exception {
+    private void dsDynamicWriter(SObject sObject, List<DynamicData> dynamicDatas, String otName) throws Exception {
         List<EDObject> edObjects = new ArrayList<>();
         //构建dobject
         EDObject edObject = new EDObject();

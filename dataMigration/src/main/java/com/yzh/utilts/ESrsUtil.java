@@ -26,6 +26,7 @@ public class ESrsUtil {
 
     /**
      * 获取空间参照的对象
+     *
      * @param oTypeList
      * @throws ConcurrentModificationException
      */
@@ -44,6 +45,6 @@ public class ESrsUtil {
         List<ESpatialReferenceSystem> collect = eSpatialReferenceSystems.stream().distinct().collect(Collectors.toList());
         JSON json = JSONUtil.parse(collect);
         String path = PathUtil.baseInfoDir + "\\test.srs";
-        FileTools.exportFile(json, path,"Srs");
+        FileTools.exportFile(json, path, "Srs");
     }
 }

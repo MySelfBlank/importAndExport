@@ -2,7 +2,7 @@ package model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class EDObject extends AbstractObject{
+public class EDObject extends AbstractObject {
     public EDObject() {
     }
 

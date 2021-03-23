@@ -53,25 +53,26 @@ public class ImprotServicesImpl implements ImportServices {
 //            throw new RuntimeException("未解析出时空对象");
 //        }
         //读取本地Id缓存
-        String idpath = path+"\\base";
+        String idpath = path + "\\base";
         String otpyeIdStr = FileUtils.readFile(idpath + "\\otpyeId.text");
         String fieldIdStr = FileUtils.readFile(idpath + "\\fieldId.text");
         String formIdStr = FileUtils.readFile(idpath + "\\formId.text");
         String modelIdStr = FileUtils.readFile(idpath + "\\modelId.text");
         String modelDefIdStr = FileUtils.readFile(idpath + "\\modelDefId.text");
         String relationIdStr = FileUtils.readFile(idpath + "\\relationId.text");
-
-        otypeIdCache.putAll(JsonUtils.parseMap(otpyeIdStr));
-        fieldIdCache.putAll(JsonUtils.parseMap(fieldIdStr));
-        formIdCache.putAll(JsonUtils.parseMap(formIdStr));
-        modelIdCache.putAll(JsonUtils.parseMap(modelIdStr));
-        modelDefIdCache.putAll(JsonUtils.parseMap(modelDefIdStr));
-        relationIdCache.putAll(JsonUtils.parseMap(relationIdStr));
-
+        if (!(otpyeIdStr.equals("") && fieldIdStr.equals("") && formIdStr.equals("") && modelIdStr.equals("") && modelDefIdStr.equals("") && relationIdStr.equals(""))) {
+            otypeIdCache.putAll(JsonUtils.parseMap(otpyeIdStr));
+            fieldIdCache.putAll(JsonUtils.parseMap(fieldIdStr));
+            formIdCache.putAll(JsonUtils.parseMap(formIdStr));
+            modelIdCache.putAll(JsonUtils.parseMap(modelIdStr));
+            modelDefIdCache.putAll(JsonUtils.parseMap(modelDefIdStr));
+            relationIdCache.putAll(JsonUtils.parseMap(relationIdStr));
+        }
         ReadID.resetId(path);//重置ID
         ReadID.readId(path);//读取ID文件
-//        Map<String, String> modelMap = new HashMap<>();
-        Map<String, String> modelMap=uploadModles(path + "/data");
+//        String mapstr = FileUtils.readFile(idpath + "\\map.json");
+//        Map<String, String> modelMap= JSONUtil.toBean(mapstr,Map.class);
+        Map<String, String> modelMap = uploadModles(path + "/data");
         System.out.println("上传模型成功");
         importSObjectList(objectNameList, sdomainId, modelMap);
         System.out.println("上传对象成功");
@@ -83,18 +84,26 @@ public class ImprotServicesImpl implements ImportServices {
         for (int i = 0; i < objectNameList.size(); i++) {
             List<CustomerSObject> customerSObjects = ReadSObject.readFromFile(objectNameList.get(i), true);
             //id替换
-            for (CustomerSObject customerSObject : customerSObjects) {
-                //修改类模板Id
-                handleOTypeId(customerSObject);
-                //修改字段Id
-                handleFieldId(customerSObject.getAttributes().getAttributeList());
-                //修改形态样式Id
-                handleFormStyleId(customerSObject.getForms());
-                //修改对象的行为Id
-                handleModelId(customerSObject.getModelList());
-                handleModelId(customerSObject.getModels().getModels());
-                //修改对象使用关系的Id
-                handleNetwork(customerSObject.getNetwork());
+            if (otypeIdCache.size() != 0 || fieldIdCache.size() != 0 || formIdCache.size() != 0 || modelIdCache.size() != 0 || modelDefIdCache.size() != 0 || relationIdCache.size() != 0) {
+//                int count=0;
+                for (CustomerSObject customerSObject : customerSObjects) {
+//                    System.out.println(count);
+//                    count++;
+//                    if (count==8){
+//                        System.out.println("123");
+//                    }
+                    //修改类模板Id
+                    handleOTypeId(customerSObject);
+                    //修改字段Id
+                    handleFieldId(customerSObject.getAttributes().getAttributeList());
+                    //修改形态样式Id
+                    handleFormStyleId(customerSObject.getForms());
+                    //修改对象的行为Id
+                    handleModelId(customerSObject.getModelList());
+                    handleModelId(customerSObject.getModels().getModels());
+                    //修改对象使用关系的Id
+                    handleNetwork(customerSObject.getNetwork());
+                }
             }
             if (i == 0) {
                 if (customerSObjects == null || customerSObjects.isEmpty()) {
@@ -223,7 +232,7 @@ public class ImprotServicesImpl implements ImportServices {
      */
     public void handleOTypeId(CustomerSObject customerSObject) {
         Long id = customerSObject.getOtype().getId();
-        String newId = String.valueOf(Optional.ofNullable(otypeIdCache.get(String.valueOf(id))).orElse(null));
+        String newId = String.valueOf(Optional.ofNullable(otypeIdCache.get(String.valueOf(id))).orElse(-1L));
         if (StrUtil.isEmpty(newId) || StrUtil.isBlank(newId)) {
             throw new RuntimeException("对象" + customerSObject.getId() + "类模板Id不存在");
         } else {
@@ -242,7 +251,9 @@ public class ImprotServicesImpl implements ImportServices {
         }
         for (Attribute attribute : attributes) {
             Long fid = attribute.getFid();
-            String newId = String.valueOf(Optional.ofNullable(fieldIdCache.get(String.valueOf(fid))).orElseGet(()->{return -1L;}));
+            String newId = String.valueOf(Optional.ofNullable(fieldIdCache.get(String.valueOf(fid))).orElseGet(() -> {
+                return -1L;
+            }));
             if (StrUtil.isEmpty(newId) || StrUtil.isBlank(newId)) {
                 throw new RuntimeException("字段" + fid + "新Id不存在");
             } else {
@@ -267,19 +278,26 @@ public class ImprotServicesImpl implements ImportServices {
                 if (styleStr.equals("[]") || StrUtil.isBlank(styleStr) || StrUtil.isEmpty(styleStr)) {
                     continue;
                 }
-                System.out.println(styleStr);
+                System.out.println("样式" + styleStr);
                 JSONArray jsonArray = JSONArray.parseArray(styleStr);
                 List<String> newIdList = new ArrayList<>();
                 List<Integer> newIds = new ArrayList<>();
                 for (Object s : jsonArray) {
                     if (s instanceof Integer) {
-                        newIds.add(Integer.parseInt(Optional.ofNullable(formIdCache.get(s.toString())).toString()));
+                        if (ObjectUtil.isNotNull(formIdCache.get(s.toString()))) {
+                            newIds.add(Integer.parseInt(formIdCache.get(s.toString()).toString()));
+                        }
                     } else {
-                        newIdList.add(Optional.ofNullable(formIdCache.get(s)).orElseGet(()->-1L).toString());
-                        System.out.println("样式ID="+s);
+                        if (ObjectUtil.isNotNull(formIdCache.get(s))) {
+                            newIdList.add(formIdCache.get(s).toString());
+                            System.out.println("样式ID=" + s);
+                        } else {
+                            newIdList.add("-1");
+                        }
+
                     }
                 }
-                System.out.println(JSONUtil.parseArray(newIdList).toString());
+                //System.out.println(JSONUtil.parseArray(newIdList).toString());
                 if (newIds.size() != 0) {
                     form.setStyle(JSONUtil.parseArray(newIds).toString());
                 } else {
@@ -291,6 +309,7 @@ public class ImprotServicesImpl implements ImportServices {
 
     /**
      * 处理对象的行为Id  对象无行为挂载直接返回
+     *
      * @param models
      */
     public void handleModelId(List<onegis.psde.model.Model> models) {
@@ -299,8 +318,8 @@ public class ImprotServicesImpl implements ImportServices {
         }
     }
 
-    public void handleNetwork(ENetWork netWork){
-        if (ObjectUtil.isNull(netWork)||ObjectUtil.isEmpty(netWork)){
+    public void handleNetwork(ENetWork netWork) {
+        if (ObjectUtil.isNull(netWork) || ObjectUtil.isEmpty(netWork)) {
             return;
         }
         //获取关系节点
@@ -315,18 +334,20 @@ public class ImprotServicesImpl implements ImportServices {
             Map oType = handleRefObjectOType(refObject.getotype());
         }
     }
-    private Map handleEdge(Map relation){
+
+    private Map handleEdge(Map relation) {
         String id = relation.get("id").toString();
         Integer newId = (Integer) relationIdCache.get(id);
         relation.remove("id");
-        relation.put("id",newId);
+        relation.put("id", newId);
         return relation;
     }
-    private Map handleRefObjectOType(Map oType){
+
+    private Map handleRefObjectOType(Map oType) {
         String id = oType.get("id").toString();
         Integer newId = (Integer) otypeIdCache.get(id);
         oType.remove("id");
-        oType.put("id",newId);
+        oType.put("id", newId);
         return oType;
     }
 }

@@ -29,8 +29,8 @@ public class EFormStyless {
         if (this.styles != null && this.styles.size() > 0) {
             Iterator var2 = this.styles.iterator();
 
-            while(var2.hasNext()) {
-                FormStyle formStyle = (FormStyle)var2.next();
+            while (var2.hasNext()) {
+                FormStyle formStyle = (FormStyle) var2.next();
                 FormEnum formEnum = formStyle.getType();
                 if (formEnum == null) {
                     return null;
@@ -51,7 +51,7 @@ public class EFormStyless {
 
 
     public List<Long> toList() {
-        return (List)this.styles.stream().map((f) -> {
+        return (List) this.styles.stream().map((f) -> {
             return f.getId();
         }).collect(Collectors.toList());
     }
@@ -59,7 +59,7 @@ public class EFormStyless {
     public String toString() {
         String result = "[]";
         if (this.styles != null) {
-            List<Long> formStyleIdList = (List)this.styles.stream().map((f) -> {
+            List<Long> formStyleIdList = (List) this.styles.stream().map((f) -> {
                 return f.getId();
             }).collect(Collectors.toList());
             result = formStyleIdList.toString();

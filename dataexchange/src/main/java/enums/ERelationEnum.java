@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * 关系类型
  */
-public enum  ERelationEnum {
+public enum ERelationEnum {
     /**
      * 一对一
      */
@@ -40,7 +40,7 @@ public enum  ERelationEnum {
 
     public static List<Map<String, Object>> enumList() {
         List<Map<String, Object>> list = new ArrayList<>();
-        for(ERelationEnum relationEnum : values()){
+        for (ERelationEnum relationEnum : values()) {
             Map<String, Object> map = new HashMap<>();
             map.put("name", relationEnum.getName());
             map.put("value", relationEnum.getValue());
@@ -50,9 +50,9 @@ public enum  ERelationEnum {
     }
 
     @JsonCreator
-    public static ERelationEnum getEnum(int value){
-        for(ERelationEnum relationEnum : values()){
-            if(relationEnum.getValue() == value){
+    public static ERelationEnum getEnum(int value) {
+        for (ERelationEnum relationEnum : values()) {
+            if (relationEnum.getValue() == value) {
                 return relationEnum;
             }
         }

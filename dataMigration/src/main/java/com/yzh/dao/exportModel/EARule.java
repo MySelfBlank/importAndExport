@@ -1,4 +1,4 @@
 package com.yzh.dao.exportModel;
 
-public class EARule extends AbstractObject  {
+public class EARule extends AbstractObject {
 }

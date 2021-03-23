@@ -1,7 +1,7 @@
 package model;
 
 /**
- *参考系统（时间参考、空间参考）
+ * 参考系统（时间参考、空间参考）
  */
 public class ERefSystem {
 

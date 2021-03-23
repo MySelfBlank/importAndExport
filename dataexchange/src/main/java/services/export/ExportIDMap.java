@@ -13,7 +13,7 @@ public class ExportIDMap {
     /**
      * 导出重置后的ID
      */
-    public static void writeNewIds(){
+    public static void writeNewIds() {
         List<IDReset> newIdList = ExecuteContainer.newIDList;
         FileUtils.writeContent(JsonUtils.objectToJson(newIdList),
                 PathUtil.baseDir, ConstantDict.ID_INFO_NAME.getName(), false);

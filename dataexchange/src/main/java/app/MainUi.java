@@ -13,7 +13,7 @@ import jfxtras.styles.jmetro.Style;
 import utils.EhcacheUtil;
 
 
-public class Main extends Application {
+public class MainUi extends Application {
 
 
     @Override

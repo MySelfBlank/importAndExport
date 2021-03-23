@@ -31,12 +31,12 @@ public class FieldImportUtil {
     public static void fieldImport(String path) {
         logger.debug("字段开始导入===========》读取字段文件");
         String fieldsStr = FileTools.readFile(path);
-        List<Field> fieldList = FileTools.jsonArray2List(fieldsStr,Field.class);
+        List<Field> fieldList = FileTools.jsonArray2List(fieldsStr, Field.class);
         //map用于记录新老Id关系
         fieldImport(fieldList);
     }
 
-    public static void fieldImport(List<Field> fieldList){
+    public static void fieldImport(List<Field> fieldList) {
         List<EField> param = new ArrayList<>();
         //遍历字段，一个一个完成导入上传操作上传
         for (Field field : fieldList) {
@@ -47,24 +47,24 @@ public class FieldImportUtil {
             eField.setDomain(field.getDomain());
             eField.setCaption(field.getCaption());
             eField.setType(String.valueOf(field.getType().getValue()));
-            if (isNotEmpty(field.getDefaultValue())&&isNotNull(field.getDefaultValue())){
+            if (isNotEmpty(field.getDefaultValue()) && isNotNull(field.getDefaultValue())) {
                 eField.setDefaultValue(field.getDefaultValue().toString());
             }
             eField.setDesc(field.getDes());
             eField.setUitype(field.getUitype().getValue());
             param.add(eField);
             //重置请求参数
-            String response = HttpUtil.post(MyApi.insertField.getValue().replace("@token", UserInfo.token),JSONUtil.parseArray(param).toString());
+            String response = HttpUtil.post(MyApi.insertField.getValue().replace("@token", UserInfo.token), JSONUtil.parseArray(param).toString());
             //错误判断
-            if (FileTools.judgeImportState(response)){
-                logger.error("id:"+field.getId()+"的字段导入失败");
+            if (FileTools.judgeImportState(response)) {
+                logger.error("id:" + field.getId() + "的字段导入失败");
                 continue;
             }
             //处理 response
             JSONArray array = FileTools.formatData2JSONArray(response);
             //上传完成将新老Id记录到Map当中
             fieldOldIdAndNewIdCache.put(field.getId(), array.get(0, JSONObject.class).getLong("id"));
-            logger.info("id" +field.getId() + "导入完毕新Id为："+array.get(0,JSONObject.class).getLong("id"));
+            logger.info("id" + field.getId() + "导入完毕新Id为：" + array.get(0, JSONObject.class).getLong("id"));
         }
     }
 

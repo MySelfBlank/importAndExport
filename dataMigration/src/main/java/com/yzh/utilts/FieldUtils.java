@@ -109,7 +109,7 @@ public class FieldUtils {
         if (fIdSet.size() > 1000) {
             split = CollUtil.split(fIdSet, 50);
         }
-        if (split.size()==0||CollUtil.isEmpty(split)){
+        if (split.size() == 0 || CollUtil.isEmpty(split)) {
             //通过fId查询字段信息
             Map<String, Object> params = MapUtil.builder(new HashMap<String, Object>())
                     .put("token", UserInfo.token)
@@ -135,7 +135,7 @@ public class FieldUtils {
             JSONObject fieldJsonObj = FileTools.formatData(fieldJsonStr);
             eFieldList.addAll(JsonUtils.jsonToList(fieldJsonObj.get("list").toString(), Field.class));
         }
-        return  eFieldList;
+        return eFieldList;
 
     }
 

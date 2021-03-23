@@ -95,16 +95,16 @@ public class OtypeUtilts {
             //如果输入了轨迹输入的类模板则去查找
             params.clear();
             params.put("token", UserInfo.token);
-            params.put("names",DOTypeName);
+            params.put("names", DOTypeName);
             String responseStr = HttpUtil.get(MyApi.getOtypesByIds.getValue(), params);
-            if (JSONUtil.parseObj(responseStr).getStr("status").equals("200")){
+            if (JSONUtil.parseObj(responseStr).getStr("status").equals("200")) {
                 JSONObject dotypeInfoJson = formatData(responseStr);
                 List<OType> list = JsonUtils.jsonToList(dotypeInfoJson.getStr("list"), OType.class);
-                if (list.size()==0){
+                if (list.size() == 0) {
                     throw new RuntimeException("未找到轨迹数据模板");
-                }else if (list.size()==1){
+                } else if (list.size() == 1) {
                     oTypeList.addAll(list);
-                }else {
+                } else {
                     System.out.println("查询到的类模板大于1,无法唯一确定");
                 }
             }

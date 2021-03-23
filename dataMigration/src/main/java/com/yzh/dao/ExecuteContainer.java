@@ -22,7 +22,7 @@ public class ExecuteContainer {
 
     public static Set<Long> otypeFieldIds = new HashSet<>();
 
-    public static void clear(){
+    public static void clear() {
         dObjectList.clear();
     }
 
@@ -31,6 +31,7 @@ public class ExecuteContainer {
             dObjectList.addAll(edObjects);
         }
     }
+
     public static void addModelId(Long modelId) {
         modelIds.add(modelId);
     }

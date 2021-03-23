@@ -24,6 +24,7 @@ import java.util.Map;
 public class BuildFormAction {
     /**
      * 判断形态的变化
+     *
      * @param eVersion
      * @param lastSObject
      * @param thisSObject
@@ -69,6 +70,7 @@ public class BuildFormAction {
 
     /**
      * 记录对象属性的变化
+     *
      * @param eVersion
      * @param form
      * @param eActionEnum
@@ -128,11 +130,11 @@ public class BuildFormAction {
             eFormRef.setDesc(GeneralUtils.isNotEmpty(modelBlock.getDes()) ? modelBlock.getDes() : "");
 
             String fname = modelBlock.getFname();
-            if (GeneralUtils.isNotEmpty(fname)){
+            if (GeneralUtils.isNotEmpty(fname)) {
                 fname = fname.replaceAll("/", "_").replaceAll(":", "");
             }
             fname = fname + "_" + modelBlock.getRefid();
-            if (!GeneralUtils.isNotEmpty(fname) || fname.contains("?")){
+            if (!GeneralUtils.isNotEmpty(fname) || fname.contains("?")) {
                 fname = modelBlock.getName() + "_" + modelBlock.getRefid() + "";
             }
             eFormRef.setFname(fname);
@@ -142,7 +144,7 @@ public class BuildFormAction {
                 eForm.setFormRef(eFormRef);
                 Long modelID = modelBlock.getRefid();
                 ExecuteContainer.addModelId(modelID);
-                ExecuteContainer.addModelName(modelID+"", fname);
+                ExecuteContainer.addModelName(modelID + "", fname);
             } else if (modelBlock.getRefid() != null) {
                 Long fid = modelBlock.getRefid();
 
@@ -156,11 +158,11 @@ public class BuildFormAction {
                         eFormRef.setDesc(GeneralUtils.isNotEmpty(modelBlock.getDes()) ? modelBlock.getDes() : "");
 
                         fname = modelBlock.getFname();
-                        if (GeneralUtils.isNotEmpty(fname)){
+                        if (GeneralUtils.isNotEmpty(fname)) {
                             fname = fname.replaceAll("/", "_").replaceAll(":", "");
                         }
                         fname = fname + "_" + modelBlock.getRefid();
-                        if (!GeneralUtils.isNotEmpty(fname) || fname.contains("?")){
+                        if (!GeneralUtils.isNotEmpty(fname) || fname.contains("?")) {
                             fname = modelBlock.getName() + "_" + fid + "";
                         }
                         eFormRef.setFname(fname);
@@ -171,7 +173,7 @@ public class BuildFormAction {
 //                            downLoadModelIDs.add(fid);
 //                            modelIdMaps.put(fid, fname);
                         ExecuteContainer.addModelId(fid);
-                        ExecuteContainer.addModelName(fid+"", fname);
+                        ExecuteContainer.addModelName(fid + "", fname);
                     }
 
                 } catch (Exception e) {

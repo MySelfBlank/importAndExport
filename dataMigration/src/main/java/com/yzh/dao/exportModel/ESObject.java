@@ -100,8 +100,8 @@ public class ESObject extends AbstractObject implements Serializable {
     private List<EVersion> versions = new ArrayList<>();
 
     public void addGeobox(double minx, double miny, double minz,
-                          double maxx, double maxy, double maxz){
-        this.addGeobox(this.geoBox,minx ,miny ,minz ,maxx ,maxy ,maxz );
+                          double maxx, double maxy, double maxz) {
+        this.addGeobox(this.geoBox, minx, miny, minz, maxx, maxy, maxz);
     }
 
     public String getCode() {

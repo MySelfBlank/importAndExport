@@ -22,11 +22,11 @@ public class CustomerGeom {
         this.data = data;
     }
 
-    public static class CustomerData{
+    public static class CustomerData {
         private String geotype;
         private Object coordinates;
 
-        public CustomerData(){
+        public CustomerData() {
 
         }
 

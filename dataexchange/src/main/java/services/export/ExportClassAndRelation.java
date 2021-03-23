@@ -22,7 +22,7 @@ public class ExportClassAndRelation {
     /**
      * 保存对象类和关系到本地
      */
-    public static void writeClassAndRelation(){
+    public static void writeClassAndRelation() {
         try {
             List<EClasses> classesList = new ArrayList<>();
             List<OType> oTypeList = ExecuteContainer.oTypeList;
@@ -33,10 +33,10 @@ public class ExportClassAndRelation {
             if (classesList != null) {
                 FileUtils.writeContent(JsonUtils.objectToJson(classesList), PathUtil.baseDir, ConstantDict.CLASSES_DATA_FILE_NAME.getName(), false);
             }
-            if(ExecuteContainer.relationList!=null||ExecuteContainer.relationList.size()>0){
-                FileUtils.writeContent(JsonUtils.objectToJson(ExecuteContainer.relationList),PathUtil.baseDir, ConstantDict.RELATION_DATA_FILE_NAME.getName(), false);
+            if (ExecuteContainer.relationList != null || ExecuteContainer.relationList.size() > 0) {
+                FileUtils.writeContent(JsonUtils.objectToJson(ExecuteContainer.relationList), PathUtil.baseDir, ConstantDict.RELATION_DATA_FILE_NAME.getName(), false);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             System.err.println(e.getMessage());
         }
 
@@ -44,7 +44,7 @@ public class ExportClassAndRelation {
     }
 
     public static EClasses dsClasses2EClass(OType oType) throws Exception {
-        if (oType == null){
+        if (oType == null) {
             return null;
         }
         EClasses eClasses = new EClasses();

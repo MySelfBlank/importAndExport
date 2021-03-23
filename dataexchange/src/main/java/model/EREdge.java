@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * 边
  */
-public class EREdge extends ERObject{
+public class EREdge extends ERObject {
 
     /**
      * 关联【自定义】关系

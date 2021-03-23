@@ -18,7 +18,7 @@ public class CustomerSObject extends DObject {
     private String trsStr;
     private String srsStr;
     private SpatialReferenceSystem srs;
-    private List<Double> geoBoxList ;
+    private List<Double> geoBoxList;
     private Long parentId;
     private GeoBox geoBox;
     /*@JsonDeserialize(

@@ -28,34 +28,35 @@ import static cn.hutool.core.util.ObjectUtil.isNull;
  */
 public class EConnectorUtils {
     private static final Logger logger = LoggerFactory.getLogger(EConnectorUtils.class);
-    public static void EConnectorHandel( Set<Long> classIDs) throws Exception{
-        Map<String,Object> params = new HashMap<>();
+
+    public static void EConnectorHandel(Set<Long> classIDs) throws Exception {
+        Map<String, Object> params = new HashMap<>();
         params.put("token", UserInfo.token);
-        params.put("otIds",classIDs.toArray());
-        String responseStr = HttpUtil.get(MyApi.getConnector.getValue(),params);
-        if(!JSONUtil.parseObj(responseStr).getStr("status").equals("200")){
-            logger.error("获取连接器失败："+JSONUtil.parseObj(responseStr).getStr("message"));
+        params.put("otIds", classIDs.toArray());
+        String responseStr = HttpUtil.get(MyApi.getConnector.getValue(), params);
+        if (!JSONUtil.parseObj(responseStr).getStr("status").equals("200")) {
+            logger.error("获取连接器失败：" + JSONUtil.parseObj(responseStr).getStr("message"));
             return;
         }
         JSONObject sourceData = JSONUtil.parseObj(responseStr);
         JSONObject clearData = (JSONObject) JSONUtil.parse(sourceData.get("data"));
         JSONArray clearDatalist = (JSONArray) clearData.get("list");
-        List<Connector> connectorList = JsonUtils.jsonToList(clearDatalist.toString(),Connector.class);
+        List<Connector> connectorList = JsonUtils.jsonToList(clearDatalist.toString(), Connector.class);
         List<Connector> connectors = new ArrayList<>();
         for (Connector connector : connectorList) {
-            if(classIDs.contains(connector.getfId())){
-                if(classIDs.contains(connector.getdType().getId())){
+            if (classIDs.contains(connector.getfId())) {
+                if (classIDs.contains(connector.getdType().getId())) {
                     connectors.add(connector);
                 }
             }
         }
         List<EConnector> eConnectors = connector2EConnector(connectors, classIDs);
-        FileTools.exportFile(JSONUtil.parse(eConnectors), PathUtil.baseInfoDir + "/test.connectors","connectors");
+        FileTools.exportFile(JSONUtil.parse(eConnectors), PathUtil.baseInfoDir + "/test.connectors", "connectors");
     }
 
-    public static List<EConnector> connector2EConnector(List<Connector> connectors,Set<Long> classIDs) {
+    public static List<EConnector> connector2EConnector(List<Connector> connectors, Set<Long> classIDs) {
         List<EConnector> eConnectors = new ArrayList<>();
-        if (isNull(connectors)||isEmpty(connectors)) {
+        if (isNull(connectors) || isEmpty(connectors)) {
             return eConnectors;
         }
         for (Connector connector : connectors) {

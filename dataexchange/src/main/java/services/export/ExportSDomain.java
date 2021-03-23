@@ -22,18 +22,19 @@ public class ExportSDomain {
 
     /**
      * 导出时空域信息到本地
+     *
      * @param sObjects
      * @param outputDir 保存路径
-     * @param fileName 文件名
+     * @param fileName  文件名
      * @throws Exception
      */
-    public void writeSDomain(List<SObject> sObjects, String outputDir, String fileName){
-        if(sObjects!=null&&sObjects.size()>0){
+    public void writeSDomain(List<SObject> sObjects, String outputDir, String fileName) {
+        if (sObjects != null && sObjects.size() > 0) {
             Long sDomainID = sObjects.get(0).getSdomain();
             if (!GeneralUtils.isNotEmpty(sDomainID)) {
                 return;
             }
-            try{
+            try {
                 SDomain sDomain = requestServices.getSDomain(sDomainID);
                 ESDomain esDomain = new ESDomain();
                 esDomain.setId(sDomain.getId());
@@ -56,7 +57,7 @@ public class ExportSDomain {
                     esDomain.addGeobox(geoBox.getMinx(), geoBox.getMiny(), geoBox.getMinz(), geoBox.getMaxx(), geoBox.getMaxy(), geoBox.getMaxz());
                 }
                 FileUtils.writeContent(JsonUtils.objectToJson(esDomain), outputDir, fileName, false);
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

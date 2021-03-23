@@ -14,7 +14,7 @@ public class PositionSerialize {
 
     private String geometry;
 
-    public PositionSerialize(){
+    public PositionSerialize() {
 
     }
 

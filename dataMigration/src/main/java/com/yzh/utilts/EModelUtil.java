@@ -27,27 +27,29 @@ import static java.util.Objects.isNull;
 
 /**
  * 行为的导出
+ *
  * @ Author        :  yuyazhou
  * @ CreateDate    :  2020/12/22 9:44
  */
 public class EModelUtil {
-    
-    static List<EModel> list=new ArrayList<>();
-    
+
+    static List<EModel> list = new ArrayList<>();
+
     /**
      * 获取行为id
+     *
      * @param modelsList
      */
-    public static Set<Long> getModel(List<OType> modelsList){
-        if (modelsList==null||modelsList.size()==0){
+    public static Set<Long> getModel(List<OType> modelsList) {
+        if (modelsList == null || modelsList.size() == 0) {
             return new HashSet<>();
         }
         Set<Long> ids = new HashSet<>();
         for (OType models : modelsList) {
-            if (models!=null&&modelsList.size()!=0) {
+            if (models != null && modelsList.size() != 0) {
                 Models myModels = models.getModels();
                 List<Model> models2 = myModels.getModels();
-                if (models2==null){
+                if (models2 == null) {
                     continue;
                 }
                 for (Model model : models2) {
@@ -61,11 +63,12 @@ public class EModelUtil {
 
     /**
      * 通过行为id获取行为数据
+     *
      * @param modelsList
      */
     public static void getModelsFile(List<OType> modelsList) throws Exception {
         Set<Long> modelIds = getModel(modelsList);
-        if(modelIds.size()==0){
+        if (modelIds.size() == 0) {
             return;
         }
         Map<String, Object> param = new HashMap<>();
@@ -84,10 +87,10 @@ public class EModelUtil {
     //下载行为下的脚本文件
     public static void getEModelScriptFile() throws IOException {
         Set<String> eModelFile = getEModelScript();
-        if (eModelFile.size()==0){
+        if (eModelFile.size() == 0) {
             return;
         }
-        int i=1;
+        int i = 1;
         for (String script : eModelFile) {
             //获取文件后缀
             String s = FileNameUtil.extName(script);
@@ -96,7 +99,7 @@ public class EModelUtil {
             InputStream inputStream = con.getInputStream();
             int index;
             byte[] bytes = new byte[1024];
-            File file = new File(PathUtil.baseInfoDirData+"\\test"+i+"."+s);
+            File file = new File(PathUtil.baseInfoDirData + "\\test" + i + "." + s);
             //判断目录
             //判断文件是否存在
             if (!file.getParentFile().exists()) {
@@ -120,22 +123,23 @@ public class EModelUtil {
 
     /**
      * 获取行为脚本
+     *
      * @return
      */
-    public static Set<String> getEModelScript(){
+    public static Set<String> getEModelScript() {
 
-        if (list==null||list.size()==0){
+        if (list == null || list.size() == 0) {
             return new HashSet<>();
         }
         Set<String> scriptSet = new HashSet<>();
-        String [] languages = new String[]{"1","2"};
+        String[] languages = new String[]{"1", "2"};
         for (EModel eModel : list) {
-            if (!Arrays.asList(languages).contains(eModel.getpLanguage())){
+            if (!Arrays.asList(languages).contains(eModel.getpLanguage())) {
                 continue;
             }
             Mobj mobj = eModel.getMobj();
-            if (!isNull(mobj)){
-                if (mobj.getScript()!=null&&!mobj.getScript().equals("")) {
+            if (!isNull(mobj)) {
+                if (mobj.getScript() != null && !mobj.getScript().equals("")) {
                     scriptSet.add(mobj.getScript());
                 }
             }

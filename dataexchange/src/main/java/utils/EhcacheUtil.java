@@ -47,7 +47,7 @@ public class EhcacheUtil {
      */
     public Object get(String cacheName, String key) {
         Cache cache = manager.getCache(cacheName);
-        if(cache==null){
+        if (cache == null) {
             return null;
         }
         Element element = cache.get(key);
@@ -75,11 +75,11 @@ public class EhcacheUtil {
         cache.remove(key);
     }
 
-    public CacheManager getManager(){
+    public CacheManager getManager() {
         return manager;
     }
 
-    public void clodeManager(){
+    public void clodeManager() {
         manager.shutdown();
     }
 }

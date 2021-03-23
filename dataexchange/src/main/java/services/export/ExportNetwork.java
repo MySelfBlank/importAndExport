@@ -16,7 +16,8 @@ import java.util.List;
 public class ExportNetwork {
 
     private RequestServices requestServices = new RequestServicesImpl();
-    public  void wiriteNetwork(String baseDir,Long sdomainId){
+
+    public void wiriteNetwork(String baseDir, Long sdomainId) {
         List<EGraph> eGraphs;
         try {
             eGraphs = requestServices.getRelationCatalog(sdomainId);

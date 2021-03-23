@@ -16,6 +16,7 @@ import java.util.Map;
 public class BuildAttributeAction {
     /**
      * 判断属性信息的变化
+     *
      * @param eVersion
      * @param lastSObject
      * @param thisSObject
@@ -59,7 +60,7 @@ public class BuildAttributeAction {
                     operationAttribute(eVersion, lastAttribute, EActionEnum.DELETE);
                 }
                 // 如果当前版本中有，则判断该属性是否被修改
-                else if (lastAttribute != null && lastAttribute.getValue() != null && thisAttribute.getValue() != null && !lastAttribute.getValue().equals(thisAttribute.getValue())){
+                else if (lastAttribute != null && lastAttribute.getValue() != null && thisAttribute.getValue() != null && !lastAttribute.getValue().equals(thisAttribute.getValue())) {
                     operationAttribute(eVersion, thisAttribute, EActionEnum.MODIFY);
                 }
             }
@@ -79,6 +80,7 @@ public class BuildAttributeAction {
 
     /**
      * 记录对象属性的变化
+     *
      * @param eVersion
      * @param attribute
      * @param eActionEnum

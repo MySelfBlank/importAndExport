@@ -15,6 +15,7 @@ public class EERelation extends Relation implements Serializable {
     public RelationEnum getMappingType() {
         return super.getMappingType();
     }
+
     @JSONField(name = "mappingType")
     @Override
     public void setOor(RelationEnum oor) {

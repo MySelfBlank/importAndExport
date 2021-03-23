@@ -5,7 +5,7 @@ import java.util.Map;
 /**
  * 基础对象
  */
-public class EObase extends AbstractObject{
+public class EObase extends AbstractObject {
     /**
      * 对象类
      */

@@ -15,6 +15,7 @@ import java.util.Map;
 public class BuildRelationAction {
     /**
      * 设置关系变化
+     *
      * @param eVersion
      * @param lastSObject
      * @param thisSObject
@@ -61,6 +62,7 @@ public class BuildRelationAction {
 
     /**
      * 记录对象关系的变化
+     *
      * @param eVersion
      * @param eNetWork
      * @param rNode

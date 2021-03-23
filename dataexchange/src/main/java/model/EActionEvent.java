@@ -26,11 +26,11 @@ public class EActionEvent {
         this.objectOperationType = objectType.getName();
     }
 
-    public void createActionOperationType(Integer value){
+    public void createActionOperationType(Integer value) {
         this.actionOperationType = EActionEnum.getEnum(value).getName();
     }
 
-    public void createObjectOperationType(Integer value){
+    public void createObjectOperationType(Integer value) {
         this.objectOperationType = EActionEnum.getEnum(value).getName();
     }
 

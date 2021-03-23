@@ -1,9 +1,10 @@
-.bg{
+.bg {
     -fx-background-image: url("/img/bg.png");
     -fx-background-repeat: no-repeat;
     /*-fx-background-size: 900 506;*/
     -fx-background-size: 100% 100%;
 }
+
 .loginButton {
     -fx-appearance: none;
     -fx-outline: 0;
@@ -17,35 +18,32 @@
     -fx-transition-duration: 0.25s;
 }
 
-.loginButton:hover{
+.loginButton:hover {
     -fx-background-color: rgb(245, 247, 249);
- }
+}
 
-.mButton
-{
-    -fx-background-color : #ffffff;
-    -fx-text-fill : #05071f;
+.mButton {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #05071f;
     -fx-background-radius: 5;
     -fx-background-insets: 3;
 }
 
-.mButton:hover{
-    -fx-background-color : #e7e7fa;
+.mButton:hover {
+    -fx-background-color: #e7e7fa;
 }
 
-.mButton:pressed
-{
+.mButton:pressed {
     -fx-background-radius: 5;
     -fx-background-insets: 3;
-    -fx-background-color : #ffffff;
+    -fx-background-color: #ffffff;
 }
 
-.mButton:selected
-{
+.mButton:selected {
     -fx-background-radius: 5;
     -fx-background-insets: 3;
-    -fx-background-color : #e7e7fa;
+    -fx-background-color: #e7e7fa;
 }
 
-.check-box{
+.check-box {
 }

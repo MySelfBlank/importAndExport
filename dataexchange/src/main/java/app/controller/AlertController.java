@@ -18,7 +18,7 @@ public class AlertController implements Initializable {
 
     }
 
-    public static void alert(String msg){
+    public static void alert(String msg) {
         FlatAlert alert = new FlatAlert(FlatAlert.AlertType.INFORMATION);
         alert.setTitle("提示");
         alert.setHeaderText(null);

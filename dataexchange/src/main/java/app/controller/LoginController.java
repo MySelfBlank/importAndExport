@@ -35,23 +35,25 @@ import java.util.ResourceBundle;
 
 
 public class LoginController implements Initializable {
-     @FXML
-     private TextField userName;
-     @FXML
-     private TextField userPwd;
-     @FXML
-     private CheckBox isCheck;
+    @FXML
+    private TextField userName;
+    @FXML
+    private TextField userPwd;
+    @FXML
+    private CheckBox isCheck;
 
-     private RequestServices requestServices = new RequestServicesImpl();
+    private RequestServices requestServices = new RequestServicesImpl();
+
     /**
      * 启动设置
+     *
      * @param location
      * @param resources
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        String userId = (String)EhcacheUtil.getInstance().get("user", "userId");
-        String password =  (String)EhcacheUtil.getInstance().get("user", "password");
+        String userId = (String) EhcacheUtil.getInstance().get("user", "userId");
+        String password = (String) EhcacheUtil.getInstance().get("user", "password");
         Object tag = EhcacheUtil.getInstance().get("user", "auto");
         if (tag != null) {
             if (tag.toString().equals("true")) {
@@ -65,7 +67,7 @@ public class LoginController implements Initializable {
 
     // 打开主窗口
     public void open(ActionEvent event) {
-        try{
+        try {
             Parent root = FXMLLoader.load(getClass().getResource("../ui/mainFrame.fxml"));
             Stage stage = new Stage();
             stage.setTitle("导入导出工具");
@@ -95,44 +97,45 @@ public class LoginController implements Initializable {
 
     /**
      * 检测用户名和密码是否正确
+     *
      * @param event
      */
-    public void checkUser(ActionEvent event){
-        try{
-            if(StrUtil.isBlank(userName.getText()) || StrUtil.isBlank(userName.getText())){
+    public void checkUser(ActionEvent event) {
+        try {
+            if (StrUtil.isBlank(userName.getText()) || StrUtil.isBlank(userName.getText())) {
                 AlertController.alert("用户名不能为空！");
                 return;
             }
-            if(StrUtil.isBlank(userPwd.getText())||StrUtil.isBlank(userPwd.getText())){
+            if (StrUtil.isBlank(userPwd.getText()) || StrUtil.isBlank(userPwd.getText())) {
                 AlertController.alert("密码不能为空！");
                 return;
             }
             JSONObject jsonObject = requestServices.queryUser(userName.getText(), userPwd.getText());
-            if(jsonObject==null){
+            if (jsonObject == null) {
                 AlertController.alert("登录异常！");
                 return;
-            }else {
-                String status =jsonObject.get("status").toString();
+            } else {
+                String status = jsonObject.get("status").toString();
                 if ("453".equals(status)) {
                     AlertController.alert("用户名或密码不正确！");
                     return;
-                }else {
+                } else {
                     JSONObject tokenObj = JSON.parseObject(jsonObject.get("data").toString());
                     String token = tokenObj.get("token").toString();
                     EhcacheUtil.getInstance().put("token", "token", token);
                     //如果登陆成功就将邮箱和密码存入缓存,并做硬盘持久化保存以便下次登陆自动填写
                     EhcacheUtil.getInstance().put("user", "userId", userName.getText());
-                    if(isCheck.isSelected()){
+                    if (isCheck.isSelected()) {
                         EhcacheUtil.getInstance().put("user", "password", userPwd.getText());
                     }
                     EhcacheUtil.getInstance().put("user", "auto", isCheck.isSelected() + "");
-                    UserInfo.username=userName.getText().trim();
-                    UserInfo.password=userPwd.getText().trim();
+                    UserInfo.username = userName.getText().trim();
+                    UserInfo.password = userPwd.getText().trim();
                     open(event);
                 }
             }
 
-            } catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

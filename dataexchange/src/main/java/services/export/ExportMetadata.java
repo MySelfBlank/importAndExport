@@ -20,17 +20,16 @@ public class ExportMetadata {
 
         FileUtils.isExistDir(outputDir);
         try {
-            valideFile(new File(outputDir+File.separator+fileName));
-            this.ini = new Wini(new File(outputDir+File.separator+fileName));
+            valideFile(new File(outputDir + File.separator + fileName));
+            this.ini = new Wini(new File(outputDir + File.separator + fileName));
         } catch (IOException | BaseException e) {
             e.printStackTrace();
         }
     }
 
-    public void put(String key, String value){
+    public void put(String key, String value) {
         this.ini.put("Multi-granularity Spatio-temporal Object Data File", key, value);
     }
-
 
 
     public static void writeMetaData(String path) {
@@ -52,32 +51,32 @@ public class ExportMetadata {
     }
 
 
-    public void write()throws Exception{
+    public void write() throws Exception {
         File file = ini.getFile();
-        if (this.ini == null || this.ini.isEmpty()){
+        if (this.ini == null || this.ini.isEmpty()) {
             throw new BaseException("配置项为空");
         }
         FileOutputStream outputStream = new FileOutputStream(file, false);
         try {
             ini.getConfig().setStrictOperator(true);
             ini.store(outputStream);
-        }finally {
+        } finally {
             outputStream.close();
         }
     }
 
     private void valideFile(File file) throws BaseException, IOException {
 
-        if (file.isDirectory()){
+        if (file.isDirectory()) {
             throw new BaseException("这不是一个文件，而是一个文件夹");
         }
-        if (!file.exists()){
+        if (!file.exists()) {
             boolean newFile = file.createNewFile();
-            if (newFile){
-            }else {
+            if (newFile) {
+            } else {
                 throw new BaseException("文件创建失败");
             }
-        }else {
+        } else {
         }
     }
 

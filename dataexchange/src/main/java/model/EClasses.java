@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *  类
+ * 类
  */
 public class EClasses extends AbstractObject {
     /**

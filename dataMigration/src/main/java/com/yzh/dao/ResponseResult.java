@@ -4,15 +4,15 @@ import java.util.Date;
 
 public class ResponseResult {
 
-    private  Integer status;
+    private Integer status;
 
-    private  String message;
+    private String message;
 
-    private  Object data;
+    private Object data;
 
-    private  String[] exceptions;
+    private String[] exceptions;
 
-    private  Date timestamp;
+    private Date timestamp;
 
     public ResponseResult(Integer status) {
         this.status = status;

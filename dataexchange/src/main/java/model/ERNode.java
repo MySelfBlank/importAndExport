@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * 节点
  */
-public class ERNode extends ERObject{
+public class ERNode extends ERObject {
     private Long id;
 
     /**
@@ -30,7 +30,7 @@ public class ERNode extends ERObject{
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<Properties> properties = new ArrayList<>();
 
-    public class Properties{
+    public class Properties {
         private String key;
         private Object value;
 

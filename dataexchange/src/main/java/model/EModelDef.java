@@ -1,4 +1,4 @@
 package model;
 
-public class EModelDef extends AbstractObject{
+public class EModelDef extends AbstractObject {
 }

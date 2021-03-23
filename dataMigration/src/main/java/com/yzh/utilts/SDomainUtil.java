@@ -49,13 +49,13 @@ public class SDomainUtil {
         return sDomainOutPutModel;
     }
 
-    public static SDomainOutPutModel getSDomainById (SDomainOutPutModel sDomainOutPutModel, long sDomainId){
-        if (ObjectUtil.isNull(sDomainId)||ObjectUtil.isEmpty(sDomainId)){
+    public static SDomainOutPutModel getSDomainById(SDomainOutPutModel sDomainOutPutModel, long sDomainId) {
+        if (ObjectUtil.isNull(sDomainId) || ObjectUtil.isEmpty(sDomainId)) {
             return null;
         }
-        Map<String,Object> params = new HashMap<>();
+        Map<String, Object> params = new HashMap<>();
         params.put("token", UserInfo.token);
-        params.put("ids",sDomainId);
+        params.put("ids", sDomainId);
         String respose = HttpUtil.get(MyApi.getDomain1.getValue(), params);
         JSONObject jsonObject = (JSONObject) JSONUtil.parseObj(respose).get("data");
         JSONArray jsonArray = JSONUtil.parseArray(jsonObject.get("list"));

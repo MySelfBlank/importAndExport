@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public class ConnectorEntity extends AObject {
     private Integer type;
-    private Map<String,Object> relation;
+    private Map<String, Object> relation;
     private User user;
     private OType dType;
     private Long fId;

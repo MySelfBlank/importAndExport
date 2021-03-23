@@ -30,34 +30,37 @@ public class CustomerGeomSerialize extends JsonSerializer<CustomerGeom> {
             if ("point".equals(type)) {
                 geomSerialize.setType("node");
                 geomSerialize.setFlag(1);
-                List<Double> coordinates = objectMapper.readValue(customerData.getCoordinates().toString(), new TypeReference<List<Double>>(){});
+                List<Double> coordinates = objectMapper.readValue(customerData.getCoordinates().toString(), new TypeReference<List<Double>>() {
+                });
                 geomSerialize.setX(coordinates.get(0));
                 geomSerialize.setY(coordinates.get(1));
                 geomSerialize.setZ(0.00);
                 geomSerialize.setNodes(null);
                 geomSerialize.setType1("Node");
-            } else{
+            } else {
                 geomSerialize.setType("way");
                 geomSerialize.setFlag(1);
                 geomSerialize.setX(null);
                 geomSerialize.setY(null);
                 geomSerialize.setZ(null);
                 geomSerialize.setType1("Way");
-                List<List<Double>> coordinates= new ArrayList<>();
+                List<List<Double>> coordinates = new ArrayList<>();
                 try {
-                    coordinates = objectMapper.readValue(customerData.getCoordinates().toString(), new TypeReference<List<List<Double>>>(){});
+                    coordinates = objectMapper.readValue(customerData.getCoordinates().toString(), new TypeReference<List<List<Double>>>() {
+                    });
                 } catch (Exception e) {
                     try {
-                        String json = customerData.getCoordinates().toString().substring(1, customerData.getCoordinates().toString().length() -1);
+                        String json = customerData.getCoordinates().toString().substring(1, customerData.getCoordinates().toString().length() - 1);
                         json = json.replace("[[[", "[[").replace("]]]", "]]");
-                        coordinates = objectMapper.readValue(json, new TypeReference<List<List<Double>>>(){});
+                        coordinates = objectMapper.readValue(json, new TypeReference<List<List<Double>>>() {
+                        });
                     } catch (Exception ex) {
                         System.out.println("form转换失败");
                     }
                 }
                 List<Node> nodes = new ArrayList<>();
                 Long firstId = 0L;
-                for (int i=0; i<coordinates.size(); i++) {
+                for (int i = 0; i < coordinates.size(); i++) {
                     List<Double> list = coordinates.get(i);
                     if (list == null || list.size() < 2) {
                         continue;
@@ -70,7 +73,7 @@ public class CustomerGeomSerialize extends JsonSerializer<CustomerGeom> {
                         firstId = id;
                     }
 
-                    if ("polygon".equals(type) && i == coordinates.size() -1) {
+                    if ("polygon".equals(type) && i == coordinates.size() - 1) {
                         node.setId(firstId);
                     }
 
@@ -97,7 +100,7 @@ public class CustomerGeomSerialize extends JsonSerializer<CustomerGeom> {
         }
     }
 
-    public static class GeomSerialize{
+    public static class GeomSerialize {
         private Long id;
         private String type;
         private Integer flag;
@@ -178,7 +181,7 @@ public class CustomerGeomSerialize extends JsonSerializer<CustomerGeom> {
         }
     }
 
-    public static class Node{
+    public static class Node {
         private Long id;
         private Integer flag;
         private String type;

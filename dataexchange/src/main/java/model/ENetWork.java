@@ -9,7 +9,7 @@ public class ENetWork {
      */
     private List<ERNode> nodes = new ArrayList<>();
 
-    public void addRNode(ERNode rNode){
+    public void addRNode(ERNode rNode) {
         if (nodes == null) {
             nodes = new ArrayList<>();
         }

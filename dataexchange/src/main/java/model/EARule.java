@@ -1,4 +1,4 @@
 package model;
 
-public class EARule extends AbstractObject  {
+public class EARule extends AbstractObject {
 }

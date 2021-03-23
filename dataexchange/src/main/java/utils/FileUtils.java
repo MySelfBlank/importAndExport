@@ -10,6 +10,7 @@ public class FileUtils {
 
     /**
      * 获取文件夹下所有文件
+     *
      * @param path
      * @return
      * @throws Exception
@@ -59,6 +60,7 @@ public class FileUtils {
 
     /**
      * 读取文件字节流
+     *
      * @param filePath
      * @return
      * @throws IOException
@@ -71,10 +73,11 @@ public class FileUtils {
 
         return data;
     }
+
     private static byte[] toByteArray(InputStream in) throws IOException {
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-       // byte[] buffer = new byte[1024 * 4];
+        // byte[] buffer = new byte[1024 * 4];
         byte[] buffer = new byte[in.available()];
         int n = 0;
         while ((n = in.read(buffer)) != -1) {

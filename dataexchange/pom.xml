@@ -7,9 +7,11 @@
         <groupId>org.example</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
+
     <modelVersion>4.0.0</modelVersion>
     <groupId>groupId</groupId>
     <artifactId>dataexchange</artifactId>
+    <packaging>jar</packaging>
 
     <repositories>
         <repository>
@@ -151,11 +153,56 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.jmetro</groupId>
+            <artifactId>jmetro</artifactId>
+            <version>8.6.14</version>
+        </dependency>
+
+        <dependency>
+            <groupId>onegis</groupId>
+            <artifactId>onegis.base</artifactId>
+            <version>0.1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/onegis.base-0.1.0-SNAPSHOT.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>onegis</groupId>
+            <artifactId>onegis.common</artifactId>
+            <version>0.1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/onegis.common-0.1.0-SNAPSHOT.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>onegis</groupId>
+            <artifactId>onegis.core</artifactId>
+            <version>0.1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/onegis.core-0.1.0-SNAPSHOT.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>onegis</groupId>
+            <artifactId>onegis.protobuf</artifactId>
+            <version>0.1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/onegis.protobuf-0.1.0-SNAPSHOT.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>protobuf</groupId>
+            <artifactId>protobuf</artifactId>
+            <version>0.1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/protobuf-java-0.1.0-SNAPSHOT.jar</systemPath>
+        </dependency>
+
     </dependencies>
 
     <build>
         <resources>
-
             <resource>
                 <directory>src/main/java</directory>
                 <includes>
@@ -166,9 +213,8 @@
                     <!-- 如果想要弄个包名专门放fxml文件，像上一行这样添加设置 -->
                     <!-- 之后，使用getResource("fxml/xx.fxml")这样子 -->
                 </includes>
-                <filtering>false</filtering>
+                <filtering>true</filtering>
             </resource>
-
             <resource>
                 <directory>src/main/resources</directory>
                 <includes>
@@ -178,20 +224,36 @@
                     <include>**/*.css</include>
                     <include>**/resources/*.css</include>
                 </includes>
-                <filtering>false</filtering>
+                <filtering>true</filtering>
             </resource>
         </resources>
 
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <webResources>
+                        <resource>
+                            <directory>src/main/resources/lib</directory>
+                            <includes>
+                                <include>*</include>
+                            </includes>
+                            <targetPath>WEB-INF/lib</targetPath>
+                        </resource>
+                    </webResources>
+                </configuration>
+            </plugin>
             <!-- Compile -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.3</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
-                    <encoding>UTF-8</encoding>
-                    <showWarnings>true</showWarnings>
                 </configuration>
             </plugin>
             <plugin>
@@ -200,6 +262,54 @@
                 <configuration>
                     <skip>true</skip>
                 </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>app.MainUi</mainClass>
+                        </manifest>
+                        <manifestEntries>
+                            <Class-Path>.</Class-Path>
+                        </manifestEntries>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id> <!-- this is used for inheritance merges -->
+                        <phase>package</phase> <!-- 指定在打包节点执行jar包合并操作 -->
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.zenjava</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>8.8.3</version>
+                <configuration>
+                    <mainClass>app.MainUi</mainClass>
+                    <appName>DataChange-Tool</appName>
+                    <needShortcut>true</needShortcut>
+                    <vendor>BlueThink</vendor>
+                    <bundleArguments>
+                        <installdirChooser>true</installdirChooser>
+                    </bundleArguments>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id> <!-- this is used for inheritance merges -->
+                        <phase>package</phase> <!-- 指定在打包节点执行jar包合并操作 -->
+                        <goals>
+                            <goal>native</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

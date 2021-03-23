@@ -34,15 +34,16 @@ public class SDomainImportUtil {
     //日志工厂
     private static final Logger logger = LoggerFactory.getLogger(FieldImportUtil.class);
 
-    public static void importSDomain(String sDomainPath)throws Exception{
+    public static void importSDomain(String sDomainPath) throws Exception {
         //读取文件
         logger.debug("时空域开始导入===========》读取文件");
-        String SDomainStr = FileTools.readFile(sDomainPath+"\\test.sdomain");
+        String SDomainStr = FileTools.readFile(sDomainPath + "\\test.sdomain");
         //构建SDomain
         SDomain sDomain = JSONUtil.toBean(SDomainStr, SDomain.class);
         ArrayList<Action> actions = new ArrayList<>();
         Action action = new Action();
-        action.setId(0L);action.setOperation(33);
+        action.setId(0L);
+        action.setOperation(33);
         actions.add(action);
         sDomain.setActions(actions);
         JSONObject object = JSONUtil.parseObj(SDomainStr);
@@ -66,10 +67,10 @@ public class SDomainImportUtil {
         sDomains.add(sDomain);
         JSONUtil.parseArray(sDomains);
         //请求
-        String response  = HttpUtil.post(MyApi.insertSDomain.getValue() + "?token=" + UserInfo.token, JSONUtil.parseArray(sDomains).toString());
+        String response = HttpUtil.post(MyApi.insertSDomain.getValue() + "?token=" + UserInfo.token, JSONUtil.parseArray(sDomains).toString());
         JSONObject responseJSONObj = JSONUtil.parseObj(response);
-        if(!responseJSONObj.getStr("status").equals("200")){
-            logger.error("导入失败="+responseJSONObj.getStr("message"));
+        if (!responseJSONObj.getStr("status").equals("200")) {
+            logger.error("导入失败=" + responseJSONObj.getStr("message"));
             return;
         }
 
@@ -80,7 +81,7 @@ public class SDomainImportUtil {
         finalUcUrl = localHostUcUrl;
         finalModelUrl = modelLocalUrl;
         login("ceshi@yzh.com", "123456");
-        PathUtil.baseInfoDir="C:\\Users\\Cai\\Desktop\\demo\\测试八个方面1223";
+        PathUtil.baseInfoDir = "C:\\Users\\Cai\\Desktop\\demo\\测试八个方面1223";
         importSDomain(PathUtil.baseInfoDir);
     }
 }

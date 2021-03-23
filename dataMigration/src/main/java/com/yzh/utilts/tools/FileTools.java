@@ -76,15 +76,15 @@ public class FileTools {
         return (JSONArray) JSONUtil.parse(sourceData.get("data"));
     }
 
-    public static Boolean judgeImportState(String response){
+    public static Boolean judgeImportState(String response) {
         JSONObject sourceData = JSONUtil.parseObj(response);
-        if(!sourceData.getInt("status").equals(200)){
+        if (!sourceData.getInt("status").equals(200)) {
             return true;
         }
         return false;
     }
 
-    public static <T> List forJsonList(String object,Class<T> tClass) throws Exception {
+    public static <T> List forJsonList(String object, Class<T> tClass) throws Exception {
         JSONObject sourceData = JSONUtil.parseObj(object);
         JSONObject clearData = (JSONObject) JSONUtil.parse(sourceData.get("data"));
         JSONArray clearDatalist = (JSONArray) clearData.get("list");
@@ -106,8 +106,8 @@ public class FileTools {
      * @param jsonObject
      * @desc 将JSON对象导出到本地文件
      */
-    public static void exportFile(JSONObject jsonObject, String pathName,String fileName) {
-        logger.debug("将"+fileName+"数据输出到本地");
+    public static void exportFile(JSONObject jsonObject, String pathName, String fileName) {
+        logger.debug("将" + fileName + "数据输出到本地");
         //创建一个文件路径
         File file = new File(pathName);
         FileWriter writer = null;
@@ -138,8 +138,8 @@ public class FileTools {
         }
     }
 
-    public static void exportFile(JSON json, String pathName,String fileName) {
-        logger.debug("将"+fileName+"数据输出到本地");
+    public static void exportFile(JSON json, String pathName, String fileName) {
+        logger.debug("将" + fileName + "数据输出到本地");
         //创建一个文件路径
         File file = new File(pathName);
         FileWriter writer = null;
@@ -169,8 +169,9 @@ public class FileTools {
             e.printStackTrace();
         }
     }
-    public static void exportFile(String json, String pathName,String fileName) {
-        logger.debug("将"+fileName+"数据输出到本地");
+
+    public static void exportFile(String json, String pathName, String fileName) {
+        logger.debug("将" + fileName + "数据输出到本地");
         //创建一个文件路径
         File file = new File(pathName);
         FileWriter writer = null;
@@ -231,42 +232,45 @@ public class FileTools {
 
     /**
      * 文件读取方法
+     *
      * @param fileUrl 文件的路径
      * @return
      */
-    public static String readFile (String fileUrl){
+    public static String readFile(String fileUrl) {
         FileReader fileReader = new FileReader(fileUrl);
         return fileReader.readString();
     }
 
     /**
      * 将Json数组转换为List
+     *
      * @param JsonArrayStr Json数组字符串
-     * @param tClass 需要转换的List 类型
+     * @param tClass       需要转换的List 类型
      * @param <T>
      * @return
      */
-    public static <T> List<T> jsonArray2List(String JsonArrayStr, Class<T> tClass){
+    public static <T> List<T> jsonArray2List(String JsonArrayStr, Class<T> tClass) {
         JSONArray jsonArray = JSONUtil.parseArray(JsonArrayStr);
         return jsonArray.toList(tClass);
     }
 
     /**
      * 获取文件夹下所有文件
+     *
      * @param fileUrl
      * @return
      */
-    public static List<File> getFiles(String fileUrl){
+    public static List<File> getFiles(String fileUrl) {
         //目标集合fileList
         List<File> fileList = new ArrayList<>();
-        File file  = new File(fileUrl);
-        if (file.isDirectory()){
+        File file = new File(fileUrl);
+        if (file.isDirectory()) {
             File[] files = file.listFiles();
             for (File fileIndex : files) {
                 //如果文件为目录则进行递归搜索
-                if (fileIndex.isDirectory()){
+                if (fileIndex.isDirectory()) {
                     getFiles(fileIndex.getPath());
-                }else {
+                } else {
                     //如果文件为普通文件，则将文件加入集合
                     fileList.add(fileIndex);
                 }
@@ -277,20 +281,21 @@ public class FileTools {
 
     /**
      * dll文件的下载
+     *
      * @param srcPath
      * @param downloadPath
      */
-    public static void utileDownLoad(String srcPath,String downloadPath){
+    public static void utileDownLoad(String srcPath, String downloadPath) {
         try {
-            URL url = new URL(MyApi.getDll.getValue() + "?srcPath=" +srcPath);
+            URL url = new URL(MyApi.getDll.getValue() + "?srcPath=" + srcPath);
             URLConnection con = url.openConnection();
-            InputStream input= con.getInputStream();
+            InputStream input = con.getInputStream();
             // 本例是储存到本地文件系统，fileRealName为你想存的文件名称
             String fileName = srcPath.substring(srcPath.lastIndexOf("/") + 1).replaceAll("\\?", "_");
             File dest = new File(downloadPath + "/" + fileName);
             //获取父目录
-            File fileParent=dest.getParentFile();
-            if (!fileParent.exists()){
+            File fileParent = dest.getParentFile();
+            if (!fileParent.exists()) {
                 fileParent.mkdirs();
             }
             OutputStream output = new FileOutputStream(dest);

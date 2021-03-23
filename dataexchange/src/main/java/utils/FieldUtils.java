@@ -37,39 +37,39 @@ public class FieldUtils {
         EField eField = new EField();
         eField.setId(field.getId());
         eField.setCaption(field.getCaption());
-        if ("date".equals(field.getType().getName())){
+        if ("date".equals(field.getType().getName())) {
             eField.setType("datetime");
-        }else {
+        } else {
             eField.setType(field.getType().getName());
         }
         eField.setDesc(field.getDes());
         Map<String, Object> domain = new HashMap<>();
-        if (field.getDomain() != null && !field.getDomain().equals("")){
+        if (field.getDomain() != null && !field.getDomain().equals("")) {
             Map<String, Object> objectMap = JsonUtils.parseMap(field.getDomain());
             for (Map.Entry<String, Object> entry : objectMap.entrySet()) {
-                if (entry.getKey().equals("Range")){
+                if (entry.getKey().equals("Range")) {
                     domain.put("type", "list");
-                }else {
+                } else {
                     domain.put("type", "range");
                 }
-                if (entry.getValue() instanceof List){
+                if (entry.getValue() instanceof List) {
                     List value = (List) entry.getValue();
                     value.removeAll(Collections.singleton(null));
-                    if (value.size() == 0){
+                    if (value.size() == 0) {
                         domain.remove("type");
                         continue;
                     }
                     domain.put("value", value);
-                }else {
+                } else {
                     domain.put("value", entry.getValue());
                 }
             }
         }
-        if (domain.size() > 0){
+        if (domain.size() > 0) {
             eField.setDomain(domain);
         }
         eField.setName(field.getName());
-        if (field.getDefaultValue() != null){
+        if (field.getDefaultValue() != null) {
             eField.setDefaultValue(field.getDefaultValue().toString());
         }
         return eField;

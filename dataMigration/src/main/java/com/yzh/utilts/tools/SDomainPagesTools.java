@@ -44,7 +44,7 @@ public class SDomainPagesTools {
         JSONObject jsonData = formatData(getRespond);
         Index.pages = jsonData.getInt("pages");
         sDomains.clear();
-        if((jsonData.getStr("list").equalsIgnoreCase("[]"))){
+        if ((jsonData.getStr("list").equalsIgnoreCase("[]"))) {
             System.out.println("未找到相关时空域");
             return;
         }

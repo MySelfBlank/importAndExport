@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ehcache>
-	<diskStore path="java.io.tempdir" />
+    <diskStore path="java.io.tempdir"/>
 
-	<defaultCache maxElementsInMemory="1000" eternal="false"
-		timeToIdleSeconds="120" timeToLiveSeconds="120" overflowToDisk="true" />
+    <defaultCache maxElementsInMemory="1000" eternal="false"
+                  timeToIdleSeconds="120" timeToLiveSeconds="120" overflowToDisk="true"/>
 
-	<!--
+    <!--
        maxElementsInMemory设置成1，overflowToDisk设置成true，只要有一个缓存元素，就直接存到硬盘上去
        eternal设置成true，代表对象永久有效
        maxElementsOnDisk设置成0 表示硬盘中最大缓存对象数无限大
        diskPersistent设置成true表示缓存虚拟机重启期数据
     -->
-	<cache name="user" maxElementsInMemory="1" eternal="true"
-		timeToIdleSeconds="300000" timeToLiveSeconds="600000"
-		overflowToDisk="true" diskPersistent="true" maxElementsOnDisk="0"/>
+    <cache name="user" maxElementsInMemory="1" eternal="true"
+           timeToIdleSeconds="300000" timeToLiveSeconds="600000"
+           overflowToDisk="true" diskPersistent="true" maxElementsOnDisk="0"/>
 
 
-	<cache name="token" maxElementsInMemory="10000" eternal="false"
-		timeToIdleSeconds="300000" timeToLiveSeconds="600000"
-		overflowToDisk="true" diskPersistent="true"/>
+    <cache name="token" maxElementsInMemory="10000" eternal="false"
+           timeToIdleSeconds="300000" timeToLiveSeconds="600000"
+           overflowToDisk="true" diskPersistent="true"/>
 </ehcache>

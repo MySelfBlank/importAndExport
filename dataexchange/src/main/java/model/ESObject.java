@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * 空间对象
  */
-public class ESObject extends AbstractObject  {
+public class ESObject extends AbstractObject {
 
     public ESObject() {
     }
@@ -95,8 +95,8 @@ public class ESObject extends AbstractObject  {
     private List<EVersion> versions = new ArrayList<>();
 
     public void addGeobox(double minx, double miny, double minz,
-                          double maxx, double maxy, double maxz){
-        this.addGeobox(this.geoBox,minx ,miny ,minz ,maxx ,maxy ,maxz );
+                          double maxx, double maxy, double maxz) {
+        this.addGeobox(this.geoBox, minx, miny, minz, maxx, maxy, maxz);
     }
 
     public String getCode() {

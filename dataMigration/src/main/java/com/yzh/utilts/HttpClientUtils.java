@@ -43,16 +43,18 @@ public class HttpClientUtils {
             .toLowerCase().replaceAll("-", "");// 边界标识
     private final static String PREFIX = "--";// 必须存在
     private final static String LINE_END = "\r\n";
-    public static ResponseResult doGet(String url) throws Exception{
+
+    public static ResponseResult doGet(String url) throws Exception {
         return doGet(url, null, null);
     }
 
-    public static ResponseResult doGet(String url,Map<String, String> params) throws Exception{
-       return doGet(url, null, params);
+    public static ResponseResult doGet(String url, Map<String, String> params) throws Exception {
+        return doGet(url, null, params);
     }
 
     /**
      * 发送get请求；带请求头和请求参数
+     *
      * @param url     请求地址
      * @param headers 请求头集合
      * @param params  请求参数集合
@@ -91,11 +93,12 @@ public class HttpClientUtils {
 
     /**
      * 下载dll文件
+     *
      * @param url
      * @param downloadPath
      * @throws Exception
      */
-    public static void execDownlLoad(String url,String downloadPath,String srcPath) throws Exception {
+    public static void execDownlLoad(String url, String downloadPath, String srcPath) throws Exception {
         CloseableHttpClient httpClient = HttpClients.createDefault();
         URIBuilder uriBuilder = new URIBuilder(url);
         HttpGet httpGet = new HttpGet(uriBuilder.build());
@@ -104,7 +107,7 @@ public class HttpClientUtils {
         CloseableHttpResponse httpResponse = null;
         try {
             HttpClientResult httpClientResult = getHttpClientResult(httpResponse, httpClient, httpGet);
-            if(httpClientResult.getCode()==200){
+            if (httpClientResult.getCode() == 200) {
                 HttpEntity entity = httpResponse.getEntity();
                 InputStream input = entity.getContent();
                 // 本例是储存到本地文件系统，fileRealName为你想存的文件名称
@@ -132,16 +135,14 @@ public class HttpClientUtils {
     }
 
 
-
-
-    public static JSONObject doPost(String url) throws Exception{
+    public static JSONObject doPost(String url) throws Exception {
         HttpClientResult httpClientResult = doPost(url, null, null);
         String content = httpClientResult.getContent();
         JSONObject jsonObject = JSONObject.parseObject(content);
         return jsonObject;
     }
 
-    public static ResponseResult doPostWithJson(String url, String json) throws Exception{
+    public static ResponseResult doPostWithJson(String url, String json) throws Exception {
         HttpClientResult httpClientResult = doPost(url, null, json);
         String content = httpClientResult.getContent();
         ResponseResult responseResult = JSON.parseObject(content, ResponseResult.class);
@@ -149,12 +150,11 @@ public class HttpClientUtils {
     }
 
     /**
-     *
      * @param url
      * @return 返回p
      * @throws Exception
      */
-    public static byte[] doPostIn(String url) throws Exception{
+    public static byte[] doPostIn(String url) throws Exception {
         CloseableHttpClient httpClient = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost(url);
         RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(CONNECT_TIMEOUT).setSocketTimeout(SOCKET_TIMEOUT).build();
@@ -166,7 +166,7 @@ public class HttpClientUtils {
                 InputStream content = httpResponse.getEntity().getContent();
                 byte[] result = IOUtils.toByteArray(content);
                 return result;
-            }else {
+            } else {
                 return null;
             }
         } finally {
@@ -177,19 +177,20 @@ public class HttpClientUtils {
 
     /**
      * POST Multipart Request
+     *
      * @param requestUrl
      * @param requestText
      * @param requestFile
      * @return
      * @throws Exception
      */
-    public static String doPostByte(String requestUrl, Map<String, String> requestText, Map<String, MultipartFile> requestFile) throws Exception{
+    public static String doPostByte(String requestUrl, Map<String, String> requestText, Map<String, MultipartFile> requestFile) throws Exception {
         HttpURLConnection conn = null;
         InputStream input = null;
         OutputStream os = null;
         BufferedReader br = null;
         StringBuffer buffer = null;
-        try{
+        try {
             URL url = new URL(requestUrl);
             conn = (HttpURLConnection) url.openConnection();
             conn.setDoOutput(true);
@@ -214,19 +215,19 @@ public class HttpClientUtils {
             String endTarget = PREFIX + BOUNDARY + PREFIX + LINE_END;
             os.write(endTarget.getBytes());
             os.flush();
-            if(conn.getResponseCode()==200){
+            if (conn.getResponseCode() == 200) {
                 input = conn.getInputStream();
-            }else{
+            } else {
                 input = conn.getErrorStream();
             }
 
-            br = new BufferedReader(new InputStreamReader( input, "UTF-8"));
+            br = new BufferedReader(new InputStreamReader(input, "UTF-8"));
             buffer = new StringBuffer();
             String line = null;
             while ((line = br.readLine()) != null) {
                 buffer.append(line);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new Exception(e);
         } finally {
             try {
@@ -245,7 +246,7 @@ public class HttpClientUtils {
                     br = null;
                 }
             } catch (IOException ex) {
-                System.out.println(ex.getMessage()+ex);
+                System.out.println(ex.getMessage() + ex);
                 throw new Exception(ex);
             }
         }
@@ -254,14 +255,13 @@ public class HttpClientUtils {
 
     /**
      * 对post参数进行编码处理并写入数据流中
+     *
      * @throws Exception
-     *
      * @throws IOException
-     *
-     * */
+     */
     private static void writeParams(Map<String, String> requestText,
                                     OutputStream os) throws Exception {
-        try{
+        try {
             String msg = "请求参数部分:\n";
             if (requestText == null || requestText.isEmpty()) {
                 msg += "空";
@@ -289,8 +289,8 @@ public class HttpClientUtils {
             }
 
             //System.out.println(msg);
-        }catch(Exception e){
-            System.out.println("writeParams failed"+ e);
+        } catch (Exception e) {
+            System.out.println("writeParams failed" + e);
             throw new Exception(e);
         }
     }
@@ -299,12 +299,11 @@ public class HttpClientUtils {
      * 对post上传的文件进行编码处理并写入数据流中
      *
      * @throws IOException
-     *
-     * */
+     */
     private static void writeFile(Map<String, MultipartFile> requestFile,
                                   OutputStream os) throws Exception {
         InputStream is = null;
-        try{
+        try {
             String msg = "请求上传文件部分:\n";
             if (requestFile == null || requestFile.isEmpty()) {
                 msg += "空";
@@ -314,7 +313,7 @@ public class HttpClientUtils {
                 Iterator<Map.Entry<String, MultipartFile>> it = set.iterator();
                 while (it.hasNext()) {
                     Map.Entry<String, MultipartFile> entry = it.next();
-                    if(entry.getValue() == null){//剔除value为空的键值对
+                    if (entry.getValue() == null) {//剔除value为空的键值对
                         continue;
                     }
                     requestParams.append(PREFIX).append(BOUNDARY).append(LINE_END);
@@ -339,16 +338,16 @@ public class HttpClientUtils {
                 }
             }
             //System.out.println(msg);
-        }catch(Exception e){
-            System.out.println("writeFile failed"+e);
+        } catch (Exception e) {
+            System.out.println("writeFile failed" + e);
             throw new Exception(e);
-        }finally{
-            try{
-                if(is!=null){
+        } finally {
+            try {
+                if (is != null) {
                     is.close();
                 }
-            }catch(Exception e){
-                System.out.println("writeFile FileInputStream close failed"+ e);
+            } catch (Exception e) {
+                System.out.println("writeFile FileInputStream close failed" + e);
                 throw new Exception(e);
             }
         }
@@ -359,7 +358,7 @@ public class HttpClientUtils {
      *
      * @param url     请求地址
      * @param headers 请求头集合
-     * @param json  请求参数集合
+     * @param json    请求参数集合
      * @return
      * @throws Exception
      */
@@ -370,8 +369,8 @@ public class HttpClientUtils {
         httpPost.setConfig(requestConfig);
         packageHeader(headers, httpPost);
         // 封装请求参数
-        if(json!=null&&!json.equals("")){
-            StringEntity requestEntity = new StringEntity(json,ENCODING);
+        if (json != null && !json.equals("")) {
+            StringEntity requestEntity = new StringEntity(json, ENCODING);
             requestEntity.setContentEncoding(ENCODING);
             httpPost.setHeader("Content-type", "application/json");
             httpPost.setEntity(requestEntity);
@@ -386,8 +385,6 @@ public class HttpClientUtils {
             release(httpResponse, httpClient);
         }
     }
-
-
 
 
     /**
