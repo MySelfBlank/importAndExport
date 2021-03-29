@@ -22,7 +22,7 @@ public class EOType extends AbstractObject {
     private EFormStyless formStyles;
     private Connectors connectors;
     private EModels models;
-    private DTypes dTypes;
+//    private DTypes dTypes;
     private Integer placedes;
     private EditTypeEnum editType;
     private Long mtime;
@@ -107,13 +107,13 @@ public class EOType extends AbstractObject {
         this.models = models;
     }
 
-    public DTypes getdTypes() {
-        return dTypes;
-    }
-
-    public void setdTypes(DTypes dTypes) {
-        this.dTypes = dTypes;
-    }
+//    public DTypes getdTypes() {
+//        return dTypes;
+//    }
+//
+//    public void setdTypes(DTypes dTypes) {
+//        this.dTypes = dTypes;
+//    }
 
     public Integer getPlacedes() {
         return placedes;
