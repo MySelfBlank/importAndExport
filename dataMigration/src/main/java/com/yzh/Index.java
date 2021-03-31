@@ -3,6 +3,7 @@ package com.yzh;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.yzh.dao.EForm;
+import com.yzh.dao.ExecuteContainer;
 import com.yzh.dao.SDomainOutPutModel;
 import com.yzh.services.export.ExportDllFile;
 import com.yzh.userInfo.PathUtil;
@@ -78,14 +79,15 @@ public class Index {
         //导出时空域下的时间参照
         ETrsUtil.getTrs(oTypeList);
         //字段集合
-        List<Field> fieldList = new ArrayList<>();
+
         //属性集合
         List<Attribute> attributeList = new ArrayList<>();
         //形态集合
         List<Form> formList = new ArrayList<>();
+        //形态样式
         List<FormStyle> FormStyleList = new ArrayList<>();
         //导出所有脚本文件
-        ExportDllFile.writeDllFiles();
+        ExportDllFile.writeDllFiles(path);
         for (SObject sObject : sObjectsList) {
             if (isEmpty(sObject) || isNull(sObject)) {
                 continue;
@@ -109,10 +111,10 @@ public class Index {
                 oType.getFormStyles().getStyles().stream().sequential().collect(Collectors.toCollection(() -> FormStyleList));
             }
         }
-        fieldList.addAll(FieldUtils.objectFieldsHandle2(attributeList));
+        ExecuteContainer.fieldList.addAll(FieldUtils.objectFieldsHandle2(attributeList));
         //导出时空域下所有使用的属性
         //List<Field> fieldList = FieldUtils.objectFieldsHandle(sObjectsList);
-        FileTools.exportFile(JSONUtil.parse(fieldList), PathUtil.baseInfoDir + "/test.fields", "field");
+        FileTools.exportFile(JSONUtil.parse(ExecuteContainer.fieldList), PathUtil.baseInfoDir + "/test.fields", "field");
         //导出时空域下所有使用的样式
         List<EForm> eFormList = FormUtils.dsForms2EForm(formList);
         FormStyleList.addAll(FormUtils.objectFromsHandle2(formList));
@@ -123,5 +125,11 @@ public class Index {
         FileTools.exportFile(JSONUtil.parse(eFormList), PathUtil.baseInfoDir + "/test.forms", "form");
         FileTools.exportFile(JSONUtil.parse(formStyles), PathUtil.baseInfoDir + "/test.formStyles", "formStyle");
         //导出时空域下所有使用的形态
+        //导出完毕后清空上次导出内容
+        sObjectsList.clear();
+        oTypeList.clear();
+        formList.clear();
+        FormStyleList.clear();
+        ExecuteContainer.clear();
     }
 }

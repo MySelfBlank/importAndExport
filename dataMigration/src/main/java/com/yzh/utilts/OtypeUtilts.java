@@ -31,8 +31,7 @@ import java.util.*;
 import static cn.hutool.core.util.ObjectUtil.isEmpty;
 import static cn.hutool.core.util.ObjectUtil.isNull;
 import static com.yzh.Index.*;
-import static com.yzh.utilts.tools.FileTools.exportFile;
-import static com.yzh.utilts.tools.FileTools.formatData;
+import static com.yzh.utilts.tools.FileTools.*;
 
 /**
  * @author Yzh
@@ -58,18 +57,34 @@ public class OtypeUtilts {
         params.put("orderType", "VID");
         params.put("descOrAsc", false);
         String objectJsonStr = HttpUtil.get(MyApi.getObject.getValue(), params);
-        JSONObject data = formatData(objectJsonStr);
-
-        List<JSONObject> objectList = null;
-        String objectListStr = data.getStr("list");
-        List<SObject> sObjects = JsonUtils.jsonToList(objectListStr, SObject.class);
-        sObjectsList.addAll(sObjects);
-//        objectList = JSONArray.parseArray(objectListStr, JSONObject.class);
-
-        //获取数据对象
-        //getDObjectList(sObjects);
-        //处理SObject
-
+        if (judgeImportState(objectJsonStr)) {
+            int currentPage = 1;
+            int pageTotal = 0;
+            System.out.println("时空域对象过载采用分页");
+            params.put("pageSize", 1000);
+            params.put("pageNum", currentPage);
+            String pageObjectJsonStr = HttpUtil.get(MyApi.getObject.getValue(), params);
+            //循环遍历出所有页
+            JSONObject data = formatData(pageObjectJsonStr);
+            pageTotal = data.getInt("pages");
+            String objectListStr = data.getStr("list");
+            List<SObject> sObjects = JsonUtils.jsonToList(objectListStr, SObject.class);
+            sObjectsList.addAll(sObjects);
+            for (int i = 2; i <= pageTotal; i++) {
+                currentPage = i;
+                params.put("pageNum", currentPage);
+                String  insideObjectJsonStr = HttpUtil.get(MyApi.getObject.getValue(), params);
+                JSONObject insideData = formatData(insideObjectJsonStr);
+                String insideObjectListStr = insideData.getStr("list");
+                List<SObject> insideObjects = JsonUtils.jsonToList(insideObjectListStr, SObject.class);
+                sObjectsList.addAll(insideObjects);
+            }
+        } else {
+            JSONObject data = formatData(objectJsonStr);
+            String objectListStr = data.getStr("list");
+            List<SObject> sObjects = JsonUtils.jsonToList(objectListStr, SObject.class);
+            sObjectsList.addAll(sObjects);
+        }
         //获取当前时空域下的所有类模板Id
 
         for (SObject sObject : sObjectsList) {

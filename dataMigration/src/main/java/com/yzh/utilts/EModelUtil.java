@@ -20,6 +20,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.*;
 
+import static com.yzh.dao.ExecuteContainer.eModelList;
+import static com.yzh.dao.ExecuteContainer.modelIds;
 import static com.yzh.utilts.tools.FileTools.exportFile;
 import static com.yzh.utilts.tools.FileTools.forJsonList;
 import static java.util.Objects.isNull;
@@ -32,8 +34,6 @@ import static java.util.Objects.isNull;
  * @ CreateDate    :  2020/12/22 9:44
  */
 public class EModelUtil {
-
-    static List<EModel> list = new ArrayList<>();
 
     /**
      * 获取行为id
@@ -67,8 +67,9 @@ public class EModelUtil {
      * @param modelsList
      */
     public static void getModelsFile(List<OType> modelsList) throws Exception {
-        Set<Long> modelIds = getModel(modelsList);
         if (modelIds.size() == 0) {
+            String path = PathUtil.baseInfoDir + "\\test.models";
+            exportFile(JSONUtil.parse(eModelList), path, "Models");
             return;
         }
         Map<String, Object> param = new HashMap<>();
@@ -77,11 +78,10 @@ public class EModelUtil {
         param.put("DESCOrAsc", true);
         String relationStr = HttpUtil.get(MyApi.getModelById.getValue(), param);
 
-        list.addAll(forJsonList(relationStr, EModel.class));
+        eModelList.addAll(forJsonList(relationStr, EModel.class));
 
         String path = PathUtil.baseInfoDir + "\\test.models";
-        exportFile(JSONUtil.parse(list), path, "Models");
-
+        exportFile(JSONUtil.parse(eModelList), path, "Models");
     }
 
     //下载行为下的脚本文件
@@ -90,7 +90,6 @@ public class EModelUtil {
         if (eModelFile.size() == 0) {
             return;
         }
-        int i = 1;
         for (String script : eModelFile) {
             //获取文件后缀
             String s = FileNameUtil.extName(script);
@@ -99,7 +98,7 @@ public class EModelUtil {
             InputStream inputStream = con.getInputStream();
             int index;
             byte[] bytes = new byte[1024];
-            File file = new File(PathUtil.baseInfoDirData + "\\test" + i + "." + s);
+            File file = new File(PathUtil.baseInfoDir+ "/"+script);
             //判断目录
             //判断文件是否存在
             if (!file.getParentFile().exists()) {
@@ -116,7 +115,6 @@ public class EModelUtil {
             }
             downloadFile.close();
             inputStream.close();
-            i++;
         }
     }
 
@@ -128,12 +126,12 @@ public class EModelUtil {
      */
     public static Set<String> getEModelScript() {
 
-        if (list == null || list.size() == 0) {
+        if (eModelList == null || eModelList.size() == 0) {
             return new HashSet<>();
         }
         Set<String> scriptSet = new HashSet<>();
         String[] languages = new String[]{"1", "2"};
-        for (EModel eModel : list) {
+        for (EModel eModel : eModelList) {
             if (!Arrays.asList(languages).contains(eModel.getpLanguage())) {
                 continue;
             }

@@ -285,14 +285,14 @@ public class FileTools {
      * @param srcPath
      * @param downloadPath
      */
-    public static void utileDownLoad(String srcPath, String downloadPath) {
+    public static void utileDownLoad(String srcPath, String ... downloadPath) {
         try {
             URL url = new URL(MyApi.getDll.getValue() + "?srcPath=" + srcPath);
             URLConnection con = url.openConnection();
             InputStream input = con.getInputStream();
             // 本例是储存到本地文件系统，fileRealName为你想存的文件名称
             String fileName = srcPath.substring(srcPath.lastIndexOf("/") + 1).replaceAll("\\?", "_");
-            File dest = new File(downloadPath + "/" + fileName);
+            File dest = new File(downloadPath[0] + "/" +downloadPath[1]+"_"+ fileName);
             //获取父目录
             File fileParent = dest.getParentFile();
             if (!fileParent.exists()) {

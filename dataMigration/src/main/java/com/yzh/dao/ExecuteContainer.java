@@ -1,6 +1,7 @@
 package com.yzh.dao;
 
 import com.yzh.dao.exportModel.EDObject;
+import onegis.psde.attribute.Field;
 
 import java.util.*;
 
@@ -22,8 +23,20 @@ public class ExecuteContainer {
 
     public static Set<Long> otypeFieldIds = new HashSet<>();
 
+//    public static Set<Long> modelIds = new HashSet<>();
+    public static List<EModel> eModelList = new ArrayList<>();
+
+    public static List<Field> fieldList = new ArrayList<>();
+
+    public static Set<Long> RelationIds = new HashSet<>();
+
     public static void clear() {
         dObjectList.clear();
+        fieldList.clear();
+        otypeFieldIds.clear();
+        eModelList.clear();
+        modelIds.clear();
+        RelationIds.clear();
     }
 
     public static void addDObject(List<EDObject> edObjects) {

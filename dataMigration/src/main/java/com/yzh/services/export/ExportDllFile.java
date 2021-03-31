@@ -8,7 +8,9 @@ import onegis.psde.model.Model;
 import onegis.psde.psdm.OType;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 导出所有行为脚本
@@ -18,10 +20,10 @@ import java.util.List;
  */
 public class ExportDllFile {
 
-    public static void writeDllFiles() {
+    public static void writeDllFiles(String path) {
         List<OType> oTypeList = Index.oTypeList;
         // 获取所有需要下载的dll文件地址
-        List<String> uriList = new ArrayList<>();
+        Map<String,String> uriList = new HashMap<>();
         for (OType oType : oTypeList) {
             if (oType == null || oType.getModels() == null) {
                 continue;
@@ -39,13 +41,13 @@ public class ExportDllFile {
                 Mobj cModel = (Mobj) model.getMobj();
                 if (cModel != null && cModel.getSource() != null && !cModel.getSource().equals("")) {
                     String uri = cModel.getSource();
-                    uriList.add(uri);
+                    uriList.put(model.getId().toString(),uri);
                 }
             }
         }
         //下载文件
-        for (String uri : uriList) {
-            FileTools.utileDownLoad(uri, "E:\\test\\" + Index.sDomain.getName() + "\\ModelFile");
+        for ( Map.Entry<String,String> uri: uriList.entrySet()) {
+            FileTools.utileDownLoad(uri.getValue(), path + "\\ModelFile" ,uri.getKey());
         }
     }
 }

@@ -95,7 +95,7 @@ public class FieldUtils {
         //属性FIdSet
         Set<Long> fIdSet = new HashSet<>();
         //所有对象均未拿到属性信息，返回空的List
-        if (isNull(attributes) || isEmpty(attributes)) {
+        if ((isNull(attributes) || isEmpty(attributes))&&otypeFieldIds.size() == 0) {
             return eFieldList;
         }
         for (Attribute attribute : attributes) {
@@ -106,7 +106,7 @@ public class FieldUtils {
         }
         //解决字段参数过大的问题
         List<List<Long>> split = new ArrayList<>();
-        if (fIdSet.size() > 1000) {
+        if (fIdSet.size() > 500) {
             split = CollUtil.split(fIdSet, 50);
         }
         if (split.size() == 0 || CollUtil.isEmpty(split)) {

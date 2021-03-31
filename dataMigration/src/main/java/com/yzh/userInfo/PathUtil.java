@@ -10,7 +10,8 @@ public class PathUtil {
 
     public static void setDir(String sdomainName, String baseDir) {
         PathUtil.baseInfoDir = baseDir;
-        PathUtil.baseInfoDirData = baseDir + "\\" + sdomainName + "\\data";
+        //存放行为脚本
+        PathUtil.baseInfoDirData = baseDir  + "\\data";
     }
 
 }

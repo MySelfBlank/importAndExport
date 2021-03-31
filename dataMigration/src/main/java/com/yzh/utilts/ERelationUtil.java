@@ -7,6 +7,7 @@ import com.yzh.api.MyApi;
 import com.yzh.dao.EField;
 import com.yzh.dao.EModel;
 import com.yzh.dao.ERelation;
+import com.yzh.dao.ExecuteContainer;
 import com.yzh.dao.exportModel.EFields;
 import com.yzh.userInfo.PathUtil;
 import com.yzh.userInfo.UserInfo;
@@ -25,6 +26,8 @@ import java.util.*;
 
 import static cn.hutool.core.util.ObjectUtil.isEmpty;
 import static cn.hutool.core.util.ObjectUtil.isNull;
+import static com.yzh.dao.ExecuteContainer.RelationIds;
+import static com.yzh.dao.ExecuteContainer.modelIds;
 import static com.yzh.utilts.tools.FileTools.exportFile;
 
 /**
@@ -39,7 +42,7 @@ public class ERelationUtil {
      */
     public static void getRelation(List<SObject> sObjects) throws Exception {
 
-        Set<Long> RelationIds = new HashSet<>();
+
         if (sObjects == null || sObjects.size() == 0) {
             return;
         }
@@ -87,6 +90,12 @@ public class ERelationUtil {
      * @throws Exception
      */
     public static void getRelationFile(Set<Long> ids) throws Exception {
+        List<ERelation> eRelations = new ArrayList<>();
+        if (isEmpty(ids)||isNull(ids)){
+            String path = PathUtil.baseInfoDir + "\\test.relation";
+            exportFile(JSONUtil.parse(eRelations), path, "relation");
+            return;
+        }
         //根据关系id打印出关系数据到本地
         Map<String, Object> param = new HashMap<>();
         param.put("token", UserInfo.token);
@@ -100,7 +109,7 @@ public class ERelationUtil {
 
         List<Relation> list = JsonUtils.jsonToList(jsonObject.getStr("list"), Relation.class);
 
-        List<ERelation> eRelations = dsRelations2ERelation(list);
+        eRelations.addAll(dsRelations2ERelation(list));
         String path = PathUtil.baseInfoDir + "\\test.relation";
         exportFile(JSONUtil.parse(eRelations), path, "relation");
     }
@@ -137,7 +146,8 @@ public class ERelationUtil {
         newModel.setId(model.getId());
         newModel.setName(model.getName());
         newModel.setpLanguage(String.valueOf(model.getpLanguage().getValue()));
-
+        //将关系使用的行为存储起来
+        modelIds.add(model.getId());
         return newModel;
     }
 
@@ -148,6 +158,8 @@ public class ERelationUtil {
         }
         List<EField> eFieldList = new ArrayList<>();
         List<Field> fieldList = fields.getFields();
+        //将关系下引用的字段存储起来
+        ExecuteContainer.fieldList.addAll(fieldList);
         for (Field field : fieldList) {
             EField eField = new EField();
             eField.setId(field.getId());

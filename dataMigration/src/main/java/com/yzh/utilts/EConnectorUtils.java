@@ -20,6 +20,7 @@ import java.util.*;
 
 import static cn.hutool.core.util.ObjectUtil.isEmpty;
 import static cn.hutool.core.util.ObjectUtil.isNull;
+import static com.yzh.dao.ExecuteContainer.RelationIds;
 
 /**
  * @author Yzh
@@ -46,6 +47,7 @@ public class EConnectorUtils {
         for (Connector connector : connectorList) {
             if (classIDs.contains(connector.getfId())) {
                 if (classIDs.contains(connector.getdType().getId())) {
+                    RelationIds.add(connector.getRelation().getId());
                     connectors.add(connector);
                 }
             }

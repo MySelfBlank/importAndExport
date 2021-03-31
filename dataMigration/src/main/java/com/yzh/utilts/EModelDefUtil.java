@@ -3,6 +3,7 @@ package com.yzh.utilts;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONUtil;
 import com.yzh.api.MyApi;
+import com.yzh.dao.EModel;
 import com.yzh.dao.EModelDef;
 import com.yzh.userInfo.PathUtil;
 import com.yzh.userInfo.UserInfo;
@@ -13,8 +14,8 @@ import onegis.psde.psdm.OType;
 
 import java.util.*;
 
-import static cn.hutool.core.util.ObjectUtil.isEmpty;
-import static cn.hutool.core.util.ObjectUtil.isNull;
+import static cn.hutool.core.util.ObjectUtil.*;
+import static com.yzh.dao.ExecuteContainer.eModelList;
 import static com.yzh.utilts.tools.FileTools.exportFile;
 import static com.yzh.utilts.tools.FileTools.forJsonList;
 
@@ -75,8 +76,18 @@ public class EModelDefUtil {
      * @param oTypeList
      */
     public static void loadModelDefFile(List<OType> oTypeList) throws Exception {
-        Set<Long> ModelDefIds = getModelDefId(oTypeList);
+        Set<Long> ModelDefIds = new HashSet<>();
+                //getModelDefId(oTypeList);
+        //获取关系中和类模板中使用的行为类
+        if(isNotNull(eModelList)&&isNotEmpty(eModelList)){
+            for (EModel eModel : eModelList) {
+                ModelDefIds.add(eModel.getMdef().getId());
+            }
+        }
+        List<EModelDef> eModelDefs = new ArrayList<>();
         if (ModelDefIds.size() == 0) {
+            String path = PathUtil.baseInfoDir + "\\test.modelDef";
+            exportFile(JSONUtil.parse(eModelDefs), path, "modelDef");
             return;
         }
         Map<String, Object> param = new HashMap<>();
@@ -86,7 +97,6 @@ public class EModelDefUtil {
         String relationStr = HttpUtil.get(MyApi.getModelDefById.getValue(), param);
 
         List<ModelDef> list = forJsonList(relationStr, ModelDef.class);
-        List<EModelDef> eModelDefs = new ArrayList<>();
         for (ModelDef modelDef : list) {
             if (modelDef != null) {
                 EModelDef eModelDef = OtypeUtilts.handleModel(modelDef);
